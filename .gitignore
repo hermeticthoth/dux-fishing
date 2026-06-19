@@ -39,3 +39,4 @@ xcuserdata/
 *.njsproj
 *.sln
 *.sw?
+.vercel
