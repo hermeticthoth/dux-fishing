@@ -251,6 +251,14 @@ function iconSvg(name) {
     users: '<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3.5 20c.7-3.7 2.5-5.5 5.5-5.5s4.8 1.8 5.5 5.5"/><path d="M14.5 15.5c2.5.2 4.2 1.7 5 4.5"/>',
     star: '<path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z"/>',
     sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v3"/><path d="M12 19v3"/><path d="M2 12h3"/><path d="M19 12h3"/><path d="m4.9 4.9 2.1 2.1"/><path d="m17 17 2.1 2.1"/><path d="m19.1 4.9-2.1 2.1"/><path d="m7 17-2.1 2.1"/>',
+    cloud: '<path d="M17.5 19H8.5a6 6 0 1 1 5.8-7.5h2.2a3.75 3.75 0 1 1 1 7.5Z"/>',
+    "cloud-sun": '<path d="M12 2v2"/><path d="m4.9 4.9 1.4 1.4"/><path d="M20 12h2"/><path d="m19.1 4.9-1.4 1.4"/><path d="M16 12.7A4 4 0 0 0 10.1 8.5"/><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z"/>',
+    "cloud-rain": '<path d="M4 15a7 7 0 1 1 11.7-7h1.8a4.5 4.5 0 0 1 2.5 8.2"/><path d="M8 14v6"/><path d="M12 16v6"/><path d="M16 14v6"/>',
+    droplets: '<path d="M7 16.3a4 4 0 0 0 4-4c0-1.2-.6-2.2-1.7-3.2S7.3 6.8 7 5.3C6.7 6.8 5.9 8.1 4.7 9.1S3 11.1 3 12.3a4 4 0 0 0 4 4Z"/><path d="M12.6 6.6A11 11 0 0 0 14 3c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a7 7 0 0 1-11.9 5"/>',
+    eye: '<path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',
+    sunrise: '<path d="M12 2v8"/><path d="m8 6 4-4 4 4"/><path d="M2 22h20"/><path d="M4 18h2"/><path d="M18 18h2"/><path d="m4.9 10.9 1.4 1.4"/><path d="m19.1 10.9-1.4 1.4"/><path d="M16 18a4 4 0 0 0-8 0"/>',
+    sunset: '<path d="M12 10V2"/><path d="m16 6-4 4-4-4"/><path d="M2 22h20"/><path d="M4 18h2"/><path d="M18 18h2"/><path d="m4.9 10.9 1.4 1.4"/><path d="m19.1 10.9-1.4 1.4"/><path d="M16 18a4 4 0 0 0-8 0"/>',
+    compass: '<circle cx="12" cy="12" r="10"/><path d="m16.2 7.8-1.8 5.4a2 2 0 0 1-1.2 1.2l-5.4 1.8 1.8-5.4a2 2 0 0 1 1.2-1.2l5.4-1.8Z"/>',
     checklist: '<path d="M9 5h10v15H5V5h2"/><path d="M9 5a3 3 0 0 1 6 0"/><path d="m8 12 2 2 4-4"/><path d="M15 13h2"/><path d="M8 17h9"/>',
     doc: '<path d="M7 3h7l4 4v14H7V3Z"/><path d="M14 3v5h5"/><path d="M10 12h6"/><path d="M10 16h6"/><path d="M10 8h2"/>',
     share: '<path d="M12 15V4"/><path d="m7 9 5-5 5 5"/><path d="M5 13v6h14v-6"/>',
@@ -466,52 +474,109 @@ function shortRate(item) {
 }
 
 function renderWeather() {
-  const callHeadline = {
-    Green: "Green for local morning trips",
-    Watch: "Watch the next forecast update",
-    Hold: "Hold pending captain review",
-  }[state.weather.localCall];
+  const hourly = [
+    ["6 AM", "58°", "6 kt", "cloud-sun"],
+    ["9 AM", "64°", "8 kt", "sun"],
+    ["12 PM", "71°", "10 kt", "sun"],
+    ["3 PM", "73°", "12 kt", "cloud-sun"],
+    ["6 PM", "68°", "9 kt", "cloud"],
+    ["9 PM", "61°", "7 kt", "cloud"],
+  ];
+  const tides = [
+    ["Low", "0.4 ft", "4:12 AM", "waves", false],
+    ["High", "9.8 ft", "10:28 AM", "waves", true],
+    ["Low", "0.6 ft", "4:41 PM", "waves", false],
+    ["High", "10.1 ft", "10:55 PM", "waves", true],
+  ];
+  const outlook = [
+    ["Mon", "8 kt SW", "58°", "74°", "sun"],
+    ["Tue", "10 kt S", "57°", "72°", "cloud-sun"],
+    ["Wed", "12 kt SW", "56°", "69°", "cloud"],
+    ["Thu", "15 kt NE", "55°", "64°", "cloud-rain"],
+    ["Fri", "9 kt E", "56°", "70°", "cloud-sun"],
+    ["Sat", "7 kt SW", "59°", "75°", "sun"],
+    ["Sun", "6 kt S", "61°", "77°", "sun"],
+  ];
+  const wind = state.weather.metrics.find((metric) => metric[0] === "Wind")?.[1] || "8 kt SW";
+  const swell = "2 ft";
   return h`
     <main class="screen stack">
-      <h1 class="title">Weather</h1>
-      ${card(h`
-        ${sectionHeader("Captain call", `Last captain update: ${new Date(state.weather.updatedAt).toLocaleString()}`)}
-        <div class="trip-summary">
-          <span class="icon-well">${state.weather.localCall === "Green" ? "✓" : state.weather.localCall === "Watch" ? "!" : "×"}</span>
-          <div><h3>${callHeadline}</h3><p>${state.weather.note}</p></div>
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">Marine forecast</p>
+          <h1>Weather</h1>
         </div>
-        <div class="plan-grid">
-          ${tile("Local bass", state.weather.localCall, "fish")}
-          ${tile("Offshore", state.weather.offshoreCall, "radio")}
-          ${tile("Next update", state.weather.nextUpdate, "clock")}
+        <button class="icon-button" aria-label="Notifications">${iconSvg("bell")}</button>
+      </header>
+
+      <section class="weather-current-card">
+        <div class="weather-current-head">
+          <div>
+            <p class="label">Duxbury Bay · Now</p>
+            <h2>68°</h2>
+            <p>Partly cloudy · feels 66°</p>
+          </div>
+          <span class="weather-large-icon">${iconSvg("cloud-sun")}</span>
         </div>
-      `)}
-      ${state.captainMode ? renderWeatherEditor() : card(renderNotice("Captain tools locked", "Clients see the latest captain call here. Weather editing is available from Contact after unlocking Captain Mode for local review."))}
-      ${card(h`
-        ${sectionHeader("Marine conditions", "Captain-entered values saved on this device until live marine data is wired.")}
-        <div class="metric-grid">
-          ${state.weather.metrics.map((metric) => tile(metric[0], `${metric[1]} · ${metric[2]}`, metric[3])).join("")}
+        <div class="weather-metrics-row">
+          ${weatherMini("wind", "Wind", compactWind(wind))}
+          ${weatherMini("waves", "Swell", swell)}
+          ${weatherMini("droplets", "Humid", "62%")}
+          ${weatherMini("eye", "Vis", "10 mi")}
         </div>
-        <div class="notice"><p>Client view: these are captain-entered review values until live marine data or authenticated captain updates are connected.</p></div>
-      `)}
-      ${card(h`
-        ${sectionHeader("Watch list", "The variables that change a charter plan fastest.")}
-        <div class="tile-grid">
-          ${row("wind", "Wind shift", "A small direction change can make one side of the bay fishable and another sloppy.")}
-          ${row("warning", "Fog window", "Visibility matters for running, finding birds and returning to the dock comfortably.")}
-          ${row("waves", "Ground swell", "Offshore trips need a wider comfort margin than local striped bass trips.")}
-          ${row("tide", "Tide timing", "Moving water drives the bite, especially on local bass and bluefish trips.")}
+      </section>
+
+      <section class="reference-section">
+        <h2 class="section-kicker">Hourly</h2>
+        <div class="hourly-strip">
+          ${hourly.map((item) => `<div class="hour-card"><span>${item[0]}</span>${iconSvg(item[3])}<b>${item[1]}</b><small>${item[2]}</small></div>`).join("")}
         </div>
-      `)}
-      ${card(h`
-        ${sectionHeader("Captain decision timeline", "Clear timing reduces day-before uncertainty.")}
-        ${row("1", "Night before", "Captain reviews wind, tide, sea state, fog and recent bite reports.")}
-        ${row("2", "Crew text", "Booked clients receive clothing, timing and dock arrival guidance.")}
-        ${row("3", "Morning check", "Final call happens after local observations and any overnight forecast shift.")}
-        ${row("4", "Adjust or reschedule", "Safety-first call if the window closes or fishable water changes.")}
-      `)}
+      </section>
+
+      <section class="reference-section">
+        <h2 class="section-kicker">Tides today</h2>
+        <div class="marine-list">
+          ${tides.map((item) => `<div class="marine-list-row"><div>${iconSvg(item[3])}<span>${item[0]}</span></div><p><small>${item[1]}</small><b>${item[2]}</b></p></div>`).join("")}
+        </div>
+      </section>
+
+      <section class="sun-grid">
+        ${weatherInfoCard("sunrise", "Sunrise", "5:08 AM")}
+        ${weatherInfoCard("sunset", "Sunset", "8:24 PM")}
+      </section>
+
+      <section class="reference-section">
+        <h2 class="section-kicker">7-day outlook</h2>
+        <div class="marine-list">
+          ${outlook.map((item) => `<div class="forecast-row"><span>${item[0]}</span>${iconSvg(item[4])}<small>${item[1]}</small><em>${item[2]}</em><b>${item[3]}</b></div>`).join("")}
+        </div>
+      </section>
+
+      <section class="captain-note-card">
+        <div class="section-kicker">${iconLabel("compass", "Captain's note")}</div>
+        <p>${escapeHtml(state.weather.note)}</p>
+        <div class="captain-weather-pills">
+          <span>Local ${state.weather.localCall}</span>
+          <span>Offshore ${state.weather.offshoreCall}</span>
+          <span>Next ${escapeHtml(state.weather.nextUpdate)}</span>
+        </div>
+      </section>
+
+      ${state.captainMode ? renderWeatherEditor() : `<section class="reference-card">${renderNotice("Captain tools locked", "Clients see the latest captain call here. Weather editing is available from Contact after unlocking Captain Mode for local review.")}</section>`}
     </main>
   `;
+}
+
+function compactWind(value) {
+  return value.replace(" kt ", " ");
+}
+
+function weatherMini(icon, label, value) {
+  return `<div class="weather-mini">${iconSvg(icon)}<span>${label}</span><b>${value}</b></div>`;
+}
+
+function weatherInfoCard(icon, label, value) {
+  return `<div class="weather-info-card">${iconSvg(icon)}<span>${label}</span><b>${value}</b></div>`;
 }
 
 function renderNotice(title, detail) {

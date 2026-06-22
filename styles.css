@@ -572,6 +572,244 @@ a {
   margin-bottom: 8px;
 }
 
+.weather-current-card {
+  display: grid;
+  gap: 18px;
+  padding: 20px;
+  border: 1px solid var(--line-soft);
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(18, 59, 145, 0.94), rgba(6, 21, 54, 0.96));
+  box-shadow: 0 22px 38px rgba(0, 0, 0, 0.32);
+}
+
+.weather-current-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.weather-current-head h2 {
+  margin: 8px 0 2px;
+  color: var(--text);
+  font-size: 4rem;
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+}
+
+.weather-current-head p {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 750;
+}
+
+.weather-large-icon {
+  color: var(--orange);
+}
+
+.weather-large-icon .ui-icon {
+  width: 60px;
+  height: 60px;
+  stroke-width: 1.55;
+}
+
+.weather-metrics-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line-soft);
+}
+
+.weather-mini {
+  display: grid;
+  place-items: center;
+  gap: 4px;
+  min-width: 0;
+  text-align: center;
+}
+
+.weather-mini .ui-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--muted);
+}
+
+.weather-mini span,
+.hour-card span,
+.weather-info-card span,
+.marine-list-row small,
+.forecast-row small {
+  color: var(--muted);
+  font-size: 0.62rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.weather-mini b,
+.hour-card b,
+.weather-info-card b,
+.marine-list-row b,
+.forecast-row b {
+  color: var(--text);
+}
+
+.hourly-strip {
+  display: flex;
+  gap: 9px;
+  overflow-x: auto;
+  margin-inline: -22px;
+  padding-inline: 22px;
+  scrollbar-width: none;
+}
+
+.hourly-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.hour-card {
+  min-width: 74px;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 13px 10px;
+  border: 1px solid var(--line-soft);
+  border-radius: 16px;
+  background: rgba(9, 33, 93, 0.62);
+}
+
+.hour-card .ui-icon {
+  width: 22px;
+  height: 22px;
+  color: var(--orange);
+}
+
+.hour-card small {
+  color: var(--muted);
+  font-weight: 750;
+}
+
+.marine-list {
+  overflow: hidden;
+  border: 1px solid var(--line-soft);
+  border-radius: 18px;
+  background: rgba(9, 33, 93, 0.62);
+}
+
+.marine-list-row,
+.forecast-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.marine-list-row:last-child,
+.forecast-row:last-child {
+  border-bottom: 0;
+}
+
+.marine-list-row > div {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text);
+  font-weight: 800;
+}
+
+.marine-list-row .ui-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--orange);
+}
+
+.marine-list-row p {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+}
+
+.sun-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.weather-info-card {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid var(--line-soft);
+  border-radius: 18px;
+  background: rgba(9, 33, 93, 0.62);
+}
+
+.weather-info-card .ui-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--orange);
+}
+
+.forecast-row > span {
+  width: 38px;
+  color: var(--text);
+  font-weight: 850;
+}
+
+.forecast-row .ui-icon {
+  width: 22px;
+  height: 22px;
+  color: var(--orange);
+}
+
+.forecast-row small {
+  flex: 1;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.forecast-row em {
+  color: var(--muted);
+  font-style: normal;
+}
+
+.captain-note-card {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid rgba(255, 210, 31, 0.34);
+  border-radius: 18px;
+  background: rgba(255, 210, 31, 0.1);
+}
+
+.captain-note-card p {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.55;
+  font-weight: 750;
+}
+
+.captain-weather-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.captain-weather-pills span {
+  padding: 6px 9px;
+  border: 1px solid rgba(255, 210, 31, 0.24);
+  border-radius: 999px;
+  color: var(--sunwash);
+  background: rgba(6, 21, 54, 0.54);
+  font-size: 0.72rem;
+  font-weight: 850;
+}
+
 .trip-summary,
 .row {
   display: grid;
