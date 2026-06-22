@@ -1,9 +1,11 @@
 # High Hook Charters
 
-Native iPhone and iPad SwiftUI app for High Hook Fishing Charters in Duxbury, MA.
+Native iPhone/iPad SwiftUI app plus a static Vercel web app conversion for High Hook Fishing Charters in Duxbury, MA.
 
 ## What is built
 
+- Static web app served from `index.html`, `styles.css`, and `app.js`.
+  - Mirrors the native app's official header artwork, navy/yellow chart UI, marine cards, bottom dock, trip finder, booking inquiry, Weather, Trip Hub, Reports, Contact, local Captain Mode, local data export/clear, and Trip Packet flows.
 - Adaptive iPhone/iPad app shell.
   - iPhone: tabbed navigation for Trips, Weather, Prep, Reports, and Contact.
   - iPad: same bottom dock navigation as iPhone, scaled for tablet.
@@ -17,6 +19,18 @@ Native iPhone and iPad SwiftUI app for High Hook Fishing Charters in Duxbury, MA
 
 ## Build
 
+### Web
+
+No build step is required for the Vercel web app.
+
+```bash
+python3 -m http.server 4173 --bind 127.0.0.1
+```
+
+Production URL: https://dux-fishing.vercel.app
+
+### iOS
+
 ```bash
 xcodegen generate
 xcodebuild -project HighHookCharters.xcodeproj -scheme HighHookCharters -destination 'generic/platform=iOS Simulator' build
@@ -26,6 +40,7 @@ The generated Xcode project is checked in for convenience, but `project.yml` is 
 
 ## Verified
 
+- Browser automation with system Chrome verified the web app has no console/page errors, no mobile horizontal overflow, working booking-to-Trip-Hub state, Trip Packet preview, Captain Mode unlock, and Weather admin controls.
 - `xcodegen generate` succeeded.
 - `xcodebuild` simulator build succeeded.
 - XcodeBuildMCP build/install/launch succeeded on:

@@ -1,0 +1,942 @@
+const assets = {
+  header:
+    "./HighHookCharters/Resources/Assets.xcassets/HighHookHeader.imageset/high-hook-header.jpg",
+  logo:
+    "./HighHookCharters/Resources/Assets.xcassets/HighHookLogo.imageset/high-hook-logo.png",
+};
+
+const trips = [
+  {
+    id: "bass-local",
+    name: "Striped Bass Local",
+    icon: "🐟",
+    duration: "Half day",
+    season: "May through October",
+    target: "Striped bass and bluefish",
+    capacity: "1-6 anglers",
+    bestFor: "Families, first timers, steady local action",
+    price: "$825 1-4, $850 5, $875 6",
+    deposit: "$425 deposit",
+    details:
+      "Fish Duxbury, Plymouth, Marshfield, Scituate, Cohasset, Quincy and Boston Harbor with light tackle, trolling, live bait or casting depending on the bite.",
+    prep: ["Soft-soled shoes", "Light rain shell", "Sunglasses", "Snacks and drinks"],
+  },
+  {
+    id: "race-point",
+    name: "Race Point Striped Bass",
+    icon: "〰",
+    duration: "5 hours",
+    season: "Peak migration windows",
+    target: "Trophy striped bass",
+    capacity: "Up to 6 anglers",
+    bestFor: "Groups chasing a bigger run",
+    price: "$1,250 half day",
+    deposit: "$425 deposit",
+    details:
+      "A longer run to Race Point for a chance at larger schools and heavier fish when the Cape bite lines up.",
+    prep: ["Wind layer", "Hat with retention", "Camera", "Motion sickness plan"],
+  },
+  {
+    id: "bluefin",
+    name: "Bluefin Tuna",
+    icon: "◉",
+    duration: "8 hours",
+    season: "Offshore season",
+    target: "Bluefin tuna",
+    capacity: "1-6 anglers",
+    bestFor: "Serious crews ready for an offshore day",
+    price: "$1,550 1-4, $1,600 5, $1,650 6",
+    deposit: "$800 deposit",
+    details:
+      "Offshore tuna trip with stand-up gear, trolling, casting or live bait strategy based on reports and conditions.",
+    prep: ["Packed lunch", "Warm layer", "Waterproof bag", "Non-marking deck shoes"],
+  },
+  {
+    id: "haddock-cod",
+    name: "Haddock / Cod",
+    icon: "⚓",
+    duration: "6 or 8 hours",
+    season: "Groundfish windows",
+    target: "Haddock and cod",
+    capacity: "1-6 anglers",
+    bestFor: "Filling the cooler and learning bottom fishing",
+    price: "$1,550 3/4 day, $1,750 full day",
+    deposit: "$800 deposit",
+    details:
+      "Bottom fishing structure and ledges for haddock and cod, with rigging and fish handling handled by the crew.",
+    prep: ["Cooler in the car", "Food and drinks", "Deck-safe footwear", "Extra layers"],
+  },
+  {
+    id: "shark",
+    name: "Shark Fishing",
+    icon: "⛵",
+    duration: "Full day",
+    season: "Summer offshore",
+    target: "Shark species",
+    capacity: "1-6 anglers",
+    bestFor: "High-adrenaline groups and experienced anglers",
+    price: "$1,650 1-4, $1,750 5-6",
+    deposit: "$800 deposit",
+    details:
+      "A full offshore day built around chumming, heavy tackle and safe catch-and-release handling.",
+    prep: ["Sun protection", "Full lunch", "Camera", "Comfortable layered clothing"],
+  },
+  {
+    id: "kids-camp",
+    name: "High Hook Kids Camp",
+    icon: "🚸",
+    duration: "4 days, 8am-12pm",
+    season: "Summer sessions",
+    target: "Fishing, ecology and safe boating",
+    capacity: "Ages 10-15",
+    bestFor: "Kids who love the ocean or want to learn",
+    price: "$600 per camper",
+    deposit: "Camp registration",
+    details:
+      "Four mornings of fishing, knot tying, lures, fish ID, boating safety and South Shore marine life.",
+    prep: ["Sunscreen", "Water bottle", "Snack", "Life jacket if preferred"],
+  },
+  {
+    id: "ladies-night",
+    name: "Ladies Night Fishing",
+    icon: "☾",
+    duration: "Evening session",
+    season: "Select summer dates",
+    target: "Striped bass, bluefish and harbor sunset",
+    capacity: "Private groups",
+    bestFor: "Friend groups, relaxed after-work outings and first timers",
+    price: "Ask for current availability",
+    deposit: "Confirmed with captain",
+    details:
+      "A social, approachable evening fishing session for groups who want an easy on-ramp to High Hook without committing to a full offshore day.",
+    prep: ["Light jacket", "Sunglasses", "Snacks and drinks", "Camera"],
+  },
+];
+
+const goals = [
+  ["firstTimer", "First timer", "✦", "bass-local", "Local striped bass is the easiest, most reliable way to get a new crew hooked."],
+  ["family", "Family", "👥", "bass-local", "Half-day local trips keep the day manageable while still feeling like a real charter."],
+  ["trophy", "Trophy fish", "◎", "race-point", "Race Point is the better fit when the group wants a shot at heavier striped bass."],
+  ["offshore", "Offshore", "◉", "bluefin", "Bluefin tuna is the serious all-day offshore choice with the biggest upside."],
+  ["social", "Social night", "☾", "ladies-night", "Ladies Night is a lower-pressure evening session for friend groups and first timers."],
+  ["kids", "Kids camp", "🚸", "kids-camp", "Kids Camp turns fishing, boating safety and marine life into four hands-on mornings."],
+];
+
+const reminderKinds = [
+  ["nightBefore", "Night-before weather check", "Evening before departure", "☀"],
+  ["dockArrival", "Dock arrival", "Morning-of dock window", "⌖"],
+  ["prepChecklist", "Prep checklist", "One day before trip", "☑"],
+  ["postTripPhotos", "Post-trip photos", "After the boat returns", "▧"],
+];
+
+const defaultReports = [
+  {
+    date: "Jun 18",
+    title: "Bass stacked tight on moving water",
+    note: "Early outgoing tide produced the cleanest topwater shots. Keep the rod tip down when the bluefish show.",
+    condition: "62F water",
+    publishedAt: "2026-06-18T19:00:00.000Z",
+  },
+  {
+    date: "Jun 15",
+    title: "Groundfish bite steady east of the bay",
+    note: "Haddock responded well to lighter rigs. Cod released cleanly when the drift slowed.",
+    condition: "2 ft swell",
+    publishedAt: "2026-06-15T19:00:00.000Z",
+  },
+  {
+    date: "Jun 11",
+    title: "Tuna windows opening offshore",
+    note: "Scattered marks and bird life. The next settled-weather stretch is worth watching.",
+    condition: "10 kt wind",
+    publishedAt: "2026-06-11T19:00:00.000Z",
+  },
+];
+
+const regulations = [
+  ["Massachusetts saltwater rules", "Striped bass, bluefish, sharks and state-water species can change by season. Check the official DMF table before keeping fish.", "Mass.gov · updated Apr 28, 2026", "https://www.mass.gov/info-details/recreational-saltwater-fishing-regulations", "🐟"],
+  ["Atlantic bluefin tuna", "Bluefin retention limits can be adjusted or closed during the season. Captain handles permits and final retention calls.", "NOAA HMS · current bag limits", "https://www.fisheries.noaa.gov/atlantic-highly-migratory-species/recreational-atlantic-bluefin-tuna-fishery-statuses-and-bag", "◉"],
+  ["Groundfish: haddock and cod", "Haddock and cod limits depend on area, season and species. Confirm before any cooler-filling trip.", "NOAA Northeast Multispecies", "https://www.fisheries.noaa.gov/species/northeast-multispecies-groundfish/recreational", "⚓"],
+];
+
+const store = {
+  get(key, fallback) {
+    try {
+      return JSON.parse(localStorage.getItem(key)) ?? fallback;
+    } catch {
+      return fallback;
+    }
+  },
+  set(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
+  },
+};
+
+const state = {
+  tab: "trips",
+  selectedTripId: "bass-local",
+  selectedGoal: "firstTimer",
+  modal: null,
+  captainMode: store.get("highHook.web.captainMode", false),
+  inquiries: store.get("highHook.web.inquiries", []),
+  reminders: store.get("highHook.web.reminders", {}),
+  checklist: store.get("highHook.web.checklist", {}),
+  reports: store.get("highHook.web.reports", defaultReports),
+  weather: store.get("highHook.web.weather", {
+    localCall: "Green",
+    offshoreCall: "Watch",
+    nextUpdate: "7:00 PM",
+    note:
+      "Local striped bass trips look comfortable. Offshore trips still need a captain review after the evening forecast update.",
+    updatedAt: "2026-06-19T00:00:00.000Z",
+    metrics: [
+      ["Wind", "8 kt SW", "Good", "≋"],
+      ["Swell", "1.5 ft", "Fishable", "〰"],
+      ["Tide", "Outgoing 8:40", "Prime", "↓"],
+      ["Water", "62F", "Active", "☀"],
+    ],
+  }),
+};
+
+const app = document.querySelector("#app");
+const today = new Date();
+const dateInputValue = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+
+function trip(id = state.selectedTripId) {
+  return trips.find((item) => item.id === id) || trips[0];
+}
+
+function h(strings, ...values) {
+  return strings.reduce((out, part, index) => out + part + (values[index] ?? ""), "");
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
+}
+
+function fmtDate(value) {
+  return new Date(value).toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" });
+}
+
+function card(content, className = "") {
+  return `<section class="marine-card ${className}">${content}</section>`;
+}
+
+function sectionHeader(title, subtitle) {
+  return `<div class="section-header"><h2>${title}</h2><p>${subtitle}</p></div>`;
+}
+
+function tile(label, value, icon = "") {
+  return `<div class="tile"><span class="label">${label}</span><b>${icon ? `${icon} ` : ""}${value}</b></div>`;
+}
+
+function row(icon, title, detail) {
+  return `<div class="row"><span class="icon-well">${icon}</span><div><b>${title}</b><p>${detail}</p></div></div>`;
+}
+
+function setTab(tab) {
+  state.tab = tab;
+  state.modal = null;
+  render();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function selectTrip(id) {
+  state.selectedTripId = id;
+  render();
+}
+
+function openBooking() {
+  state.modal = "booking";
+  render();
+}
+
+function closeModal() {
+  state.modal = null;
+  render();
+}
+
+function matchingInquiries() {
+  return state.inquiries
+    .filter((item) => item.tripId === state.selectedTripId)
+    .sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
+}
+
+function checklistItems(currentTrip = trip()) {
+  return [
+    "Confirm departure: 25 Mattakeesett Ct, Duxbury, MA 02332",
+    "Watch for the captain's weather text the evening before",
+    ...currentTrip.prep,
+    "Leave large coolers in the vehicle until fish return dockside",
+  ];
+}
+
+function renderTrips() {
+  const current = trip();
+  const selectedGoal = goals.find((goal) => goal[0] === state.selectedGoal) || goals[0];
+  const matched = trip(selectedGoal[3]);
+  return h`
+    <main class="screen stack">
+      <section class="hero-panel">
+        <img src="${assets.header}" alt="High Hook Charter Fishing header artwork" />
+        <div class="hero-copy">
+          <p class="eyebrow">Duxbury charter log</p>
+          <h1>Book a Duxbury charter</h1>
+          <p>Bass, tuna, haddock, shark trips and kids sessions from Mattakeesett Court.</p>
+          <div class="actions">
+            <button class="button primary" data-action="book">➜ Book a charter</button>
+            <a class="button" href="mailto:Charters@FishHighHook.com">✉ Ask Captain</a>
+          </div>
+          <p>⌖ 25 Mattakeesett Ct, Duxbury, MA</p>
+          <div class="log-bands">
+            ${tile("Wind", "8 kt SW", "≋")}
+            ${tile("Tide", "Outgoing", "↓")}
+          </div>
+        </div>
+      </section>
+
+      ${card(h`
+        ${sectionHeader("Plan your trip in 30 seconds", "Start with the crew and the app will point you to the best High Hook option.")}
+        <div class="chip-row">
+          ${goals.map((goal) => `<button class="chip ${goal[0] === state.selectedGoal ? "is-selected" : ""}" data-goal="${goal[0]}">${goal[2]} ${goal[1]}</button>`).join("")}
+        </div>
+        <div class="recommendation">
+          <span class="icon-well">${matched.icon}</span>
+          <div>
+            <b>Recommended: ${matched.name}</b>
+            <p>${selectedGoal[4]}</p>
+            <p><strong>${matched.price}</strong></p>
+          </div>
+        </div>
+      `)}
+
+      ${card(h`
+        ${sectionHeader("Find the right trip", "Pick a target species, compare 2026 rates and send the captain a clean inquiry.")}
+        <div class="chip-row">
+          ${trips.map((item) => `<button class="chip ${item.id === current.id ? "is-selected" : ""}" data-trip="${item.id}">${item.icon} ${item.name}<br><small>${item.duration}</small></button>`).join("")}
+        </div>
+        <div class="trip-summary">
+          <span class="icon-well">${current.icon}</span>
+          <div>
+            <h3>${current.name}</h3>
+            <p>${current.details}</p>
+            <div class="rate-grid">
+              ${tile("Duration", current.duration, "◷")}
+              ${tile("Crew", current.capacity, "👥")}
+              ${tile("Rate", current.price, "$")}
+              ${tile("Season", current.season, "▣")}
+            </div>
+            <div class="actions" style="margin-top:14px">
+              <button class="button primary" data-action="book">Request ${current.name}</button>
+              <button class="button" data-modal="trip-detail">Trip details</button>
+            </div>
+          </div>
+        </div>
+      `)}
+
+      ${card(h`
+        ${sectionHeader("2026 Trips & Rates", "Transparent options for prospects before they reach out.")}
+        ${trips.map((item) => `
+          <button class="rate-row" data-trip-detail="${item.id}">
+            <h3>${item.icon} ${item.name}</h3>
+            <p>${item.duration} · ${item.target}</p>
+            <p><strong>${item.price}</strong> · ${item.deposit}</p>
+          </button>
+        `).join("")}
+      `)}
+    </main>
+  `;
+}
+
+function renderWeather() {
+  const callHeadline = {
+    Green: "Green for local morning trips",
+    Watch: "Watch the next forecast update",
+    Hold: "Hold pending captain review",
+  }[state.weather.localCall];
+  return h`
+    <main class="screen stack">
+      <h1 class="title">Weather</h1>
+      ${card(h`
+        ${sectionHeader("Captain call", `Last captain update: ${new Date(state.weather.updatedAt).toLocaleString()}`)}
+        <div class="trip-summary">
+          <span class="icon-well">${state.weather.localCall === "Green" ? "✓" : state.weather.localCall === "Watch" ? "!" : "×"}</span>
+          <div><h3>${callHeadline}</h3><p>${state.weather.note}</p></div>
+        </div>
+        <div class="plan-grid">
+          ${tile("Local bass", state.weather.localCall, "🐟")}
+          ${tile("Offshore", state.weather.offshoreCall, "◉")}
+          ${tile("Next update", state.weather.nextUpdate, "◷")}
+        </div>
+      `)}
+      ${state.captainMode ? renderWeatherEditor() : card(renderNotice("Captain tools locked", "Clients see the latest captain call here. Weather editing is available from Contact after unlocking Captain Mode for local review."))}
+      ${card(h`
+        ${sectionHeader("Marine conditions", "Captain-entered values saved on this device until live marine data is wired.")}
+        <div class="metric-grid">
+          ${state.weather.metrics.map((metric) => tile(metric[0], `${metric[1]} · ${metric[2]}`, metric[3])).join("")}
+        </div>
+        <div class="notice"><p>Client view: these are captain-entered review values until live marine data or authenticated captain updates are connected.</p></div>
+      `)}
+      ${card(h`
+        ${sectionHeader("Watch list", "The variables that change a charter plan fastest.")}
+        <div class="tile-grid">
+          ${row("≋", "Wind shift", "A small direction change can make one side of the bay fishable and another sloppy.")}
+          ${row("◌", "Fog window", "Visibility matters for running, finding birds and returning to the dock comfortably.")}
+          ${row("〰", "Ground swell", "Offshore trips need a wider comfort margin than local striped bass trips.")}
+          ${row("↓", "Tide timing", "Moving water drives the bite, especially on local bass and bluefish trips.")}
+        </div>
+      `)}
+      ${card(h`
+        ${sectionHeader("Captain decision timeline", "Clear timing reduces day-before uncertainty.")}
+        ${row("1", "Night before", "Captain reviews wind, tide, sea state, fog and recent bite reports.")}
+        ${row("2", "Crew text", "Booked clients receive clothing, timing and dock arrival guidance.")}
+        ${row("3", "Morning check", "Final call happens after local observations and any overnight forecast shift.")}
+        ${row("4", "Adjust or reschedule", "Safety-first call if the window closes or fishable water changes.")}
+      `)}
+    </main>
+  `;
+}
+
+function renderNotice(title, detail) {
+  return `<div class="notice row"><span class="icon-well">🔒</span><div><b>${title}</b><p>${detail}</p></div></div>`;
+}
+
+function renderWeatherEditor() {
+  return card(h`
+    ${sectionHeader("Captain update controls", "Prototype admin controls for reviewing the client weather experience.")}
+    <div class="form-grid">
+      <div class="field"><label>Local bass</label><select id="localCall"><option>Green</option><option>Watch</option><option>Hold</option></select></div>
+      <div class="field"><label>Offshore</label><select id="offshoreCall"><option>Green</option><option>Watch</option><option>Hold</option></select></div>
+      <div class="field"><label>Next update</label><input id="nextUpdate" value="${escapeHtml(state.weather.nextUpdate)}" /></div>
+      <div class="field"><label>Captain note</label><textarea id="weatherNote">${escapeHtml(state.weather.note)}</textarea></div>
+      <div class="actions"><button class="button primary" data-action="save-weather">Save update</button><button class="button" data-action="reset-weather">Reset sample</button></div>
+    </div>
+  `);
+}
+
+function renderPrep() {
+  const current = trip();
+  const inquiries = matchingInquiries();
+  const inquiry = inquiries[0];
+  const checked = state.checklist[current.id] || checklistItems(current).slice(0, 2);
+  return h`
+    <main class="screen stack">
+      <h1 class="title">Trip Hub</h1>
+      ${card(h`
+        ${sectionHeader(`${current.name} · Trip Hub`, inquiry ? `${inquiry.name}'s request for ${fmtDate(inquiry.preferredDate)}` : "A booked-client view for this selected trip after the captain confirms.")}
+        <div class="plan-grid">
+          ${tile("Inquiry", inquiry ? inquiry.status : current.deposit, "✓")}
+          ${tile("Weather", "Captain review", "☀")}
+          ${tile("Trip time", current.duration, "◷")}
+          ${tile("Prep", `${checked.length}/${checklistItems(current).length} ready`, "☑")}
+        </div>
+      `)}
+      ${inquiry ? renderInquiryHub(current, inquiry, inquiries) : renderEmptyHub(current)}
+      ${renderReminders(current, Boolean(inquiry))}
+      ${card(h`
+        ${sectionHeader("Captain note", "The kind of short operational update a client should see before departure.")}
+        <div class="notice"><p>${captainNote(current)}</p></div>
+      `)}
+      ${card(h`
+        ${sectionHeader("Dock arrival", "Reduce morning-of confusion with the exact dock plan.")}
+        ${row("⌖", "Departure", "25 Mattakeesett Ct, Duxbury, MA 02332")}
+        ${row("▣", "Parking", "Park near the marina entrance unless the captain texts a different slip.")}
+        ${row("▤", "Bring aboard", "Soft bag, drinks, snacks, sunglasses, hat, and soft-soled shoes.")}
+        <a class="button primary block" href="https://maps.apple.com/?q=25%20Mattakeesett%20Ct%20Duxbury%20MA%2002332">Open in Maps</a>
+      `)}
+      ${renderChecklist(current)}
+    </main>
+  `;
+}
+
+function renderInquiryHub(current, inquiry, inquiries) {
+  return h`
+    ${card(h`
+      ${sectionHeader("Inquiry status", "A client-facing receipt for the request that just left the app.")}
+      ${row("👤", "Client", `${inquiry.name} · ${inquiry.email}`)}
+      ${row("▣", "Preferred date", fmtDate(inquiry.preferredDate))}
+      ${row("👥", "Party size", `${inquiry.partySize} anglers`)}
+      ${row("◷", "Submitted", new Date(inquiry.submittedAt).toLocaleString())}
+      ${state.captainMode ? `<div class="chip-row">${["Email draft ready", "Awaiting captain", "Captain confirmed", "Deposit due"].map((status) => `<button class="status-button ${inquiry.status === status ? "is-active" : ""}" data-status="${status}" data-id="${inquiry.id}">${status}</button>`).join("")}</div>` : renderNotice("Captain updates locked", "Clients can see the latest request status here. Status editing stays hidden until Captain Mode is unlocked from Contact.")}
+      ${inquiry.notes ? `<div class="data-box" style="padding:12px"><span class="label">Notes</span><p>${escapeHtml(inquiry.notes)}</p></div>` : ""}
+    `)}
+    ${card(h`
+      ${sectionHeader("Day-of plan", "A compact client itinerary for the morning of the trip.")}
+      <div class="plan-grid">
+        ${tile("Preferred date", fmtDate(inquiry.preferredDate), "▣")}
+        ${tile("Captain status", inquiry.status, "✓")}
+        ${tile("Trip length", current.duration, "◷")}
+        ${tile("Hold", current.deposit, "$")}
+      </div>
+      ${row("☀", "Weather call", "Watch for the captain's go/no-go text the evening before. Offshore trips may wait on the latest marine forecast.")}
+      ${row("⌖", "Meet at the dock", "25 Mattakeesett Ct, Duxbury, MA 02332. Bring soft-soled shoes and keep large coolers in the vehicle.")}
+      ${row("👥", "Crew", `${inquiry.partySize} anglers for ${current.name}. ${availabilitySummary(inquiry)}`)}
+      <div class="actions">
+        <button class="button primary" data-modal="packet">View trip packet</button>
+        <a class="button primary" href="https://maps.apple.com/?q=25%20Mattakeesett%20Ct%20Duxbury%20MA%2002332">Maps</a>
+        <a class="button" href="mailto:Charters@FishHighHook.com?subject=High%20Hook%20trip%20question%20-%20${encodeURIComponent(current.name)}">Ask</a>
+      </div>
+    `)}
+    ${inquiries.length > 1 ? card(h`
+      ${sectionHeader("Local inquiry queue", `${inquiries.length} saved requests for this trip on this device.`)}
+      ${inquiries.slice(0, 4).map((item) => row("✉", item.name, `${item.status} · ${fmtDate(item.preferredDate)} · ${item.partySize} anglers`)).join("")}
+    `) : ""}
+  `;
+}
+
+function renderEmptyHub(current) {
+  return card(h`
+    ${sectionHeader("Start this Trip Hub", `Send a request for ${current.name} and this hub becomes a client-specific plan.`)}
+    <div class="plan-grid">
+      ${tile("Trip length", current.duration, "◷")}
+      ${tile("Rate", current.price, "$")}
+      ${tile("Deposit", current.deposit, "▣")}
+      ${tile("Capacity", current.capacity, "👥")}
+    </div>
+    ${row("1", "Choose the trip", `${current.bestFor}. The booking sheet will carry the selected trip, date and party size into a prepared email.`)}
+    ${row("2", "Captain confirms", "High Hook confirms weather, availability and deposit details before the date is held.")}
+    ${row("3", "Hub unlocks", "After the request is saved locally, this screen shows status, reminders, dock details and the prep checklist.")}
+    <div class="actions"><button class="button primary" data-action="book">Request this trip</button><a class="button" href="mailto:Charters@FishHighHook.com">Ask Captain</a></div>
+  `);
+}
+
+function renderReminders(current, canSchedule) {
+  const enabled = reminderKinds.filter((kind) => state.reminders[`${current.id}-${kind[0]}`]).length;
+  return card(h`
+    ${sectionHeader("Trip reminders", `${enabled} of ${reminderKinds.length} local reminders enabled for this trip.`)}
+    <div class="notice"><p>${canSchedule ? "Enabling a reminder saves the preference locally for this inquiry's preferred date." : "Preferences save now. Notification scheduling starts after this trip has a booked inquiry date."}</p></div>
+    ${reminderKinds.map((kind) => `
+      <button class="toggle-row" data-reminder="${kind[0]}">
+        <span><b>${kind[3]} ${kind[1]}</b><p>${kind[2]}</p></span>
+        <span class="switch ${state.reminders[`${current.id}-${kind[0]}`] ? "is-on" : ""}"></span>
+      </button>
+    `).join("")}
+  `);
+}
+
+function renderChecklist(current) {
+  const items = checklistItems(current);
+  const checked = new Set(state.checklist[current.id] || items.slice(0, 2));
+  return card(h`
+    ${sectionHeader("Prep checklist", `${checked.size} of ${items.length} ready for ${current.name} · saved on this device`)}
+    ${items.map((item) => `<button class="toggle-row" data-check="${escapeHtml(item)}"><span><b>${checked.has(item) ? "✓" : "○"} ${item}</b></span></button>`).join("")}
+  `);
+}
+
+function captainNote(current) {
+  if (["bluefin", "shark", "haddock-cod"].includes(current.id)) {
+    return "Offshore comfort depends on swell and wind direction. Pack food, layers and a waterproof bag; the captain will confirm the final go/no-go window.";
+  }
+  if (current.id === "kids-camp") {
+    return "Camp mornings focus on fishing, knot tying, fish ID and boating safety. Send any medical or comfort notes before the first morning.";
+  }
+  if (current.id === "ladies-night") {
+    return "Evening timing depends on tide and sunset. Bring a light jacket, sunglasses and anything you want for snacks or photos.";
+  }
+  return "Outgoing tide is the plan. Dress for a cool run across the bay, bring sunglasses, and leave the large cooler in the car until we return.";
+}
+
+function availabilitySummary(inquiry) {
+  return inquiry.notes?.split("\n")[0]?.startsWith("Availability:")
+    ? inquiry.notes.split("\n")[0]
+    : "Confirm any backup windows with the captain.";
+}
+
+function renderReports() {
+  return h`
+    <main class="screen stack">
+      <h1 class="title">Reports</h1>
+      ${state.captainMode ? card(h`
+        ${sectionHeader("Publish local report", "Prototype captain/CMS controls saved on this device.")}
+        <div class="form-grid">
+          <div class="field"><label>Title</label><input id="reportTitle" value="Bass bite update" /></div>
+          <div class="field"><label>Condition</label><input id="reportCondition" value="Outgoing tide" /></div>
+          <div class="field"><label>Report note</label><textarea id="reportNote">Clean water and steady marks around the bay.</textarea></div>
+          <button class="button primary" data-action="publish-report">Publish local report</button>
+        </div>
+      `) : card(renderNotice("Reports are client-safe", "Captain publishing controls stay hidden until Captain Mode is unlocked from Contact."))}
+      ${card(h`
+        ${sectionHeader("Fishing reports", `${state.reports.length} local report highlights.`)}
+        <div class="stack">
+          ${state.reports.map((report) => `<article class="report-card" style="padding:14px"><span class="label">${report.date} · ${report.condition}</span><h3>${escapeHtml(report.title)}</h3><p>${escapeHtml(report.note)}</p></article>`).join("")}
+        </div>
+      `)}
+      ${card(h`
+        ${sectionHeader("Gallery preview", "Production should connect real trip photos, moderation and public report controls.")}
+        <div class="tile-grid">
+          ${tile("Bass", "Topwater shots", "🐟")}
+          ${tile("Offshore", "Tuna windows", "◉")}
+          ${tile("Camp", "Kids learning knots", "🚸")}
+        </div>
+      `)}
+    </main>
+  `;
+}
+
+function renderContact() {
+  const summary = localDataSummary();
+  return h`
+    <main class="screen stack">
+      <h1 class="title">Contact</h1>
+      ${card(h`
+        ${sectionHeader("Captain & Contact", "Make it easy to ask a question, find the dock or reopen the store.")}
+        <a class="row" href="mailto:Charters@FishHighHook.com"><span class="icon-well">✉</span><div><b>Email</b><p>Charters@FishHighHook.com</p></div></a>
+        <a class="row" href="https://www.fishhighhook.com/"><span class="icon-well">⌘</span><div><b>Website</b><p>fishhighhook.com</p></div></a>
+        <a class="row" href="https://maps.apple.com/?q=25%20Mattakeesett%20Ct%20Duxbury%20MA%2002332"><span class="icon-well">⌖</span><div><b>Departure</b><p>25 Mattakeesett Ct, Duxbury, MA 02332</p></div></a>
+        <a class="row" href="https://www.fishhighhook.com/store"><span class="icon-well">▤</span><div><b>Store</b><p>High Hook gear and gift ideas</p></div></a>
+      `)}
+      ${card(h`
+        ${sectionHeader("Captain Mode", state.captainMode ? "Local review tools are visible for weather, reports and booking status." : "Keep the customer app clean. Unlock only when the captain is reviewing operations.")}
+        ${row(state.captainMode ? "🔓" : "🔒", state.captainMode ? "Unlocked on this device" : "Locked for client review", state.captainMode ? "Weather update controls, report publishing and Trip Hub status editing are available locally. Production still needs real captain sign-in." : "Clients see reports, weather calls and trip status without editing controls.")}
+        <button class="button ${state.captainMode ? "" : "primary"} block" data-action="${state.captainMode ? "lock-captain" : "unlock-captain"}">${state.captainMode ? "Lock Captain Mode" : "Unlock Captain Mode"}</button>
+        <p class="muted">Review unlock code: HIGHHOOK. This is a local prototype gate, not production authentication.</p>
+      `)}
+      ${card(h`
+        ${sectionHeader("Trust & safety", "Plain-language expectations for booking, privacy and on-water decisions.")}
+        ${row("🔒", "Privacy", "Booking details are saved locally on this device for the prototype and sent through your Mail draft. Production needs a published privacy policy and secure backend storage.")}
+        ${row("$", "Payments", "No card is charged in the app. Deposits and balances are handled only after High Hook confirms the date.")}
+        ${row("☀", "Captain authority", "Weather, tide, safety and fishery rules can change. The captain's latest call overrides any sample app data.")}
+        ${row("✚", "Emergency", "For immediate on-water emergencies, call emergency services or hail the Coast Guard. This app is not an emergency channel.")}
+        <a class="button block" href="tel:911">Call 911</a>
+        <div class="data-box" style="padding:12px"><b>Local client data</b><p>${summary}</p><div class="actions" style="margin-top:12px"><button class="button primary" data-modal="export">Export local data</button><button class="button" data-action="clear-data">Clear local booking data</button></div></div>
+      `)}
+      ${card(h`
+        ${sectionHeader("Sessions", "Kids camp and social evening options from High Hook.")}
+        ${row("🚸", "Kids Camp", "Ages 10-15 learn fishing, knot tying, lures, fish ID, boating safety and South Shore marine life. $600 · 4 days · 8am-12pm")}
+        ${row("☾", "Ladies Night Fishing", "A relaxed evening fishing session for friend groups, first timers and after-work crews. Select summer evenings · ask captain")}
+      `)}
+      ${card(h`
+        ${sectionHeader("Regulations", "Rules move during the season. Use these official sources and defer to the captain before keeping fish.")}
+        ${regulations.map((item) => `<a class="row" href="${item[3]}"><span class="icon-well">${item[4]}</span><div><b>${item[0]}</b><p>${item[1]}</p><p><strong>${item[2]}</strong></p></div></a>`).join("")}
+        <p class="muted">Verified source links: June 19, 2026. This app should still support captain/admin updates before release.</p>
+      `)}
+    </main>
+  `;
+}
+
+function localDataSummary() {
+  const activeReminders = Object.values(state.reminders).filter(Boolean).length;
+  const checklistTrips = Object.values(state.checklist).filter((items) => items.length).length;
+  if (!state.inquiries.length && !activeReminders && !checklistTrips) {
+    return "No local booking inquiries, active trip reminders or prep checklist progress are saved on this device.";
+  }
+  return `${state.inquiries.length} saved inquiries, ${activeReminders} active reminders and ${checklistTrips} trip checklists on this device.`;
+}
+
+function renderDock() {
+  const tabs = [
+    ["trips", "🐟", "Trips"],
+    ["weather", "☀", "Weather"],
+    ["prep", "☑", "Prep"],
+    ["reports", "▧", "Reports"],
+    ["contact", "☎", "Contact"],
+  ];
+  return `<nav class="dock" aria-label="High Hook navigation">${tabs.map((tab) => `<button class="dock-button ${state.tab === tab[0] ? "is-active" : ""}" data-tab="${tab[0]}"><span>${tab[1]}</span><span>${tab[2]}</span></button>`).join("")}</nav>`;
+}
+
+function renderModal() {
+  if (!state.modal) return "";
+  if (state.modal === "booking") return renderBookingModal();
+  if (state.modal === "trip-detail") return renderTripDetailModal();
+  if (state.modal === "packet") return renderPacketModal();
+  if (state.modal === "export") return renderExportModal();
+  return "";
+}
+
+function renderBookingModal() {
+  const current = trip();
+  return h`
+    <div class="modal-backdrop" role="dialog" aria-modal="true">
+      <section class="modal-panel">
+        <div class="modal-header"><h2>Book a charter</h2><button class="button" data-action="close-modal">Done</button></div>
+        <div id="bookingForm" class="stack">
+          ${card(h`
+            ${sectionHeader("Selected trip", "The inquiry will be tied to this option.")}
+            <h3>${current.icon} ${current.name}</h3><p>${current.details}</p>
+            <div class="plan-grid">${tile("Rate", current.price, "$")}${tile("Deposit", current.deposit, "▣")}</div>
+          `)}
+          ${card(h`
+            ${sectionHeader("Your crew", "Give the captain enough context to confirm the right date and plan.")}
+            <div class="form-grid">
+              <div class="field"><label>Name</label><input id="bookName" autocomplete="name" /></div>
+              <div class="field"><label>Email</label><input id="bookEmail" type="email" autocomplete="email" /></div>
+              <div class="counter"><b>Party size</b><div class="counter-controls"><button class="button" data-party="-1">-</button><span id="partySize">4</span><button class="button" data-party="1">+</button></div></div>
+              <div class="field"><label>Preferred date</label><input id="preferredDate" type="date" value="${dateInputValue}" /></div>
+              <div class="field"><label>Date flexibility</label><select id="dateFlex"><option>Flexible by a few days</option><option>Exact date</option><option>Captain can pick best window</option></select></div>
+              <div class="field"><label>Backup date/window</label><input id="backupDate" type="date" value="${dateInputValue}" /></div>
+              <div class="field"><label>Notes for the captain</label><textarea id="bookNotes" placeholder="Target species, kids, experience level, date flexibility or special considerations."></textarea></div>
+            </div>
+          `)}
+          ${card(h`
+            ${sectionHeader("Deposit & hold", "No card is charged in the app.")}
+            ${row("$", "Deposit", `${current.deposit} is handled after the captain confirms the date.`)}
+            ${row("◷", "Hold status", "This inquiry does not reserve the boat until High Hook replies and the deposit is settled.")}
+            ${row("✉", "Best response", "Flexible dates and backup windows help the captain match weather, tide and availability.")}
+          `)}
+          ${card(h`
+            ${sectionHeader("What happens next", "A clear handoff before the user commits.")}
+            ${row("✉", "Email draft opens", "The app prepares a clean message to Charters@FishHighHook.com.")}
+            ${row("☀", "Captain confirms window", "Weather, tide and fish reports shape the final plan.")}
+            ${row("$", "Deposit holds the date", "No date is held until the captain confirms and payment is handled.")}
+            ${row("☑", "Trip Hub unlocks", "Booked clients get arrival details, captain notes, weather status and a prep checklist in one place.")}
+          `)}
+          <button class="button primary block" data-action="submit-booking">Email</button>
+        </div>
+      </section>
+    </div>
+  `;
+}
+
+function renderTripDetailModal() {
+  const current = trip();
+  return h`
+    <div class="modal-backdrop" role="dialog" aria-modal="true">
+      <section class="modal-panel">
+        <div class="modal-header"><h2>${current.name}</h2><button class="button" data-action="close-modal">Done</button></div>
+        <div class="stack">
+          <p>${current.details}</p>
+          <div class="plan-grid">${tile("Duration", current.duration)}${tile("Season", current.season)}${tile("Target", current.target)}${tile("Capacity", current.capacity)}${tile("Rate", current.price)}${tile("Deposit", current.deposit)}</div>
+          ${card(h`${sectionHeader("Prep", "Trip-specific checklist starter.")}${current.prep.map((item) => row("✓", item, "Recommended for this trip.")).join("")}`)}
+          <button class="button primary block" data-action="book">Request this trip</button>
+        </div>
+      </section>
+    </div>
+  `;
+}
+
+function packetText() {
+  const current = trip();
+  const inquiry = matchingInquiries()[0];
+  if (!inquiry) return "";
+  return `High Hook Charters Trip Packet
+
+Trip: ${current.name}
+Preferred date: ${fmtDate(inquiry.preferredDate)}
+Captain status: ${inquiry.status}
+Client: ${inquiry.name}
+Party size: ${inquiry.partySize} anglers
+Trip length: ${current.duration}
+Rate: ${current.price}
+Deposit/Hold: ${current.deposit}
+
+Departure
+25 Mattakeesett Ct
+Duxbury, MA 02332
+
+Weather call
+Watch for the captain's go/no-go text the evening before. Offshore trips may wait on the latest marine forecast.
+
+Availability
+${availabilitySummary(inquiry)}
+
+Bring aboard
+Soft bag, drinks, snacks, sunglasses, hat, layers and soft-soled shoes. Keep large coolers in the vehicle until fish return dockside.
+
+Captain question
+Charters@FishHighHook.com`;
+}
+
+function renderPacketModal() {
+  const text = packetText();
+  return h`<div class="modal-backdrop" role="dialog" aria-modal="true"><section class="modal-panel"><div class="modal-header"><h2>Trip Packet</h2><button class="button" data-action="close-modal">Done</button></div><pre class="data-box" style="padding:14px;white-space:pre-wrap;color:var(--sunwash)">${escapeHtml(text)}</pre><button class="button primary block" data-action="share-packet">Share trip packet</button></section></div>`;
+}
+
+function renderExportModal() {
+  const exportText = `High Hook local client data export
+Generated: ${new Date().toLocaleString()}
+
+Saved inquiries (${state.inquiries.length})
+${state.inquiries.map((item) => `- ${item.name} <${item.email}> · ${item.tripName} · ${fmtDate(item.preferredDate)} · ${item.status}`).join("\n") || "- None"}
+
+Local summary
+${localDataSummary()}`;
+  return h`<div class="modal-backdrop" role="dialog" aria-modal="true"><section class="modal-panel"><div class="modal-header"><h2>Local Data Export</h2><button class="button" data-action="close-modal">Done</button></div><pre class="data-box" style="padding:14px;white-space:pre-wrap;color:var(--sunwash)">${escapeHtml(exportText)}</pre><button class="button primary block" data-action="copy-export">Copy export</button></section></div>`;
+}
+
+function render() {
+  const content = {
+    trips: renderTrips,
+    weather: renderWeather,
+    prep: renderPrep,
+    reports: renderReports,
+    contact: renderContact,
+  }[state.tab]();
+  app.innerHTML = `${state.captainMode ? '<div class="captain-banner">Captain Mode unlocked on this device</div>' : ""}${content}${renderDock()}${renderModal()}`;
+  bind();
+}
+
+function persist() {
+  store.set("highHook.web.captainMode", state.captainMode);
+  store.set("highHook.web.inquiries", state.inquiries);
+  store.set("highHook.web.reminders", state.reminders);
+  store.set("highHook.web.checklist", state.checklist);
+  store.set("highHook.web.reports", state.reports);
+  store.set("highHook.web.weather", state.weather);
+}
+
+function bind() {
+  document.querySelectorAll("[data-tab]").forEach((button) => button.addEventListener("click", () => setTab(button.dataset.tab)));
+  document.querySelectorAll("[data-trip]").forEach((button) => button.addEventListener("click", () => selectTrip(button.dataset.trip)));
+  document.querySelectorAll("[data-trip-detail]").forEach((button) => button.addEventListener("click", () => { selectTrip(button.dataset.tripDetail); state.modal = "trip-detail"; render(); }));
+  document.querySelectorAll("[data-goal]").forEach((button) => button.addEventListener("click", () => {
+    const goal = goals.find((item) => item[0] === button.dataset.goal);
+    state.selectedGoal = goal[0];
+    state.selectedTripId = goal[3];
+    render();
+  }));
+  document.querySelectorAll("[data-modal]").forEach((button) => button.addEventListener("click", () => { state.modal = button.dataset.modal; render(); }));
+  document.querySelectorAll("[data-action]").forEach((button) => button.addEventListener("click", handleAction));
+  document.querySelectorAll("[data-party]").forEach((button) => button.addEventListener("click", () => {
+    const node = document.querySelector("#partySize");
+    node.textContent = Math.max(1, Math.min(6, Number(node.textContent) + Number(button.dataset.party)));
+  }));
+  document.querySelectorAll("[data-status]").forEach((button) => button.addEventListener("click", () => {
+    const item = state.inquiries.find((record) => record.id === button.dataset.id);
+    if (item) item.status = button.dataset.status;
+    persist();
+    render();
+  }));
+  document.querySelectorAll("[data-reminder]").forEach((button) => button.addEventListener("click", () => {
+    const key = `${state.selectedTripId}-${button.dataset.reminder}`;
+    state.reminders[key] = !state.reminders[key];
+    persist();
+    render();
+  }));
+  document.querySelectorAll("[data-check]").forEach((button) => button.addEventListener("click", () => {
+    const current = trip();
+    const items = checklistItems(current);
+    const set = new Set(state.checklist[current.id] || items.slice(0, 2));
+    if (set.has(button.dataset.check)) set.delete(button.dataset.check);
+    else set.add(button.dataset.check);
+    state.checklist[current.id] = [...set];
+    persist();
+    render();
+  }));
+  if (document.querySelector("#localCall")) {
+    document.querySelector("#localCall").value = state.weather.localCall;
+    document.querySelector("#offshoreCall").value = state.weather.offshoreCall;
+  }
+}
+
+function handleAction(event) {
+  const action = event.currentTarget.dataset.action;
+  if (action === "book") openBooking();
+  if (action === "close-modal") closeModal();
+  if (action === "submit-booking") submitBooking();
+  if (action === "unlock-captain") unlockCaptain();
+  if (action === "lock-captain") {
+    state.captainMode = false;
+    persist();
+    render();
+  }
+  if (action === "clear-data" && confirm("Clear local booking data from this browser?")) {
+    state.inquiries = [];
+    state.reminders = {};
+    state.checklist = {};
+    persist();
+    render();
+  }
+  if (action === "save-weather") {
+    state.weather.localCall = document.querySelector("#localCall").value;
+    state.weather.offshoreCall = document.querySelector("#offshoreCall").value;
+    state.weather.nextUpdate = document.querySelector("#nextUpdate").value;
+    state.weather.note = document.querySelector("#weatherNote").value;
+    state.weather.updatedAt = new Date().toISOString();
+    persist();
+    render();
+  }
+  if (action === "reset-weather") {
+    localStorage.removeItem("highHook.web.weather");
+    location.reload();
+  }
+  if (action === "publish-report") {
+    state.reports.unshift({
+      date: new Date().toLocaleDateString(undefined, { month: "short", day: "numeric" }),
+      title: document.querySelector("#reportTitle").value,
+      condition: document.querySelector("#reportCondition").value,
+      note: document.querySelector("#reportNote").value,
+      publishedAt: new Date().toISOString(),
+    });
+    persist();
+    render();
+  }
+  if (action === "share-packet") shareText(packetText());
+  if (action === "copy-export") shareText(document.querySelector("pre").textContent);
+}
+
+function unlockCaptain() {
+  const code = prompt("Captain Mode review code");
+  if (String(code || "").trim().toUpperCase() === "HIGHHOOK") {
+    state.captainMode = true;
+    persist();
+    render();
+  } else if (code !== null) {
+    alert("That code did not match. Use HIGHHOOK for local review.");
+  }
+}
+
+function submitBooking() {
+  const name = document.querySelector("#bookName").value.trim();
+  const email = document.querySelector("#bookEmail").value.trim();
+  if (!name || !email) {
+    alert("Name and email are required.");
+    return;
+  }
+  const current = trip();
+  const preferredDate = document.querySelector("#preferredDate").value || dateInputValue;
+  const backupDate = document.querySelector("#backupDate").value || preferredDate;
+  const dateFlex = document.querySelector("#dateFlex").value;
+  const notes = document.querySelector("#bookNotes").value.trim();
+  const localNotes = `Availability: ${dateFlex}; backup ${fmtDate(backupDate)}.${notes ? `\n\n${notes}` : ""}`;
+  const inquiry = {
+    id: crypto.randomUUID(),
+    tripId: current.id,
+    tripName: current.name,
+    name,
+    email,
+    partySize: Number(document.querySelector("#partySize").textContent),
+    preferredDate,
+    notes: localNotes,
+    submittedAt: new Date().toISOString(),
+    status: "Email draft ready",
+  };
+  state.inquiries.unshift(inquiry);
+  persist();
+  const body = encodeURIComponent(`High Hook charter request
+
+Trip: ${current.name}
+Target: ${current.target}
+Rate: ${current.price}
+Deposit: ${current.deposit}
+
+Name: ${name}
+Email: ${email}
+Party size: ${inquiry.partySize}
+Preferred date: ${fmtDate(preferredDate)}
+Date flexibility: ${dateFlex}
+Backup date/window: ${fmtDate(backupDate)}
+
+Notes:
+${notes || "None provided yet."}
+
+Sent from the High Hook Charters web app.`);
+  window.location.href = `mailto:Charters@FishHighHook.com?subject=${encodeURIComponent(`High Hook charter request - ${current.name}`)}&body=${body}`;
+  state.tab = "prep";
+  state.modal = null;
+  render();
+}
+
+async function shareText(text) {
+  if (navigator.share) {
+    await navigator.share({ text });
+    return;
+  }
+  await navigator.clipboard.writeText(text);
+  alert("Copied.");
+}
+
+render();

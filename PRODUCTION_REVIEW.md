@@ -1,14 +1,16 @@
 # High Hook Charters Production Review
 
-Last reviewed: 2026-06-19 03:43 EDT
+Last reviewed: 2026-06-22 12:45 EDT
 
 ## Current Release Readiness
 
-This is a strong native prototype, but it is not yet a production release candidate because several live-service and business-operation integrations are still mocked or static.
+This is now a strong native prototype with a real static web-app conversion deployed through Vercel, but it is not yet a full production release candidate because several live-service and business-operation integrations are still mocked or stored locally.
 
 ## Passed This Iteration
 
 - Native iPhone/iPad SwiftUI app builds for iOS Simulator.
+- Static web app conversion now serves from `index.html`, `styles.css`, and `app.js` with the same High Hook navy/yellow chart UI, official header image, bottom dock, core tabs and local client workflows.
+- Vercel production URL: https://dux-fishing.vercel.app
 - iPhone and iPad both use bottom dock navigation.
 - Blue/yellow brand UI is consistent across the main app, tab dock, cards, and booking sheet.
 - Trip discovery now starts with a guided crew-intent selector instead of only rate cards.
@@ -74,9 +76,12 @@ xcodebuild -project HighHookCharters.xcodeproj -scheme HighHookCharters -destina
 - iPad Pro 13-inch simulator: client mode confirmed Weather shows `Captain tools locked`, Reports shows `Reports are client-safe`, and Trip Hub shows `Captain updates locked` instead of edit controls.
 - iPad Pro 13-inch simulator: Contact Captain Mode unlock sheet accepted `HIGHHOOK`, switched the card to `Unlocked on this device`, and revealed Weather update controls, Reports publishing controls and Trip Hub status controls; Captain Mode was then locked again for client-safe viewing.
 - iPad Pro 13-inch simulator: selected Bluefin Tuna, opened Trip Hub with no saved inquiry, confirmed the new `Start this Trip Hub` card with Bluefin-specific rate/deposit/capacity and Request/Ask actions, then tapped Request this trip and confirmed the booking sheet opened with Bluefin Tuna selected.
+- Chrome desktop/mobile web verification: Trips rendered with official header artwork, marine-card styling and bottom dock; booking created a local `Web Tester` inquiry and routed to Trip Hub; Weather and Contact tabs rendered without console/page errors; mobile viewport had no horizontal overflow.
+- Chrome mobile web verification: Trip Packet preview included the booked client name; Captain Mode accepted `HIGHHOOK`; Weather showed captain update controls after unlock.
 
 ## Known Release Blockers
 
+- Web conversion is static/local-first and mirrors the prototype, but it still needs server-side booking persistence, authenticated admin/CMS sync, and production analytics before it can replace operational tooling.
 - Booking inquiry can now open a prefilled email draft, persist a local device queue/status/availability preview and expose local export/clear controls, but it does not yet persist to CRM, Supabase, a secured admin queue, or analytics.
 - No deposit/payment integration.
 - Weather now supports Captain Mode local updates and persistence, but still needs authenticated captain/admin sync or live marine weather/tide feeds; water temperature and tide metrics remain sample/local data. Regulations now link to official sources but still need captain/admin refresh controls.
