@@ -1,6 +1,6 @@
 # High Hook Charters Production Review
 
-Last reviewed: 2026-06-22 12:45 EDT
+Last reviewed: 2026-06-22 13:55 EDT
 
 ## Current Release Readiness
 
@@ -10,6 +10,7 @@ This is now a strong native prototype with a real static web-app conversion depl
 
 - Native iPhone/iPad SwiftUI app builds for iOS Simulator.
 - Static web app conversion now serves from `index.html`, `styles.css`, and `app.js` with the same High Hook navy/yellow chart UI, official header image, bottom dock, core tabs and local client workflows.
+- Web iconography now uses a shared monochrome inline-SVG icon system instead of platform emoji, bringing chips, tiles, rows and the bottom dock closer to the native iOS SF Symbol treatment.
 - Vercel production URL: https://dux-fishing.vercel.app
 - iPhone and iPad both use bottom dock navigation.
 - Blue/yellow brand UI is consistent across the main app, tab dock, cards, and booking sheet.
@@ -78,6 +79,7 @@ xcodebuild -project HighHookCharters.xcodeproj -scheme HighHookCharters -destina
 - iPad Pro 13-inch simulator: selected Bluefin Tuna, opened Trip Hub with no saved inquiry, confirmed the new `Start this Trip Hub` card with Bluefin-specific rate/deposit/capacity and Request/Ask actions, then tapped Request this trip and confirmed the booking sheet opened with Bluefin Tuna selected.
 - Chrome desktop/mobile web verification: Trips rendered with official header artwork, marine-card styling and bottom dock; booking created a local `Web Tester` inquiry and routed to Trip Hub; Weather and Contact tabs rendered without console/page errors; mobile viewport had no horizontal overflow.
 - Chrome mobile web verification: Trip Packet preview included the booked client name; Captain Mode accepted `HIGHHOOK`; Weather showed captain update controls after unlock.
+- Chrome mobile/desktop icon-parity verification: no console/page errors, no mobile horizontal overflow, booking still created an `Icon Tester` Trip Hub inquiry, rendered `svg.ui-icon` elements across the page, and no emoji-like icon text remained in the visible body.
 
 ## Known Release Blockers
 

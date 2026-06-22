@@ -9,7 +9,7 @@ const trips = [
   {
     id: "bass-local",
     name: "Striped Bass Local",
-    icon: "🐟",
+    icon: "fish",
     duration: "Half day",
     season: "May through October",
     target: "Striped bass and bluefish",
@@ -24,7 +24,7 @@ const trips = [
   {
     id: "race-point",
     name: "Race Point Striped Bass",
-    icon: "〰",
+    icon: "waves",
     duration: "5 hours",
     season: "Peak migration windows",
     target: "Trophy striped bass",
@@ -39,7 +39,7 @@ const trips = [
   {
     id: "bluefin",
     name: "Bluefin Tuna",
-    icon: "◉",
+    icon: "radio",
     duration: "8 hours",
     season: "Offshore season",
     target: "Bluefin tuna",
@@ -54,7 +54,7 @@ const trips = [
   {
     id: "haddock-cod",
     name: "Haddock / Cod",
-    icon: "⚓",
+    icon: "anchor",
     duration: "6 or 8 hours",
     season: "Groundfish windows",
     target: "Haddock and cod",
@@ -69,7 +69,7 @@ const trips = [
   {
     id: "shark",
     name: "Shark Fishing",
-    icon: "⛵",
+    icon: "sailboat",
     duration: "Full day",
     season: "Summer offshore",
     target: "Shark species",
@@ -84,7 +84,7 @@ const trips = [
   {
     id: "kids-camp",
     name: "High Hook Kids Camp",
-    icon: "🚸",
+    icon: "kids",
     duration: "4 days, 8am-12pm",
     season: "Summer sessions",
     target: "Fishing, ecology and safe boating",
@@ -99,7 +99,7 @@ const trips = [
   {
     id: "ladies-night",
     name: "Ladies Night Fishing",
-    icon: "☾",
+    icon: "moon",
     duration: "Evening session",
     season: "Select summer dates",
     target: "Striped bass, bluefish and harbor sunset",
@@ -114,19 +114,19 @@ const trips = [
 ];
 
 const goals = [
-  ["firstTimer", "First timer", "✦", "bass-local", "Local striped bass is the easiest, most reliable way to get a new crew hooked."],
-  ["family", "Family", "👥", "bass-local", "Half-day local trips keep the day manageable while still feeling like a real charter."],
-  ["trophy", "Trophy fish", "◎", "race-point", "Race Point is the better fit when the group wants a shot at heavier striped bass."],
-  ["offshore", "Offshore", "◉", "bluefin", "Bluefin tuna is the serious all-day offshore choice with the biggest upside."],
-  ["social", "Social night", "☾", "ladies-night", "Ladies Night is a lower-pressure evening session for friend groups and first timers."],
-  ["kids", "Kids camp", "🚸", "kids-camp", "Kids Camp turns fishing, boating safety and marine life into four hands-on mornings."],
+  ["firstTimer", "First timer", "sparkles", "bass-local", "Local striped bass is the easiest, most reliable way to get a new crew hooked."],
+  ["family", "Family", "users", "bass-local", "Half-day local trips keep the day manageable while still feeling like a real charter."],
+  ["trophy", "Trophy fish", "star", "race-point", "Race Point is the better fit when the group wants a shot at heavier striped bass."],
+  ["offshore", "Offshore", "radio", "bluefin", "Bluefin tuna is the serious all-day offshore choice with the biggest upside."],
+  ["social", "Social night", "moon", "ladies-night", "Ladies Night is a lower-pressure evening session for friend groups and first timers."],
+  ["kids", "Kids camp", "kids", "kids-camp", "Kids Camp turns fishing, boating safety and marine life into four hands-on mornings."],
 ];
 
 const reminderKinds = [
-  ["nightBefore", "Night-before weather check", "Evening before departure", "☀"],
-  ["dockArrival", "Dock arrival", "Morning-of dock window", "⌖"],
-  ["prepChecklist", "Prep checklist", "One day before trip", "☑"],
-  ["postTripPhotos", "Post-trip photos", "After the boat returns", "▧"],
+  ["nightBefore", "Night-before weather check", "Evening before departure", "sun"],
+  ["dockArrival", "Dock arrival", "Morning-of dock window", "location"],
+  ["prepChecklist", "Prep checklist", "One day before trip", "checklist"],
+  ["postTripPhotos", "Post-trip photos", "After the boat returns", "photo"],
 ];
 
 const defaultReports = [
@@ -154,9 +154,9 @@ const defaultReports = [
 ];
 
 const regulations = [
-  ["Massachusetts saltwater rules", "Striped bass, bluefish, sharks and state-water species can change by season. Check the official DMF table before keeping fish.", "Mass.gov · updated Apr 28, 2026", "https://www.mass.gov/info-details/recreational-saltwater-fishing-regulations", "🐟"],
-  ["Atlantic bluefin tuna", "Bluefin retention limits can be adjusted or closed during the season. Captain handles permits and final retention calls.", "NOAA HMS · current bag limits", "https://www.fisheries.noaa.gov/atlantic-highly-migratory-species/recreational-atlantic-bluefin-tuna-fishery-statuses-and-bag", "◉"],
-  ["Groundfish: haddock and cod", "Haddock and cod limits depend on area, season and species. Confirm before any cooler-filling trip.", "NOAA Northeast Multispecies", "https://www.fisheries.noaa.gov/species/northeast-multispecies-groundfish/recreational", "⚓"],
+  ["Massachusetts saltwater rules", "Striped bass, bluefish, sharks and state-water species can change by season. Check the official DMF table before keeping fish.", "Mass.gov · updated Apr 28, 2026", "https://www.mass.gov/info-details/recreational-saltwater-fishing-regulations", "fish"],
+  ["Atlantic bluefin tuna", "Bluefin retention limits can be adjusted or closed during the season. Captain handles permits and final retention calls.", "NOAA HMS · current bag limits", "https://www.fisheries.noaa.gov/atlantic-highly-migratory-species/recreational-atlantic-bluefin-tuna-fishery-statuses-and-bag", "radio"],
+  ["Groundfish: haddock and cod", "Haddock and cod limits depend on area, season and species. Confirm before any cooler-filling trip.", "NOAA Northeast Multispecies", "https://www.fisheries.noaa.gov/species/northeast-multispecies-groundfish/recreational", "anchor"],
 ];
 
 const store = {
@@ -190,10 +190,10 @@ const state = {
       "Local striped bass trips look comfortable. Offshore trips still need a captain review after the evening forecast update.",
     updatedAt: "2026-06-19T00:00:00.000Z",
     metrics: [
-      ["Wind", "8 kt SW", "Good", "≋"],
-      ["Swell", "1.5 ft", "Fishable", "〰"],
-      ["Tide", "Outgoing 8:40", "Prime", "↓"],
-      ["Water", "62F", "Active", "☀"],
+      ["Wind", "8 kt SW", "Good", "wind"],
+      ["Swell", "1.5 ft", "Fishable", "waves"],
+      ["Tide", "Outgoing 8:40", "Prime", "tide"],
+      ["Water", "62F", "Active", "sun"],
     ],
   }),
 };
@@ -222,6 +222,50 @@ function fmtDate(value) {
   return new Date(value).toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" });
 }
 
+function iconSvg(name) {
+  const paths = {
+    fish: '<path d="M4 12c3.2-4.2 8.3-5.4 13.4-2.8 1.4.7 2.7 1.7 3.6 2.8-.9 1.1-2.2 2.1-3.6 2.8C12.3 17.4 7.2 16.2 4 12Z"/><path d="m4 12-2.5-3.2v6.4L4 12Z"/><circle cx="15.5" cy="11" r=".8"/><path d="M8.5 9.5c1.2 1.6 1.2 3.4 0 5"/>',
+    waves: '<path d="M3 8c2 0 2-1.3 4-1.3S9 8 11 8s2-1.3 4-1.3S17 8 21 8"/><path d="M3 13c2 0 2-1.3 4-1.3S9 13 11 13s2-1.3 4-1.3S17 13 21 13"/><path d="M3 18c2 0 2-1.3 4-1.3S9 18 11 18s2-1.3 4-1.3S17 18 21 18"/>',
+    radio: '<circle cx="12" cy="12" r="2.4"/><path d="M7.5 7.5a6.4 6.4 0 0 0 0 9"/><path d="M16.5 7.5a6.4 6.4 0 0 1 0 9"/><path d="M4.8 4.8a10.2 10.2 0 0 0 0 14.4"/><path d="M19.2 4.8a10.2 10.2 0 0 1 0 14.4"/>',
+    anchor: '<circle cx="12" cy="5" r="2"/><path d="M12 7v13"/><path d="M7 10h10"/><path d="M5 15c.8 3.2 3.2 5 7 5s6.2-1.8 7-5"/><path d="m5 15 3-1"/><path d="m19 15-3-1"/>',
+    sailboat: '<path d="M5 20h14"/><path d="M7 17h10l-2 3H9l-2-3Z"/><path d="M11 4v13"/><path d="M11 5 5 16h6V5Z"/><path d="M12 7l6 9h-6V7Z"/>',
+    kids: '<circle cx="8" cy="7" r="2"/><circle cx="16" cy="7" r="2"/><path d="M8 9v6"/><path d="M16 9v6"/><path d="M8 12h8"/><path d="M6 21l2-6 2 6"/><path d="M14 21l2-6 2 6"/>',
+    moon: '<path d="M19 15.5A8 8 0 0 1 8.5 5a7 7 0 1 0 10.5 10.5Z"/>',
+    sparkles: '<path d="M12 2.5 13.8 8l5.7 1.8-5.7 1.8L12 17l-1.8-5.4-5.7-1.8L10.2 8 12 2.5Z"/><path d="M5 16.5 5.8 19l2.7.8-2.7.8L5 23l-.8-2.4-2.7-.8 2.7-.8.8-2.5Z"/>',
+    users: '<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3.5 20c.7-3.7 2.5-5.5 5.5-5.5s4.8 1.8 5.5 5.5"/><path d="M14.5 15.5c2.5.2 4.2 1.7 5 4.5"/>',
+    star: '<path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z"/>',
+    sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v3"/><path d="M12 19v3"/><path d="M2 12h3"/><path d="M19 12h3"/><path d="m4.9 4.9 2.1 2.1"/><path d="m17 17 2.1 2.1"/><path d="m19.1 4.9-2.1 2.1"/><path d="m7 17-2.1 2.1"/>',
+    checklist: '<path d="M9 5h10v15H5V5h2"/><path d="M9 5a3 3 0 0 1 6 0"/><path d="m8 12 2 2 4-4"/><path d="M15 13h2"/><path d="M8 17h9"/>',
+    photo: '<rect x="4" y="5" width="16" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m5 17 4.5-4 3 2.6 2.5-2.1 4 3.5"/>',
+    phone: '<path d="M7 4h10v16H7z"/><path d="M10 18h4"/>',
+    location: '<path d="M12 21s7-5.7 7-12a7 7 0 1 0-14 0c0 6.3 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/>',
+    wind: '<path d="M3 8h11a3 3 0 1 0-3-3"/><path d="M3 12h16a3 3 0 1 1-3 3"/><path d="M3 16h8"/>',
+    tide: '<path d="M12 3v14"/><path d="m7 12 5 5 5-5"/><path d="M5 21h14"/>',
+    clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    calendar: '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4"/><path d="M16 3v4"/><path d="M4 10h16"/>',
+    arrow: '<path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>',
+    card: '<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/><path d="M7 15h4"/>',
+    envelope: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/>',
+    lock: '<rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',
+    "lock-open": '<rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 7.6-1.8"/>',
+    person: '<circle cx="12" cy="8" r="3"/><path d="M5 21c.8-4 3.1-6 7-6s6.2 2 7 6"/>',
+    map: '<path d="M9 18 3 21V6l6-3 6 3 6-3v15l-6 3-6-3Z"/><path d="M9 3v15"/><path d="M15 6v15"/>',
+    bag: '<path d="M6 8h12l1 13H5L6 8Z"/><path d="M9 8a3 3 0 0 1 6 0"/>',
+    shield: '<path d="M12 3 20 6v6c0 5-3.4 8-8 10-4.6-2-8-5-8-10V6l8-3Z"/>',
+    emergency: '<path d="M12 4v16"/><path d="M4 12h16"/>',
+    dollar: '<path d="M12 3v18"/><path d="M16 7.5c-1.2-1-2.6-1.5-4.2-1.3-2.2.2-3.8 1.3-3.8 3 0 4 8 2.3 8 6.4 0 1.8-1.6 3.1-4 3.1-1.8 0-3.3-.5-4.5-1.5"/>',
+    check: '<path d="m5 13 4 4L19 7"/>',
+    x: '<path d="M6 6 18 18"/><path d="M18 6 6 18"/>',
+    warning: '<path d="M12 3 22 20H2L12 3Z"/><path d="M12 9v5"/><path d="M12 17h.01"/>',
+  };
+  if (!paths[name]) return `<span class="glyph-fallback">${escapeHtml(name)}</span>`;
+  return `<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">${paths[name]}</svg>`;
+}
+
+function iconLabel(name, label) {
+  return `<span class="icon-label">${iconSvg(name)}<span>${label}</span></span>`;
+}
+
 function card(content, className = "") {
   return `<section class="marine-card ${className}">${content}</section>`;
 }
@@ -231,11 +275,11 @@ function sectionHeader(title, subtitle) {
 }
 
 function tile(label, value, icon = "") {
-  return `<div class="tile"><span class="label">${label}</span><b>${icon ? `${icon} ` : ""}${value}</b></div>`;
+  return `<div class="tile"><span class="label">${label}</span><b>${icon ? iconLabel(icon, value) : value}</b></div>`;
 }
 
 function row(icon, title, detail) {
-  return `<div class="row"><span class="icon-well">${icon}</span><div><b>${title}</b><p>${detail}</p></div></div>`;
+  return `<div class="row"><span class="icon-well">${iconSvg(icon)}</span><div><b>${title}</b><p>${detail}</p></div></div>`;
 }
 
 function setTab(tab) {
@@ -288,13 +332,13 @@ function renderTrips() {
           <h1>Book a Duxbury charter</h1>
           <p>Bass, tuna, haddock, shark trips and kids sessions from Mattakeesett Court.</p>
           <div class="actions">
-            <button class="button primary" data-action="book">➜ Book a charter</button>
-            <a class="button" href="mailto:Charters@FishHighHook.com">✉ Ask Captain</a>
+            <button class="button primary" data-action="book">${iconLabel("arrow", "Book a charter")}</button>
+            <a class="button" href="mailto:Charters@FishHighHook.com">${iconLabel("envelope", "Ask Captain")}</a>
           </div>
-          <p>⌖ 25 Mattakeesett Ct, Duxbury, MA</p>
+          <p>${iconLabel("location", "25 Mattakeesett Ct, Duxbury, MA")}</p>
           <div class="log-bands">
-            ${tile("Wind", "8 kt SW", "≋")}
-            ${tile("Tide", "Outgoing", "↓")}
+            ${tile("Wind", "8 kt SW", "wind")}
+            ${tile("Tide", "Outgoing", "tide")}
           </div>
         </div>
       </section>
@@ -302,10 +346,10 @@ function renderTrips() {
       ${card(h`
         ${sectionHeader("Plan your trip in 30 seconds", "Start with the crew and the app will point you to the best High Hook option.")}
         <div class="chip-row">
-          ${goals.map((goal) => `<button class="chip ${goal[0] === state.selectedGoal ? "is-selected" : ""}" data-goal="${goal[0]}">${goal[2]} ${goal[1]}</button>`).join("")}
+          ${goals.map((goal) => `<button class="chip ${goal[0] === state.selectedGoal ? "is-selected" : ""}" data-goal="${goal[0]}">${iconLabel(goal[2], goal[1])}</button>`).join("")}
         </div>
         <div class="recommendation">
-          <span class="icon-well">${matched.icon}</span>
+          <span class="icon-well">${iconSvg(matched.icon)}</span>
           <div>
             <b>Recommended: ${matched.name}</b>
             <p>${selectedGoal[4]}</p>
@@ -317,18 +361,18 @@ function renderTrips() {
       ${card(h`
         ${sectionHeader("Find the right trip", "Pick a target species, compare 2026 rates and send the captain a clean inquiry.")}
         <div class="chip-row">
-          ${trips.map((item) => `<button class="chip ${item.id === current.id ? "is-selected" : ""}" data-trip="${item.id}">${item.icon} ${item.name}<br><small>${item.duration}</small></button>`).join("")}
+          ${trips.map((item) => `<button class="chip ${item.id === current.id ? "is-selected" : ""}" data-trip="${item.id}">${iconLabel(item.icon, item.name)}<br><small>${item.duration}</small></button>`).join("")}
         </div>
         <div class="trip-summary">
-          <span class="icon-well">${current.icon}</span>
+          <span class="icon-well">${iconSvg(current.icon)}</span>
           <div>
             <h3>${current.name}</h3>
             <p>${current.details}</p>
             <div class="rate-grid">
-              ${tile("Duration", current.duration, "◷")}
-              ${tile("Crew", current.capacity, "👥")}
-              ${tile("Rate", current.price, "$")}
-              ${tile("Season", current.season, "▣")}
+              ${tile("Duration", current.duration, "clock")}
+              ${tile("Crew", current.capacity, "users")}
+              ${tile("Rate", current.price, "dollar")}
+              ${tile("Season", current.season, "calendar")}
             </div>
             <div class="actions" style="margin-top:14px">
               <button class="button primary" data-action="book">Request ${current.name}</button>
@@ -342,7 +386,7 @@ function renderTrips() {
         ${sectionHeader("2026 Trips & Rates", "Transparent options for prospects before they reach out.")}
         ${trips.map((item) => `
           <button class="rate-row" data-trip-detail="${item.id}">
-            <h3>${item.icon} ${item.name}</h3>
+            <h3>${iconLabel(item.icon, item.name)}</h3>
             <p>${item.duration} · ${item.target}</p>
             <p><strong>${item.price}</strong> · ${item.deposit}</p>
           </button>
@@ -368,9 +412,9 @@ function renderWeather() {
           <div><h3>${callHeadline}</h3><p>${state.weather.note}</p></div>
         </div>
         <div class="plan-grid">
-          ${tile("Local bass", state.weather.localCall, "🐟")}
-          ${tile("Offshore", state.weather.offshoreCall, "◉")}
-          ${tile("Next update", state.weather.nextUpdate, "◷")}
+          ${tile("Local bass", state.weather.localCall, "fish")}
+          ${tile("Offshore", state.weather.offshoreCall, "radio")}
+          ${tile("Next update", state.weather.nextUpdate, "clock")}
         </div>
       `)}
       ${state.captainMode ? renderWeatherEditor() : card(renderNotice("Captain tools locked", "Clients see the latest captain call here. Weather editing is available from Contact after unlocking Captain Mode for local review."))}
@@ -384,10 +428,10 @@ function renderWeather() {
       ${card(h`
         ${sectionHeader("Watch list", "The variables that change a charter plan fastest.")}
         <div class="tile-grid">
-          ${row("≋", "Wind shift", "A small direction change can make one side of the bay fishable and another sloppy.")}
-          ${row("◌", "Fog window", "Visibility matters for running, finding birds and returning to the dock comfortably.")}
-          ${row("〰", "Ground swell", "Offshore trips need a wider comfort margin than local striped bass trips.")}
-          ${row("↓", "Tide timing", "Moving water drives the bite, especially on local bass and bluefish trips.")}
+          ${row("wind", "Wind shift", "A small direction change can make one side of the bay fishable and another sloppy.")}
+          ${row("warning", "Fog window", "Visibility matters for running, finding birds and returning to the dock comfortably.")}
+          ${row("waves", "Ground swell", "Offshore trips need a wider comfort margin than local striped bass trips.")}
+          ${row("tide", "Tide timing", "Moving water drives the bite, especially on local bass and bluefish trips.")}
         </div>
       `)}
       ${card(h`
@@ -402,7 +446,7 @@ function renderWeather() {
 }
 
 function renderNotice(title, detail) {
-  return `<div class="notice row"><span class="icon-well">🔒</span><div><b>${title}</b><p>${detail}</p></div></div>`;
+  return `<div class="notice row"><span class="icon-well">${iconSvg("lock")}</span><div><b>${title}</b><p>${detail}</p></div></div>`;
 }
 
 function renderWeatherEditor() {
@@ -429,10 +473,10 @@ function renderPrep() {
       ${card(h`
         ${sectionHeader(`${current.name} · Trip Hub`, inquiry ? `${inquiry.name}'s request for ${fmtDate(inquiry.preferredDate)}` : "A booked-client view for this selected trip after the captain confirms.")}
         <div class="plan-grid">
-          ${tile("Inquiry", inquiry ? inquiry.status : current.deposit, "✓")}
-          ${tile("Weather", "Captain review", "☀")}
-          ${tile("Trip time", current.duration, "◷")}
-          ${tile("Prep", `${checked.length}/${checklistItems(current).length} ready`, "☑")}
+          ${tile("Inquiry", inquiry ? inquiry.status : current.deposit, "check")}
+          ${tile("Weather", "Captain review", "sun")}
+          ${tile("Trip time", current.duration, "clock")}
+          ${tile("Prep", `${checked.length}/${checklistItems(current).length} ready`, "checklist")}
         </div>
       `)}
       ${inquiry ? renderInquiryHub(current, inquiry, inquiries) : renderEmptyHub(current)}
@@ -443,9 +487,9 @@ function renderPrep() {
       `)}
       ${card(h`
         ${sectionHeader("Dock arrival", "Reduce morning-of confusion with the exact dock plan.")}
-        ${row("⌖", "Departure", "25 Mattakeesett Ct, Duxbury, MA 02332")}
-        ${row("▣", "Parking", "Park near the marina entrance unless the captain texts a different slip.")}
-        ${row("▤", "Bring aboard", "Soft bag, drinks, snacks, sunglasses, hat, and soft-soled shoes.")}
+        ${row("location", "Departure", "25 Mattakeesett Ct, Duxbury, MA 02332")}
+        ${row("map", "Parking", "Park near the marina entrance unless the captain texts a different slip.")}
+        ${row("bag", "Bring aboard", "Soft bag, drinks, snacks, sunglasses, hat, and soft-soled shoes.")}
         <a class="button primary block" href="https://maps.apple.com/?q=25%20Mattakeesett%20Ct%20Duxbury%20MA%2002332">Open in Maps</a>
       `)}
       ${renderChecklist(current)}
@@ -457,24 +501,24 @@ function renderInquiryHub(current, inquiry, inquiries) {
   return h`
     ${card(h`
       ${sectionHeader("Inquiry status", "A client-facing receipt for the request that just left the app.")}
-      ${row("👤", "Client", `${inquiry.name} · ${inquiry.email}`)}
-      ${row("▣", "Preferred date", fmtDate(inquiry.preferredDate))}
-      ${row("👥", "Party size", `${inquiry.partySize} anglers`)}
-      ${row("◷", "Submitted", new Date(inquiry.submittedAt).toLocaleString())}
+      ${row("person", "Client", `${inquiry.name} · ${inquiry.email}`)}
+      ${row("calendar", "Preferred date", fmtDate(inquiry.preferredDate))}
+      ${row("users", "Party size", `${inquiry.partySize} anglers`)}
+      ${row("clock", "Submitted", new Date(inquiry.submittedAt).toLocaleString())}
       ${state.captainMode ? `<div class="chip-row">${["Email draft ready", "Awaiting captain", "Captain confirmed", "Deposit due"].map((status) => `<button class="status-button ${inquiry.status === status ? "is-active" : ""}" data-status="${status}" data-id="${inquiry.id}">${status}</button>`).join("")}</div>` : renderNotice("Captain updates locked", "Clients can see the latest request status here. Status editing stays hidden until Captain Mode is unlocked from Contact.")}
       ${inquiry.notes ? `<div class="data-box" style="padding:12px"><span class="label">Notes</span><p>${escapeHtml(inquiry.notes)}</p></div>` : ""}
     `)}
     ${card(h`
       ${sectionHeader("Day-of plan", "A compact client itinerary for the morning of the trip.")}
       <div class="plan-grid">
-        ${tile("Preferred date", fmtDate(inquiry.preferredDate), "▣")}
-        ${tile("Captain status", inquiry.status, "✓")}
-        ${tile("Trip length", current.duration, "◷")}
-        ${tile("Hold", current.deposit, "$")}
+        ${tile("Preferred date", fmtDate(inquiry.preferredDate), "calendar")}
+        ${tile("Captain status", inquiry.status, "check")}
+        ${tile("Trip length", current.duration, "clock")}
+        ${tile("Hold", current.deposit, "dollar")}
       </div>
-      ${row("☀", "Weather call", "Watch for the captain's go/no-go text the evening before. Offshore trips may wait on the latest marine forecast.")}
-      ${row("⌖", "Meet at the dock", "25 Mattakeesett Ct, Duxbury, MA 02332. Bring soft-soled shoes and keep large coolers in the vehicle.")}
-      ${row("👥", "Crew", `${inquiry.partySize} anglers for ${current.name}. ${availabilitySummary(inquiry)}`)}
+      ${row("sun", "Weather call", "Watch for the captain's go/no-go text the evening before. Offshore trips may wait on the latest marine forecast.")}
+      ${row("location", "Meet at the dock", "25 Mattakeesett Ct, Duxbury, MA 02332. Bring soft-soled shoes and keep large coolers in the vehicle.")}
+      ${row("users", "Crew", `${inquiry.partySize} anglers for ${current.name}. ${availabilitySummary(inquiry)}`)}
       <div class="actions">
         <button class="button primary" data-modal="packet">View trip packet</button>
         <a class="button primary" href="https://maps.apple.com/?q=25%20Mattakeesett%20Ct%20Duxbury%20MA%2002332">Maps</a>
@@ -483,7 +527,7 @@ function renderInquiryHub(current, inquiry, inquiries) {
     `)}
     ${inquiries.length > 1 ? card(h`
       ${sectionHeader("Local inquiry queue", `${inquiries.length} saved requests for this trip on this device.`)}
-      ${inquiries.slice(0, 4).map((item) => row("✉", item.name, `${item.status} · ${fmtDate(item.preferredDate)} · ${item.partySize} anglers`)).join("")}
+      ${inquiries.slice(0, 4).map((item) => row("envelope", item.name, `${item.status} · ${fmtDate(item.preferredDate)} · ${item.partySize} anglers`)).join("")}
     `) : ""}
   `;
 }
@@ -492,10 +536,10 @@ function renderEmptyHub(current) {
   return card(h`
     ${sectionHeader("Start this Trip Hub", `Send a request for ${current.name} and this hub becomes a client-specific plan.`)}
     <div class="plan-grid">
-      ${tile("Trip length", current.duration, "◷")}
-      ${tile("Rate", current.price, "$")}
-      ${tile("Deposit", current.deposit, "▣")}
-      ${tile("Capacity", current.capacity, "👥")}
+      ${tile("Trip length", current.duration, "clock")}
+      ${tile("Rate", current.price, "dollar")}
+      ${tile("Deposit", current.deposit, "card")}
+      ${tile("Capacity", current.capacity, "users")}
     </div>
     ${row("1", "Choose the trip", `${current.bestFor}. The booking sheet will carry the selected trip, date and party size into a prepared email.`)}
     ${row("2", "Captain confirms", "High Hook confirms weather, availability and deposit details before the date is held.")}
@@ -568,9 +612,9 @@ function renderReports() {
       ${card(h`
         ${sectionHeader("Gallery preview", "Production should connect real trip photos, moderation and public report controls.")}
         <div class="tile-grid">
-          ${tile("Bass", "Topwater shots", "🐟")}
-          ${tile("Offshore", "Tuna windows", "◉")}
-          ${tile("Camp", "Kids learning knots", "🚸")}
+          ${tile("Bass", "Topwater shots", "fish")}
+          ${tile("Offshore", "Tuna windows", "radio")}
+          ${tile("Camp", "Kids learning knots", "kids")}
         </div>
       `)}
     </main>
@@ -584,30 +628,30 @@ function renderContact() {
       <h1 class="title">Contact</h1>
       ${card(h`
         ${sectionHeader("Captain & Contact", "Make it easy to ask a question, find the dock or reopen the store.")}
-        <a class="row" href="mailto:Charters@FishHighHook.com"><span class="icon-well">✉</span><div><b>Email</b><p>Charters@FishHighHook.com</p></div></a>
+        <a class="row" href="mailto:Charters@FishHighHook.com"><span class="icon-well">${iconSvg("envelope")}</span><div><b>Email</b><p>Charters@FishHighHook.com</p></div></a>
         <a class="row" href="https://www.fishhighhook.com/"><span class="icon-well">⌘</span><div><b>Website</b><p>fishhighhook.com</p></div></a>
-        <a class="row" href="https://maps.apple.com/?q=25%20Mattakeesett%20Ct%20Duxbury%20MA%2002332"><span class="icon-well">⌖</span><div><b>Departure</b><p>25 Mattakeesett Ct, Duxbury, MA 02332</p></div></a>
-        <a class="row" href="https://www.fishhighhook.com/store"><span class="icon-well">▤</span><div><b>Store</b><p>High Hook gear and gift ideas</p></div></a>
+        <a class="row" href="https://maps.apple.com/?q=25%20Mattakeesett%20Ct%20Duxbury%20MA%2002332"><span class="icon-well">${iconSvg("location")}</span><div><b>Departure</b><p>25 Mattakeesett Ct, Duxbury, MA 02332</p></div></a>
+        <a class="row" href="https://www.fishhighhook.com/store"><span class="icon-well">${iconSvg("bag")}</span><div><b>Store</b><p>High Hook gear and gift ideas</p></div></a>
       `)}
       ${card(h`
         ${sectionHeader("Captain Mode", state.captainMode ? "Local review tools are visible for weather, reports and booking status." : "Keep the customer app clean. Unlock only when the captain is reviewing operations.")}
-        ${row(state.captainMode ? "🔓" : "🔒", state.captainMode ? "Unlocked on this device" : "Locked for client review", state.captainMode ? "Weather update controls, report publishing and Trip Hub status editing are available locally. Production still needs real captain sign-in." : "Clients see reports, weather calls and trip status without editing controls.")}
+        ${row(state.captainMode ? "lock-open" : "lock", state.captainMode ? "Unlocked on this device" : "Locked for client review", state.captainMode ? "Weather update controls, report publishing and Trip Hub status editing are available locally. Production still needs real captain sign-in." : "Clients see reports, weather calls and trip status without editing controls.")}
         <button class="button ${state.captainMode ? "" : "primary"} block" data-action="${state.captainMode ? "lock-captain" : "unlock-captain"}">${state.captainMode ? "Lock Captain Mode" : "Unlock Captain Mode"}</button>
         <p class="muted">Review unlock code: HIGHHOOK. This is a local prototype gate, not production authentication.</p>
       `)}
       ${card(h`
         ${sectionHeader("Trust & safety", "Plain-language expectations for booking, privacy and on-water decisions.")}
-        ${row("🔒", "Privacy", "Booking details are saved locally on this device for the prototype and sent through your Mail draft. Production needs a published privacy policy and secure backend storage.")}
-        ${row("$", "Payments", "No card is charged in the app. Deposits and balances are handled only after High Hook confirms the date.")}
-        ${row("☀", "Captain authority", "Weather, tide, safety and fishery rules can change. The captain's latest call overrides any sample app data.")}
-        ${row("✚", "Emergency", "For immediate on-water emergencies, call emergency services or hail the Coast Guard. This app is not an emergency channel.")}
+        ${row("shield", "Privacy", "Booking details are saved locally on this device for the prototype and sent through your Mail draft. Production needs a published privacy policy and secure backend storage.")}
+        ${row("dollar", "Payments", "No card is charged in the app. Deposits and balances are handled only after High Hook confirms the date.")}
+        ${row("sun", "Captain authority", "Weather, tide, safety and fishery rules can change. The captain's latest call overrides any sample app data.")}
+        ${row("emergency", "Emergency", "For immediate on-water emergencies, call emergency services or hail the Coast Guard. This app is not an emergency channel.")}
         <a class="button block" href="tel:911">Call 911</a>
         <div class="data-box" style="padding:12px"><b>Local client data</b><p>${summary}</p><div class="actions" style="margin-top:12px"><button class="button primary" data-modal="export">Export local data</button><button class="button" data-action="clear-data">Clear local booking data</button></div></div>
       `)}
       ${card(h`
         ${sectionHeader("Sessions", "Kids camp and social evening options from High Hook.")}
-        ${row("🚸", "Kids Camp", "Ages 10-15 learn fishing, knot tying, lures, fish ID, boating safety and South Shore marine life. $600 · 4 days · 8am-12pm")}
-        ${row("☾", "Ladies Night Fishing", "A relaxed evening fishing session for friend groups, first timers and after-work crews. Select summer evenings · ask captain")}
+        ${row("kids", "Kids Camp", "Ages 10-15 learn fishing, knot tying, lures, fish ID, boating safety and South Shore marine life. $600 · 4 days · 8am-12pm")}
+        ${row("moon", "Ladies Night Fishing", "A relaxed evening fishing session for friend groups, first timers and after-work crews. Select summer evenings · ask captain")}
       `)}
       ${card(h`
         ${sectionHeader("Regulations", "Rules move during the season. Use these official sources and defer to the captain before keeping fish.")}
@@ -629,13 +673,13 @@ function localDataSummary() {
 
 function renderDock() {
   const tabs = [
-    ["trips", "🐟", "Trips"],
-    ["weather", "☀", "Weather"],
-    ["prep", "☑", "Prep"],
-    ["reports", "▧", "Reports"],
-    ["contact", "☎", "Contact"],
+    ["trips", "fish", "Trips"],
+    ["weather", "sun", "Weather"],
+    ["prep", "checklist", "Prep"],
+    ["reports", "photo", "Reports"],
+    ["contact", "phone", "Contact"],
   ];
-  return `<nav class="dock" aria-label="High Hook navigation">${tabs.map((tab) => `<button class="dock-button ${state.tab === tab[0] ? "is-active" : ""}" data-tab="${tab[0]}"><span>${tab[1]}</span><span>${tab[2]}</span></button>`).join("")}</nav>`;
+  return `<nav class="dock" aria-label="High Hook navigation">${tabs.map((tab) => `<button class="dock-button ${state.tab === tab[0] ? "is-active" : ""}" data-tab="${tab[0]}"><span>${iconSvg(tab[1])}</span><span>${tab[2]}</span></button>`).join("")}</nav>`;
 }
 
 function renderModal() {
@@ -657,7 +701,7 @@ function renderBookingModal() {
           ${card(h`
             ${sectionHeader("Selected trip", "The inquiry will be tied to this option.")}
             <h3>${current.icon} ${current.name}</h3><p>${current.details}</p>
-            <div class="plan-grid">${tile("Rate", current.price, "$")}${tile("Deposit", current.deposit, "▣")}</div>
+            <div class="plan-grid">${tile("Rate", current.price, "dollar")}${tile("Deposit", current.deposit, "card")}</div>
           `)}
           ${card(h`
             ${sectionHeader("Your crew", "Give the captain enough context to confirm the right date and plan.")}
@@ -673,16 +717,16 @@ function renderBookingModal() {
           `)}
           ${card(h`
             ${sectionHeader("Deposit & hold", "No card is charged in the app.")}
-            ${row("$", "Deposit", `${current.deposit} is handled after the captain confirms the date.`)}
-            ${row("◷", "Hold status", "This inquiry does not reserve the boat until High Hook replies and the deposit is settled.")}
-            ${row("✉", "Best response", "Flexible dates and backup windows help the captain match weather, tide and availability.")}
+            ${row("dollar", "Deposit", `${current.deposit} is handled after the captain confirms the date.`)}
+            ${row("clock", "Hold status", "This inquiry does not reserve the boat until High Hook replies and the deposit is settled.")}
+            ${row("envelope", "Best response", "Flexible dates and backup windows help the captain match weather, tide and availability.")}
           `)}
           ${card(h`
             ${sectionHeader("What happens next", "A clear handoff before the user commits.")}
-            ${row("✉", "Email draft opens", "The app prepares a clean message to Charters@FishHighHook.com.")}
-            ${row("☀", "Captain confirms window", "Weather, tide and fish reports shape the final plan.")}
-            ${row("$", "Deposit holds the date", "No date is held until the captain confirms and payment is handled.")}
-            ${row("☑", "Trip Hub unlocks", "Booked clients get arrival details, captain notes, weather status and a prep checklist in one place.")}
+            ${row("envelope", "Email draft opens", "The app prepares a clean message to Charters@FishHighHook.com.")}
+            ${row("sun", "Captain confirms window", "Weather, tide and fish reports shape the final plan.")}
+            ${row("dollar", "Deposit holds the date", "No date is held until the captain confirms and payment is handled.")}
+            ${row("checklist", "Trip Hub unlocks", "Booked clients get arrival details, captain notes, weather status and a prep checklist in one place.")}
           `)}
           <button class="button primary block" data-action="submit-booking">Email</button>
         </div>
@@ -700,7 +744,7 @@ function renderTripDetailModal() {
         <div class="stack">
           <p>${current.details}</p>
           <div class="plan-grid">${tile("Duration", current.duration)}${tile("Season", current.season)}${tile("Target", current.target)}${tile("Capacity", current.capacity)}${tile("Rate", current.price)}${tile("Deposit", current.deposit)}</div>
-          ${card(h`${sectionHeader("Prep", "Trip-specific checklist starter.")}${current.prep.map((item) => row("✓", item, "Recommended for this trip.")).join("")}`)}
+          ${card(h`${sectionHeader("Prep", "Trip-specific checklist starter.")}${current.prep.map((item) => row("check", item, "Recommended for this trip.")).join("")}`)}
           <button class="button primary block" data-action="book">Request this trip</button>
         </div>
       </section>

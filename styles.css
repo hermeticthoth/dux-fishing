@@ -192,6 +192,31 @@ a {
   padding: 10px 14px;
 }
 
+.ui-icon {
+  width: 1.22em;
+  height: 1.22em;
+  display: inline-block;
+  vertical-align: -0.18em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex: 0 0 auto;
+}
+
+.icon-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42em;
+  min-width: 0;
+}
+
+.glyph-fallback {
+  color: currentColor;
+  font-weight: 950;
+}
+
 .button.primary,
 .chip.is-selected,
 .dock-button.is-active,
@@ -282,6 +307,11 @@ a {
   font-weight: 950;
 }
 
+.icon-well .ui-icon {
+  width: 21px;
+  height: 21px;
+}
+
 .rate-row {
   width: 100%;
   padding: 13px 0;
@@ -342,6 +372,11 @@ a {
 
 .dock-button span:first-child {
   font-size: 1.35rem;
+}
+
+.dock-button .ui-icon {
+  width: 24px;
+  height: 24px;
 }
 
 .modal-backdrop {
