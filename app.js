@@ -3,6 +3,21 @@ const assets = {
     "./HighHookCharters/Resources/Assets.xcassets/HighHookHeader.imageset/high-hook-header.jpg",
   logo:
     "./HighHookCharters/Resources/Assets.xcassets/HighHookLogo.imageset/high-hook-logo.png",
+  heroDawn: "./assets/lovable-reference/hero-dawn.jpg",
+  tripImages: {
+    "bass-local": "./assets/lovable-reference/cat-bass.jpg",
+    "race-point": "./assets/lovable-reference/cat-racepoint.jpg",
+    bluefin: "./assets/lovable-reference/cat-tuna.jpg",
+    "haddock-cod": "./assets/lovable-reference/cat-cod.jpg",
+    shark: "./assets/lovable-reference/cat-tuna.jpg",
+    "kids-camp": "./assets/lovable-reference/gallery-bass.jpg",
+    "ladies-night": "./assets/lovable-reference/hero-dawn.jpg",
+  },
+  gallery: [
+    "./assets/lovable-reference/gallery-cod.jpg",
+    "./assets/lovable-reference/gallery-bass.jpg",
+    "./assets/lovable-reference/hero-dawn.jpg",
+  ],
 };
 
 const trips = [
@@ -237,6 +252,8 @@ function iconSvg(name) {
     star: '<path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z"/>',
     sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v3"/><path d="M12 19v3"/><path d="M2 12h3"/><path d="M19 12h3"/><path d="m4.9 4.9 2.1 2.1"/><path d="m17 17 2.1 2.1"/><path d="m19.1 4.9-2.1 2.1"/><path d="m7 17-2.1 2.1"/>',
     checklist: '<path d="M9 5h10v15H5V5h2"/><path d="M9 5a3 3 0 0 1 6 0"/><path d="m8 12 2 2 4-4"/><path d="M15 13h2"/><path d="M8 17h9"/>',
+    doc: '<path d="M7 3h7l4 4v14H7V3Z"/><path d="M14 3v5h5"/><path d="M10 12h6"/><path d="M10 16h6"/><path d="M10 8h2"/>',
+    share: '<path d="M12 15V4"/><path d="m7 9 5-5 5 5"/><path d="M5 13v6h14v-6"/>',
     photo: '<rect x="4" y="5" width="16" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m5 17 4.5-4 3 2.6 2.5-2.1 4 3.5"/>',
     phone: '<path d="M7 4h10v16H7z"/><path d="M10 18h4"/>',
     location: '<path d="M12 21s7-5.7 7-12a7 7 0 1 0-14 0c0 6.3 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/>',
@@ -247,6 +264,10 @@ function iconSvg(name) {
     arrow: '<path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>',
     card: '<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/><path d="M7 15h4"/>',
     envelope: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/>',
+    bell: '<path d="M10.3 21a2 2 0 0 0 3.4 0"/><path d="M4 16.5c1.3-1.4 2-3 2-7a6 6 0 0 1 12 0c0 4 0.7 5.6 2 7 .5.5.1 1.5-.7 1.5H4.7c-.8 0-1.2-1-.7-1.5Z"/>',
+    home: '<path d="M4 11 12 4l8 7"/><path d="M6 10.5V20h12v-9.5"/><path d="M10 20v-6h4v6"/>',
+    images: '<rect x="8" y="3" width="13" height="13" rx="2"/><path d="M16 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h3"/><path d="m9 14 2.4-2.4a1.2 1.2 0 0 1 1.7 0L16 14.5"/><circle cx="16" cy="8" r="1"/>',
+    ellipsis: '<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>',
     lock: '<rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',
     "lock-open": '<rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 7.6-1.8"/>',
     person: '<circle cx="12" cy="8" r="3"/><path d="M5 21c.8-4 3.1-6 7-6s6.2 2 7 6"/>',
@@ -326,75 +347,118 @@ function renderTrips() {
   const matched = trip(selectedGoal[3]);
   return h`
     <main class="screen stack">
-      <section class="hero-panel">
-        <img src="${assets.header}" alt="High Hook Charter Fishing header artwork" />
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">Duxbury, Massachusetts</p>
+          <h1>High Hook Charters</h1>
+        </div>
+        <button class="icon-button" aria-label="Notifications">${iconSvg("bell")}</button>
+      </header>
+
+      <section class="hero-card">
+        <img src="${assets.heroDawn}" alt="Cockpit of High Hook at dawn on Massachusetts Bay" />
+        <div class="hero-shade"></div>
         <div class="hero-copy">
-          <p class="eyebrow">Duxbury charter log</p>
-          <h1>Book a Duxbury charter</h1>
-          <p>Bass, tuna, haddock, shark trips and kids sessions from Mattakeesett Court.</p>
-          <div class="actions">
-            <button class="button primary" data-action="book">${iconLabel("arrow", "Book a charter")}</button>
-            <a class="button" href="mailto:Charters@FishHighHook.com">${iconLabel("envelope", "Ask Captain")}</a>
+          <span class="opening-pill"><span></span>Next opening</span>
+          <h2>October Bluefin Run</h2>
+          <p>Capt. Willie at the helm. Stellwagen Bank, full day. Two deck spots left for Oct 12.</p>
+          <button class="button primary" data-action="book">${iconLabel("arrow", "Quick book Oct 12")}</button>
+        </div>
+      </section>
+
+      <section class="weather-strip">
+        <p>${iconLabel("location", "25 Mattakeesett Ct · Duxbury, MA")}</p>
+        <div class="mini-grid">
+          ${tile("Wind", "8 kt SW", "wind")}
+          ${tile("Tide", "Outgoing", "waves")}
+        </div>
+      </section>
+
+      <section class="reference-section">
+        <div class="section-kicker">${iconLabel("sparkles", "Plan in 30 seconds")}</div>
+        <div class="chip-scroller">
+          ${goals.map((goal) => `<button class="chip ${goal[0] === state.selectedGoal ? "is-selected" : ""}" data-goal="${goal[0]}">${iconLabel(goal[2], goal[1])}</button>`).join("")}
+        </div>
+        <div class="recommendation reference-card">
+          <div>
+            <span class="label">Recommended</span>
+            <h3>${matched.name}</h3>
+            <p>${selectedGoal[4]}</p>
           </div>
-          <p>${iconLabel("location", "25 Mattakeesett Ct, Duxbury, MA")}</p>
-          <div class="log-bands">
-            ${tile("Wind", "8 kt SW", "wind")}
-            ${tile("Tide", "Outgoing", "tide")}
+          <div class="recommendation-footer">
+            <div><span class="label">Rate</span><b>${shortRate(matched)}</b></div>
+            <button class="button primary compact" data-trip="${matched.id}">${iconLabel("arrow", "See trip")}</button>
           </div>
         </div>
       </section>
 
-      ${card(h`
-        ${sectionHeader("Plan your trip in 30 seconds", "Start with the crew and the app will point you to the best High Hook option.")}
-        <div class="chip-row">
-          ${goals.map((goal) => `<button class="chip ${goal[0] === state.selectedGoal ? "is-selected" : ""}" data-goal="${goal[0]}">${iconLabel(goal[2], goal[1])}</button>`).join("")}
+      <section class="reference-section">
+        <div class="section-line">
+          <h2>Charter Types</h2>
+          <button class="link-button" data-modal="trip-detail">View selected</button>
         </div>
-        <div class="recommendation">
-          <span class="icon-well">${iconSvg(matched.icon)}</span>
-          <div>
-            <b>Recommended: ${matched.name}</b>
-            <p>${selectedGoal[4]}</p>
-            <p><strong>${matched.price}</strong></p>
-          </div>
+        <div class="photo-grid">
+          ${trips.slice(0, 6).map((item) => `
+            <button class="photo-trip ${item.id === current.id ? "is-selected" : ""}" data-trip="${item.id}">
+              <img src="${assets.tripImages[item.id]}" alt="${item.name}" />
+              <span>${item.name}</span>
+              <small>${item.target} · ${shortRate(item)}</small>
+            </button>
+          `).join("")}
         </div>
-      `)}
+      </section>
 
-      ${card(h`
-        ${sectionHeader("Find the right trip", "Pick a target species, compare 2026 rates and send the captain a clean inquiry.")}
-        <div class="chip-row">
-          ${trips.map((item) => `<button class="chip ${item.id === current.id ? "is-selected" : ""}" data-trip="${item.id}">${iconLabel(item.icon, item.name)}<br><small>${item.duration}</small></button>`).join("")}
+      <section class="reference-section">
+        <div class="section-line">
+          <h2>Selected Trip</h2>
+          <button class="link-button" data-modal="trip-detail">Details</button>
         </div>
-        <div class="trip-summary">
-          <span class="icon-well">${iconSvg(current.icon)}</span>
+        <div class="selected-trip-panel">
           <div>
+            <span class="label">${current.duration}</span>
             <h3>${current.name}</h3>
             <p>${current.details}</p>
-            <div class="rate-grid">
-              ${tile("Duration", current.duration, "clock")}
-              ${tile("Crew", current.capacity, "users")}
-              ${tile("Rate", current.price, "dollar")}
-              ${tile("Season", current.season, "calendar")}
-            </div>
-            <div class="actions" style="margin-top:14px">
-              <button class="button primary" data-action="book">Request ${current.name}</button>
-              <button class="button" data-modal="trip-detail">Trip details</button>
-            </div>
           </div>
+          <div class="mini-grid">
+            ${tile("Crew", current.capacity, "users")}
+            ${tile("Rate", current.price, "dollar")}
+          </div>
+          <button class="button primary block" data-action="book">Request ${current.name}</button>
         </div>
-      `)}
+      </section>
 
-      ${card(h`
-        ${sectionHeader("2026 Trips & Rates", "Transparent options for prospects before they reach out.")}
-        ${trips.map((item) => `
-          <button class="rate-row" data-trip-detail="${item.id}">
-            <h3>${iconLabel(item.icon, item.name)}</h3>
-            <p>${item.duration} · ${item.target}</p>
-            <p><strong>${item.price}</strong> · ${item.deposit}</p>
-          </button>
-        `).join("")}
-      `)}
+      <section class="reference-section">
+        <div class="section-line">
+          <h2>Latest from the deck</h2>
+          <button class="link-button" data-tab="reports">Full log</button>
+        </div>
+        <div class="gallery-rail">
+          ${[
+            ["Oct 5 log", "42 lb Cod · Stellwagen ledge", assets.gallery[0]],
+            ["Oct 3 log", '44" Striper · Gurnet Point', assets.gallery[1]],
+            ["Oct 1 log", "Dawn run · Duxbury Bay", assets.gallery[2]],
+          ].map((item) => `
+            <article class="gallery-card">
+              <img src="${item[2]}" alt="${item[1]}" />
+              <span>${item[0]}</span>
+              <p>${item[1]}</p>
+            </article>
+          `).join("")}
+        </div>
+      </section>
+
+      <section class="reference-card captain-report">
+        <span class="label">Captain's Report</span>
+        <h3>Stellwagen temperature drop is moving the big fish south.</h3>
+        <p>Water temps hit 58 degrees this morning. Intense surface activity between the southwest corner and middle bank. We're loading heavy stand-up rods all week.</p>
+      </section>
     </main>
   `;
+}
+
+function shortRate(item) {
+  const first = item.price.match(/\$[\d,]+/);
+  return first ? `From ${first[0]}` : item.price;
 }
 
 function renderWeather() {
@@ -674,11 +738,11 @@ function localDataSummary() {
 
 function renderDock() {
   const tabs = [
-    ["trips", "fish", "Trips"],
+    ["trips", "home", "Home"],
     ["weather", "sun", "Weather"],
-    ["prep", "checklist", "Prep"],
-    ["reports", "photo", "Reports"],
-    ["contact", "phone", "Contact"],
+    ["prep", "checklist", "Hub"],
+    ["reports", "images", "Gallery"],
+    ["contact", "ellipsis", "More"],
   ];
   return `<nav class="dock" aria-label="High Hook navigation">${tabs.map((tab) => `<button class="dock-button ${state.tab === tab[0] ? "is-active" : ""}" data-tab="${tab[0]}"><span>${iconSvg(tab[1])}</span><span>${tab[2]}</span></button>`).join("")}</nav>`;
 }
@@ -812,7 +876,24 @@ Charters@FishHighHook.com`;
 
 function renderPacketModal() {
   const text = packetText();
-  return h`<div class="modal-backdrop" role="dialog" aria-modal="true"><section class="modal-panel"><div class="modal-header"><h2>Trip Packet</h2><button class="button" data-action="close-modal">Done</button></div><pre class="data-box" style="padding:14px;white-space:pre-wrap;color:var(--sunwash)">${escapeHtml(text)}</pre><button class="button primary block" data-action="share-packet">Share trip packet</button></section></div>`;
+  const current = trip();
+  const inquiry = matchingInquiries()[0];
+  if (!inquiry) return "";
+  return h`
+    <div class="modal-backdrop" role="dialog" aria-modal="true">
+      <section class="modal-panel">
+        <div class="modal-header"><h2>Trip Packet</h2><button class="button" data-action="close-modal">Done</button></div>
+        <div class="stack">
+          ${card(h`
+            ${sectionHeader("Trip packet", `${current.name} · ${fmtDate(inquiry.preferredDate)}`)}
+            <div class="packet-card" tabindex="0" aria-label="Selectable trip packet text">${escapeHtml(text)}</div>
+            <button class="button primary block" data-action="share-packet">${iconLabel("share", "Share trip packet")}</button>
+            <p class="muted small-note">Local review mode: this packet is generated from device-saved inquiry details. Production should generate the final client packet from the confirmed booking record.</p>
+          `)}
+        </div>
+      </section>
+    </div>
+  `;
 }
 
 function renderExportModal() {

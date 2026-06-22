@@ -1,6 +1,6 @@
 # High Hook Charters Production Review
 
-Last reviewed: 2026-06-22 13:59 EDT
+Last reviewed: 2026-06-22 14:18 EDT
 
 ## Current Release Readiness
 
@@ -12,6 +12,9 @@ This is now a strong native prototype with a real static web-app conversion depl
 - Static web app conversion now serves from `index.html`, `styles.css`, and `app.js` with the same High Hook navy/yellow chart UI, official header image, bottom dock, core tabs and local client workflows.
 - Web iconography now uses a shared monochrome inline-SVG icon system instead of platform emoji, bringing chips, tiles, rows and the bottom dock closer to the native iOS SF Symbol treatment.
 - Web booking now mirrors the native app's post-submit success panel with `Email draft ready`, `Reopen email draft` and `Preview Trip Hub` actions before moving the guest into Trip Hub.
+- Web home UI now incorporates the Lovable reference direction from `hook-up-app.lovable.app`: centered phone-app shell, image-led dawn hero, compact header, weather strip, horizontal planning chips, photo trip grid, gallery rail and glassy bottom dock.
+- Orange/navy reference accents were adapted to High Hook yellow and royal blue; visible CTA/button text avoids black-on-dark states.
+- Trip Packet modal was upgraded from a raw preformatted block to a native-style packet sheet with title/subtitle, selectable packet card, share action and local-review caveat.
 - Vercel production URL: https://dux-fishing.vercel.app
 - iPhone and iPad both use bottom dock navigation.
 - Blue/yellow brand UI is consistent across the main app, tab dock, cards, and booking sheet.
@@ -83,6 +86,7 @@ xcodebuild -project HighHookCharters.xcodeproj -scheme HighHookCharters -destina
 - Chrome mobile/desktop icon-parity verification: no console/page errors, no mobile horizontal overflow, booking still created an `Icon Tester` Trip Hub inquiry, rendered `svg.ui-icon` elements across the page, and no emoji-like icon text remained in the visible body.
 - Chrome mobile booking-success verification: submitted a `Success Tester` inquiry, confirmed the `Email draft ready` panel, verified `Reopen email draft` and `Preview Trip Hub` actions, entered Trip Hub with the inquiry visible, and captured `/private/tmp/highhook-booking-success-mobile.png` with no console/page errors or horizontal overflow.
 - Chrome desktop web verification after booking-success parity: all dock tabs rendered without console/page errors or horizontal overflow.
+- Chrome Lovable-reference UI verification: captured `/private/tmp/hook-up-reference-mobile.png` and compared it with `/private/tmp/highhook-lovable-final-mobile.png` plus `/private/tmp/highhook-lovable-final-desktop.png`; local mobile/desktop had no console errors, no horizontal overflow, six photo trip images loaded, the centered phone frame held on desktop, and booking-to-success-to-Trip-Hub still worked. Headless Chrome reported the expected `mailto:` external handoff failure while the in-app success state remained correct.
 
 ## Known Release Blockers
 
