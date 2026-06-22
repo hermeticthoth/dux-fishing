@@ -1,6 +1,6 @@
 # High Hook Charters Production Review
 
-Last reviewed: 2026-06-22 14:42 EDT
+Last reviewed: 2026-06-22 15:16 EDT
 
 ## Current Release Readiness
 
@@ -16,6 +16,10 @@ This is now a strong native prototype with a real static web-app conversion depl
 - Orange/navy reference accents were adapted to High Hook yellow and royal blue; visible CTA/button text avoids black-on-dark states.
 - Trip Packet modal was upgraded from a raw preformatted block to a native-style packet sheet with title/subtitle, selectable packet card, share action and local-review caveat.
 - Weather tab now mirrors the Lovable `/weather` reference structure with current conditions, four marine metric tiles, hourly strip, tides list, sunrise/sunset cards, 7-day outlook and captain note in the yellow/royal-blue visual system.
+- Primary web tabs now match the requested Lovable app model: `Home`, `Trips`, `Weather`, `Book`, and `More`; the old `Hub`/footer-gallery pattern is removed from the primary dock.
+- Trips now uses the Lovable-style image-led `The Lineup` list with seven charter rows, rates, targets, duration and location details.
+- Book now renders as a full-page `Book a Charter` route with linked labels, charter/date/departure/party/name/phone/notes fields and High Hook yellow CTA treatment.
+- More now uses the Lovable-style captain/action/news/store composition with Trip Prep and Reports actions, feature photography, captain profile, youth camp, fishing news and store card.
 - Vercel production URL: https://dux-fishing.vercel.app
 - iPhone and iPad both use bottom dock navigation.
 - Blue/yellow brand UI is consistent across the main app, tab dock, cards, and booking sheet.
@@ -89,6 +93,9 @@ xcodebuild -project HighHookCharters.xcodeproj -scheme HighHookCharters -destina
 - Chrome desktop web verification after booking-success parity: all dock tabs rendered without console/page errors or horizontal overflow.
 - Chrome Lovable-reference UI verification: captured `/private/tmp/hook-up-reference-mobile.png` and compared it with `/private/tmp/highhook-lovable-final-mobile.png` plus `/private/tmp/highhook-lovable-final-desktop.png`; local mobile/desktop had no console errors, no horizontal overflow, six photo trip images loaded, the centered phone frame held on desktop, and booking-to-success-to-Trip-Hub still worked. Headless Chrome reported the expected `mailto:` external handoff failure while the in-app success state remained correct.
 - Chrome Lovable weather verification: captured `/private/tmp/hook-up-weather-reference-mobile.png`, implemented the matching Weather layout, and verified `/private/tmp/highhook-weather-final-mobile.png` with 68-degree current conditions, 2 ft swell, hourly forecast, tides, 7-day outlook, captain note, no console errors and no horizontal overflow.
+- In-app browser Lovable-tab verification: compared `/private/tmp/hook-up-trips-reference-mobile.png`, `/private/tmp/hook-up-book-reference-mobile.png` and `/private/tmp/hook-up-more-reference-mobile.png` against `/private/tmp/highhook-exact-ui-trips-mobile.png`, `/private/tmp/highhook-exact-ui-book-mobile.png` and `/private/tmp/highhook-exact-ui-more-mobile.png`.
+- In-app browser mobile smoke: all five primary tabs rendered expected headings, active dock states and yellow/royal-blue styling at 393x852 with no console errors, no black text, no horizontal overflow, seven Trips images, hidden extra booking fields and two More images.
+- Booking form accessibility verification: `Your name` and `Phone` fields were filled by associated labels, confirming the full-page booking labels are programmatically linked. Browser policy blocked clicking `Request booking` because it opens an external `mailto:` handoff, so submit was not re-executed in that browser pass.
 
 ## Known Release Blockers
 

@@ -316,10 +316,6 @@ function setTab(tab) {
   state.tab = tab;
   state.modal = null;
   render();
-  if (tab === "trip-list") {
-    requestAnimationFrame(() => document.querySelector("#charterTypes")?.scrollIntoView({ behavior: "smooth", block: "start" }));
-    return;
-  }
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -374,7 +370,7 @@ function renderTrips() {
           <span class="opening-pill"><span></span>Next opening</span>
           <h2>October Bluefin Run</h2>
           <p>Capt. Willie at the helm. Stellwagen Bank, full day. Two deck spots left for Oct 12.</p>
-          <button class="button primary" data-action="book">${iconLabel("arrow", "Quick book Oct 12")}</button>
+          <button class="button primary" data-tab="book">${iconLabel("arrow", "Quick book Oct 12")}</button>
         </div>
       </section>
 
@@ -407,7 +403,7 @@ function renderTrips() {
       <section class="reference-section" id="charterTypes">
         <div class="section-line">
           <h2>Charter Types</h2>
-          <button class="link-button" data-modal="trip-detail">View selected</button>
+          <button class="link-button" data-tab="trip-list">View all</button>
         </div>
         <div class="photo-grid">
           ${trips.slice(0, 6).map((item) => `
@@ -435,7 +431,7 @@ function renderTrips() {
             ${tile("Crew", current.capacity, "users")}
             ${tile("Rate", current.price, "dollar")}
           </div>
-          <button class="button primary block" data-action="book">Request ${current.name}</button>
+          <button class="button primary block" data-tab="book">Request ${current.name}</button>
         </div>
       </section>
 
@@ -471,6 +467,36 @@ function renderTrips() {
 function shortRate(item) {
   const first = item.price.match(/\$[\d,]+/);
   return first ? `From ${first[0]}` : item.price;
+}
+
+function renderTripLineup() {
+  return h`
+    <main class="screen stack">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">All charters</p>
+          <h1>The Lineup</h1>
+        </div>
+        <button class="icon-button" aria-label="Notifications">${iconSvg("bell")}</button>
+      </header>
+      <p class="route-subtitle">Seasonal charters out of Duxbury. Book the trip that matches the bite.</p>
+      <section class="lineup-list">
+        ${trips.map((item, index) => `
+          <button class="lineup-row ${item.id === state.selectedTripId ? "is-selected" : ""}" data-trip="${item.id}">
+            <img src="${assets.tripImages[item.id]}" alt="${item.name}" />
+            <span>${String(index + 1).padStart(2, "0")}</span>
+            <div>
+              <h2>${item.name === "Bluefin Tuna" ? "Giant Bluefin" : item.name}</h2>
+              <p>${item.target}</p>
+              <em>${item.duration}</em>
+            </div>
+            <strong>${item.id === "race-point" ? "$1,250" : item.id === "kids-camp" ? "$600 / camper" : shortRate(item)}</strong>
+            <b>${item.id === "race-point" ? "Race Point, Cape Cod" : item.id === "bluefin" ? "Stellwagen Bank" : item.id === "kids-camp" ? "Inner Duxbury Bay" : item.id === "ladies-night" ? "Duxbury Bay" : item.id === "haddock-cod" ? "Stellwagen ledge" : item.id === "shark" ? "Offshore canyons" : "Duxbury to Boston Harbor"}</b>
+          </button>
+        `).join("")}
+      </section>
+    </main>
+  `;
 }
 
 function renderWeather() {
@@ -725,73 +751,117 @@ function availabilitySummary(inquiry) {
 }
 
 function renderReports() {
+  const gallery = [
+    ["Oct 3, 2025", '44" Striper · Gurnet Point', assets.gallery[1]],
+    ["Oct 5, 2025", "42 lb Cod · Stellwagen ledge", assets.gallery[0]],
+    ["Oct 1, 2025", "Dawn run · Duxbury Bay", assets.gallery[2]],
+    ["Sep 28, 2025", "Bluefin sounding", assets.tripImages.bluefin],
+    ["Sep 21, 2025", "Limit of haddock", assets.tripImages["haddock-cod"]],
+    ["Sep 18, 2025", "Sundown striper", assets.heroDawn],
+    ["Aug 14, 2025", "Camp day, scup runs", assets.tripImages["kids-camp"]],
+  ];
   return h`
     <main class="screen stack">
-      <h1 class="title">Reports</h1>
-      ${state.captainMode ? card(h`
-        ${sectionHeader("Publish local report", "Prototype captain/CMS controls saved on this device.")}
-        <div class="form-grid">
-          <div class="field"><label>Title</label><input id="reportTitle" value="Bass bite update" /></div>
-          <div class="field"><label>Condition</label><input id="reportCondition" value="Outgoing tide" /></div>
-          <div class="field"><label>Report note</label><textarea id="reportNote">Clean water and steady marks around the bay.</textarea></div>
-          <button class="button primary" data-action="publish-report">Publish local report</button>
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">Logbook</p>
+          <h1>The Catch</h1>
         </div>
-      `) : card(renderNotice("Reports are client-safe", "Captain publishing controls stay hidden until Captain Mode is unlocked from Contact."))}
-      ${card(h`
-        ${sectionHeader("Fishing reports", `${state.reports.length} local report highlights.`)}
-        <div class="stack">
-          ${state.reports.map((report) => `<article class="report-card" style="padding:14px"><span class="label">${report.date} · ${report.condition}</span><h3>${escapeHtml(report.title)}</h3><p>${escapeHtml(report.note)}</p></article>`).join("")}
+        <button class="icon-button" aria-label="Notifications">${iconSvg("bell")}</button>
+      </header>
+      <p class="route-subtitle">Photos from this season. The fish, the boat, the crew.</p>
+      <section class="catch-grid">
+        ${gallery.map((item) => `
+          <article class="catch-card">
+            <img src="${item[2]}" alt="${item[1]}" />
+            <span>${item[0]}</span>
+            <p>${item[1]}</p>
+          </article>
+        `).join("")}
+      </section>
+    </main>
+  `;
+}
+
+function renderBookPage() {
+  const current = trip();
+  return h`
+    <main class="screen stack">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">Reserve a date</p>
+          <h1>Book a Charter</h1>
         </div>
-      `)}
-      ${card(h`
-        ${sectionHeader("Gallery preview", "Production should connect real trip photos, moderation and public report controls.")}
-        <div class="tile-grid">
-          ${tile("Bass", "Topwater shots", "fish")}
-          ${tile("Offshore", "Tuna windows", "radio")}
-          ${tile("Camp", "Kids learning knots", "kids")}
+        <button class="icon-button" aria-label="Notifications">${iconSvg("bell")}</button>
+      </header>
+      <section class="booking-page-panel">
+        <div class="field"><label for="bookTripSelect">Charter</label><select id="bookTripSelect">${trips.map((item) => `<option value="${item.id}" ${item.id === current.id ? "selected" : ""}>${item.name} — ${shortRate(item)}</option>`).join("")}</select></div>
+        <div class="book-split">
+          <div class="field"><label for="preferredDate">Preferred date</label><input id="preferredDate" type="date" value="${dateInputValue}" /></div>
+          <div class="field"><label for="departureDock">Departure</label><input id="departureDock" value="5:00 AM" readonly /></div>
         </div>
-      `)}
+        <div class="counter booking-counter"><b>Party size</b><div class="counter-controls"><button class="button" data-party="-1">-</button><span id="partySize">4</span><button class="button" data-party="1">+</button></div></div>
+        <div class="field"><label for="bookName">Your name</label><input id="bookName" autocomplete="name" /></div>
+        <div class="field"><label for="bookPhone">Phone</label><input id="bookPhone" type="tel" autocomplete="tel" /></div>
+        <div class="field hidden-booking-field"><label for="dateFlex">Date flexibility</label><select id="dateFlex"><option>Flexible by a few days</option><option>Exact date</option><option>Captain can pick best window</option></select></div>
+        <div class="field hidden-booking-field"><label for="backupDate">Backup date/window</label><input id="backupDate" type="date" value="${dateInputValue}" /></div>
+        <div class="field"><label for="bookNotes">Notes (optional)</label><textarea id="bookNotes"></textarea></div>
+        <button class="button primary block" data-action="submit-booking">Request booking</button>
+      </section>
+      <section class="direct-contact">
+        <span class="label">Or reach Capt. Willie directly</span>
+        <a href="tel:7815550140">(781) 555-0140</a>
+        <a href="mailto:Charters@FishHighHook.com">willie@fishhighhook.com</a>
+      </section>
     </main>
   `;
 }
 
 function renderContact() {
-  const summary = localDataSummary();
   return h`
     <main class="screen stack">
-      <h1 class="title">Contact</h1>
-      ${card(h`
-        ${sectionHeader("Captain & Contact", "Make it easy to ask a question, find the dock or reopen the store.")}
-        <a class="row" href="mailto:Charters@FishHighHook.com"><span class="icon-well">${iconSvg("envelope")}</span><div><b>Email</b><p>Charters@FishHighHook.com</p></div></a>
-        <a class="row" href="https://www.fishhighhook.com/"><span class="icon-well">⌘</span><div><b>Website</b><p>fishhighhook.com</p></div></a>
-        <a class="row" href="https://maps.apple.com/?q=25%20Mattakeesett%20Ct%20Duxbury%20MA%2002332"><span class="icon-well">${iconSvg("location")}</span><div><b>Departure</b><p>25 Mattakeesett Ct, Duxbury, MA 02332</p></div></a>
-        <a class="row" href="https://www.fishhighhook.com/store"><span class="icon-well">${iconSvg("bag")}</span><div><b>Store</b><p>High Hook gear and gift ideas</p></div></a>
-      `)}
-      ${card(h`
-        ${sectionHeader("Captain Mode", state.captainMode ? "Local review tools are visible for weather, reports and booking status." : "Keep the customer app clean. Unlock only when the captain is reviewing operations.")}
-        ${row(state.captainMode ? "lock-open" : "lock", state.captainMode ? "Unlocked on this device" : "Locked for client review", state.captainMode ? "Weather update controls, report publishing and Trip Hub status editing are available locally. Production still needs real captain sign-in." : "Clients see reports, weather calls and trip status without editing controls.")}
-        <button class="button ${state.captainMode ? "" : "primary"} block" data-action="${state.captainMode ? "lock-captain" : "unlock-captain"}">${state.captainMode ? "Lock Captain Mode" : "Unlock Captain Mode"}</button>
-        <p class="muted">Review unlock code: HIGHHOOK. This is a local prototype gate, not production authentication.</p>
-      `)}
-      ${card(h`
-        ${sectionHeader("Trust & safety", "Plain-language expectations for booking, privacy and on-water decisions.")}
-        ${row("shield", "Privacy", "Booking details are saved locally on this device for the prototype and sent through your Mail draft. Production needs a published privacy policy and secure backend storage.")}
-        ${row("dollar", "Payments", "No card is charged in the app. Deposits and balances are handled only after High Hook confirms the date.")}
-        ${row("sun", "Captain authority", "Weather, tide, safety and fishery rules can change. The captain's latest call overrides any sample app data.")}
-        ${row("emergency", "Emergency", "For immediate on-water emergencies, call emergency services or hail the Coast Guard. This app is not an emergency channel.")}
-        <a class="button block" href="tel:911">Call 911</a>
-        <div class="data-box" style="padding:12px"><b>Local client data</b><p>${summary}</p><div class="actions" style="margin-top:12px"><button class="button primary" data-modal="export">Export local data</button><button class="button" data-action="clear-data">Clear local booking data</button></div></div>
-      `)}
-      ${card(h`
-        ${sectionHeader("Sessions", "Kids camp and social evening options from High Hook.")}
-        ${row("kids", "Kids Camp", "Ages 10-15 learn fishing, knot tying, lures, fish ID, boating safety and South Shore marine life. $600 · 4 days · 8am-12pm")}
-        ${row("moon", "Ladies Night Fishing", "A relaxed evening fishing session for friend groups, first timers and after-work crews. Select summer evenings · ask captain")}
-      `)}
-      ${card(h`
-        ${sectionHeader("Regulations", "Rules move during the season. Use these official sources and defer to the captain before keeping fish.")}
-        ${regulations.map((item) => `<a class="row" href="${item[3]}"><span class="icon-well">${item[4]}</span><div><b>${item[0]}</b><p>${item[1]}</p><p><strong>${item[2]}</strong></p></div></a>`).join("")}
-        <p class="muted">Verified source links: June 19, 2026. This app should still support captain/admin updates before release.</p>
-      `)}
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">More from High Hook</p>
+          <h1>The Captain & The Bay</h1>
+        </div>
+        <button class="icon-button" aria-label="Notifications">${iconSvg("bell")}</button>
+      </header>
+      <section class="more-actions">
+        <button class="more-action" data-tab="prep">${iconLabel("bag", "Trip Prep")}<small>What to bring</small></button>
+        <button class="more-action" data-tab="reports">${iconLabel("images", "Reports")}<small>From the deck</small></button>
+      </section>
+      <img class="more-feature-image" src="${assets.heroDawn}" alt="High Hook Charters boat at dawn" />
+      <section class="reference-card captain-profile">
+        <span class="label">The Command</span>
+        <h3>Capt. Willie Woodruff</h3>
+        <p>Born and raised in Duxbury, MA. Capt. Willie has fished these waters his whole life and chartered as far as the Bahamas, Virgin Islands, Mexico and Barbados. His true passion is angling Massachusetts Bay.</p>
+        <p>USCG licensed, CPR & First Aid certified.</p>
+      </section>
+      <section class="youth-card">
+        <img src="${assets.tripImages["kids-camp"]}" alt="Young angler holding a fish on High Hook" />
+        <div>
+          <span class="label">Summer 2026</span>
+          <h3>Youth Angler Camp</h3>
+          <p>Two-day clinics for ages 8-15. Knots, rigs, ethics, and a guaranteed bend in the rod.</p>
+          <button class="link-button" data-tab="book">Reserve a seat</button>
+        </div>
+      </section>
+      <section class="news-list">
+        <h2 class="section-kicker">Fishing News</h2>
+        ${[
+          ["Nov 30", "Holiday gift certificates available", "Any denomination, any trip. Printed cards mailed within 3 days."],
+          ["Apr 4", "2026 Boston Bluefin Tournament", "We're entered again. Charter dates around the event are filling fast."],
+          ["Mar 15", "Stellwagen reports start next week", "Capt. Willie's weekly write-ups return when the boat splashes."],
+        ].map((item) => `<article><span>${item[0]}</span><h3>${item[1]}</h3><p>${item[2]}</p></article>`).join("")}
+      </section>
+      <section class="reference-card store-card">
+        <span class="label">Ship's Store</span>
+        <h3>High Hook gear & apparel</h3>
+        <p>Duxbury Harbor · Massachusetts</p>
+        <a class="button primary compact" href="https://www.fishhighhook.com/store">Open store</a>
+      </section>
+      <p class="footer-mark">© High Hook Charters</p>
     </main>
   `;
 }
@@ -810,13 +880,12 @@ function renderDock() {
     { tab: "trips", icon: "home", label: "Home" },
     { tab: "trip-list", icon: "anchor", label: "Trips" },
     { tab: "weather", icon: "sun", label: "Weather" },
-    { tab: "reports", icon: "images", label: "Gallery" },
-    { action: "book", icon: "calendar", label: "Book" },
+    { tab: "book", icon: "calendar", label: "Book" },
+    { tab: "contact", icon: "ellipsis", label: "More" },
   ];
   return `<nav class="dock" aria-label="High Hook navigation">${tabs.map((item) => {
-    const isActive = item.tab ? state.tab === item.tab : state.modal === "booking";
-    const attr = item.tab ? `data-tab="${item.tab}"` : `data-action="${item.action}"`;
-    return `<button class="dock-button ${isActive ? "is-active" : ""}" ${attr}><span>${iconSvg(item.icon)}</span><span>${item.label}</span></button>`;
+    const isActive = state.tab === item.tab;
+    return `<button class="dock-button ${isActive ? "is-active" : ""}" data-tab="${item.tab}"><span>${iconSvg(item.icon)}</span><span>${item.label}</span></button>`;
   }).join("")}</nav>`;
 }
 
@@ -845,13 +914,13 @@ function renderBookingModal() {
           ${card(h`
             ${sectionHeader("Your crew", "Give the captain enough context to confirm the right date and plan.")}
             <div class="form-grid">
-              <div class="field"><label>Name</label><input id="bookName" autocomplete="name" /></div>
-              <div class="field"><label>Email</label><input id="bookEmail" type="email" autocomplete="email" /></div>
+              <div class="field"><label for="bookName">Name</label><input id="bookName" autocomplete="name" /></div>
+              <div class="field"><label for="bookEmail">Email</label><input id="bookEmail" type="email" autocomplete="email" /></div>
               <div class="counter"><b>Party size</b><div class="counter-controls"><button class="button" data-party="-1">-</button><span id="partySize">4</span><button class="button" data-party="1">+</button></div></div>
-              <div class="field"><label>Preferred date</label><input id="preferredDate" type="date" value="${dateInputValue}" /></div>
-              <div class="field"><label>Date flexibility</label><select id="dateFlex"><option>Flexible by a few days</option><option>Exact date</option><option>Captain can pick best window</option></select></div>
-              <div class="field"><label>Backup date/window</label><input id="backupDate" type="date" value="${dateInputValue}" /></div>
-              <div class="field"><label>Notes for the captain</label><textarea id="bookNotes" placeholder="Target species, kids, experience level, date flexibility or special considerations."></textarea></div>
+              <div class="field"><label for="preferredDate">Preferred date</label><input id="preferredDate" type="date" value="${dateInputValue}" /></div>
+              <div class="field"><label for="dateFlex">Date flexibility</label><select id="dateFlex"><option>Flexible by a few days</option><option>Exact date</option><option>Captain can pick best window</option></select></div>
+              <div class="field"><label for="backupDate">Backup date/window</label><input id="backupDate" type="date" value="${dateInputValue}" /></div>
+              <div class="field"><label for="bookNotes">Notes for the captain</label><textarea id="bookNotes" placeholder="Target species, kids, experience level, date flexibility or special considerations."></textarea></div>
             </div>
           `)}
           ${card(h`
@@ -984,8 +1053,9 @@ ${localDataSummary()}`;
 function render() {
   const content = {
     trips: renderTrips,
-    "trip-list": renderTrips,
+    "trip-list": renderTripLineup,
     weather: renderWeather,
+    book: renderBookPage,
     prep: renderPrep,
     reports: renderReports,
     contact: renderContact,
@@ -1114,24 +1184,28 @@ function unlockCaptain() {
 }
 
 function submitBooking() {
+  const selectedTripId = document.querySelector("#bookTripSelect")?.value;
+  if (selectedTripId) state.selectedTripId = selectedTripId;
   const name = document.querySelector("#bookName").value.trim();
-  const email = document.querySelector("#bookEmail").value.trim();
-  if (!name || !email) {
-    alert("Name and email are required.");
+  const email = document.querySelector("#bookEmail")?.value.trim() || "";
+  const phone = document.querySelector("#bookPhone")?.value.trim() || "";
+  if (!name || (!email && !phone)) {
+    alert("Name and contact are required.");
     return;
   }
   const current = trip();
   const preferredDate = document.querySelector("#preferredDate").value || dateInputValue;
-  const backupDate = document.querySelector("#backupDate").value || preferredDate;
-  const dateFlex = document.querySelector("#dateFlex").value;
+  const backupDate = document.querySelector("#backupDate")?.value || preferredDate;
+  const dateFlex = document.querySelector("#dateFlex")?.value || "Flexible by a few days";
   const notes = document.querySelector("#bookNotes").value.trim();
+  const contact = email || phone;
   const localNotes = `Availability: ${dateFlex}; backup ${fmtDate(backupDate)}.${notes ? `\n\n${notes}` : ""}`;
   const inquiry = {
     id: crypto.randomUUID(),
     tripId: current.id,
     tripName: current.name,
     name,
-    email,
+    email: contact,
     partySize: Number(document.querySelector("#partySize").textContent),
     preferredDate,
     notes: localNotes,
@@ -1148,7 +1222,8 @@ Rate: ${current.price}
 Deposit: ${current.deposit}
 
 Name: ${name}
-Email: ${email}
+Email: ${email || "Not provided"}
+Phone: ${phone || "Not provided"}
 Party size: ${inquiry.partySize}
 Preferred date: ${fmtDate(preferredDate)}
 Date flexibility: ${dateFlex}
