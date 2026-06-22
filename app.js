@@ -31,7 +31,7 @@ const trips = [
     capacity: "1-6 anglers",
     bestFor: "Families, first timers, steady local action",
     price: "$825 1-4, $850 5, $875 6",
-    deposit: "$425 deposit",
+    deposit: "$100 deposit",
     details:
       "Fish Duxbury, Plymouth, Marshfield, Scituate, Cohasset, Quincy and Boston Harbor with light tackle, trolling, live bait or casting depending on the bite.",
     prep: ["Soft-soled shoes", "Light rain shell", "Sunglasses", "Snacks and drinks"],
@@ -46,7 +46,7 @@ const trips = [
     capacity: "Up to 6 anglers",
     bestFor: "Groups chasing a bigger run",
     price: "$1,250 half day",
-    deposit: "$425 deposit",
+    deposit: "$100 deposit",
     details:
       "A longer run to Race Point for a chance at larger schools and heavier fish when the Cape bite lines up.",
     prep: ["Wind layer", "Hat with retention", "Camera", "Motion sickness plan"],
@@ -61,7 +61,7 @@ const trips = [
     capacity: "1-6 anglers",
     bestFor: "Serious crews ready for an offshore day",
     price: "$1,550 1-4, $1,600 5, $1,650 6",
-    deposit: "$800 deposit",
+    deposit: "$300 deposit",
     details:
       "Offshore tuna trip with stand-up gear, trolling, casting or live bait strategy based on reports and conditions.",
     prep: ["Packed lunch", "Warm layer", "Waterproof bag", "Non-marking deck shoes"],
@@ -76,7 +76,7 @@ const trips = [
     capacity: "1-6 anglers",
     bestFor: "Filling the cooler and learning bottom fishing",
     price: "$1,550 3/4 day, $1,750 full day",
-    deposit: "$800 deposit",
+    deposit: "$300 deposit",
     details:
       "Bottom fishing structure and ledges for haddock and cod, with rigging and fish handling handled by the crew.",
     prep: ["Cooler in the car", "Food and drinks", "Deck-safe footwear", "Extra layers"],
@@ -91,7 +91,7 @@ const trips = [
     capacity: "1-6 anglers",
     bestFor: "High-adrenaline groups and experienced anglers",
     price: "$1,650 1-4, $1,750 5-6",
-    deposit: "$800 deposit",
+    deposit: "$300 deposit",
     details:
       "A full offshore day built around chumming, heavy tackle and safe catch-and-release handling.",
     prep: ["Sun protection", "Full lunch", "Camera", "Comfortable layered clothing"],
@@ -103,10 +103,10 @@ const trips = [
     duration: "4 days, 8am-12pm",
     season: "Summer sessions",
     target: "Fishing, ecology and safe boating",
-    capacity: "Ages 10-15",
+    capacity: "Ages 6-16",
     bestFor: "Kids who love the ocean or want to learn",
     price: "$600 per camper",
-    deposit: "Camp registration",
+    deposit: "Full payment at sign-up",
     details:
       "Four mornings of fishing, knot tying, lures, fish ID, boating safety and South Shore marine life.",
     prep: ["Sunscreen", "Water bottle", "Snack", "Life jacket if preferred"],
@@ -174,6 +174,123 @@ const regulations = [
   ["Groundfish: haddock and cod", "Haddock and cod limits depend on area, season and species. Confirm before any cooler-filling trip.", "NOAA Northeast Multispecies", "https://www.fisheries.noaa.gov/species/northeast-multispecies-groundfish/recreational", "anchor"],
 ];
 
+const darkCharters = [
+  {
+    id: "bluefin",
+    name: "Bluefin Tuna",
+    type: "Offshore",
+    duration: "8 Hours",
+    party: "1-6 People",
+    price: "$1,550+",
+    image: assets.tripImages.bluefin,
+    description: "Run offshore for bluefin tuna with stand-up gear, trolling, casting or live bait strategy based on Stellwagen reports and conditions.",
+    included: ["Rods, reels & tackle", "USCG licensed captain", "Ice & fish handling", "Captain weather call"],
+  },
+  {
+    id: "haddock-cod",
+    name: "Haddock / Cod",
+    type: "Offshore",
+    duration: "6 or 8 Hours",
+    party: "1-6 People",
+    price: "$1,550+",
+    image: assets.tripImages["haddock-cod"],
+    description: "Bottom-fish productive structure and ledges for haddock and cod, with rigging and fish handling handled by the crew.",
+    included: ["Bottom rigs & tackle", "USCG licensed captain", "Cooler guidance", "Fish handling"],
+  },
+  {
+    id: "bass-local",
+    name: "Striped Bass Local",
+    type: "Inshore",
+    duration: "Half Day",
+    party: "1-6 People",
+    price: "$825+",
+    image: assets.tripImages["bass-local"],
+    description: "Fish Duxbury, Plymouth, Marshfield, Scituate, Cohasset, Quincy and Boston Harbor with light tackle, trolling, live bait or casting.",
+    included: ["Light tackle", "Local fish intel", "Captain weather call", "Family friendly pacing"],
+  },
+  {
+    id: "race-point",
+    name: "Race Point Striped Bass",
+    type: "Inshore",
+    duration: "5 Hours",
+    party: "1-6 People",
+    price: "$1,250",
+    image: assets.tripImages["race-point"],
+    description: "A longer run to Race Point for a chance at larger schools and heavier striped bass when the Cape bite lines up.",
+    included: ["Heavy striped bass gear", "Cape run planning", "Captain weather call", "Photo-ready catch handling"],
+  },
+  {
+    id: "shark",
+    name: "Shark Fishing",
+    type: "Offshore",
+    duration: "Full Day",
+    party: "1-6 People",
+    price: "$1,650+",
+    image: assets.tripImages.shark,
+    description: "A full offshore day built around chumming, heavy tackle and safe catch-and-release handling.",
+    included: ["Heavy tackle", "Chumming setup", "Safe release handling", "Captain weather call"],
+  },
+  {
+    id: "kids-camp",
+    name: "High Hook Kids Camp",
+    type: "Kids Camp",
+    duration: "4 Mornings",
+    party: "Ages 6-16",
+    price: "$600",
+    image: assets.tripImages["kids-camp"],
+    description: "Three days of fishing the local waters, learning spots, techniques, live bait, fish ID, boating safety and South Shore marine life.",
+    included: ["Fishing basics", "Knot tying", "Fish ID", "Boating safety"],
+  },
+  {
+    id: "ladies-night",
+    name: "Ladies Night Fishing",
+    type: "Ladies Night",
+    duration: "Evening Session",
+    party: "Private Groups",
+    price: "Ask",
+    image: assets.heroDawn,
+    description: "A social, approachable evening fishing session for groups who want an easy on-ramp to High Hook.",
+    included: ["Light tackle", "Sunset timing", "Relaxed instruction", "Captain weather call"],
+  },
+];
+
+const darkBookings = [
+  ["Oct 12, 2026", "Bluefin Tuna", "4 People", "$1,600", "Confirmed"],
+  ["Jun 20, 2026", "Striped Bass Local", "5 People", "$850", "Awaiting captain"],
+  ["Aug 10, 2026", "High Hook Kids Camp", "1 Camper", "$600", "Completed"],
+];
+
+const darkCrew = [
+  ["Capt. Willie Woodruff", "Owner / Captain", "USCG Licensed · CPR & First Aid Certified", assets.tripImages.bluefin],
+  ["High Hook Mate", "Deckhand / Mate", "Rigging, fish handling and deck safety", assets.gallery[1]],
+  ["Youth Camp Crew", "Kids Camp Support", "Fishing basics, knots and marine-life coaching", assets.tripImages["kids-camp"]],
+];
+
+const darkLocations = [
+  ["High Hook Dock", "25 Mattakeesett Ct, Duxbury, MA 02332", assets.heroDawn],
+  ["Duxbury Bay", "Local bass, bluefish, youth camp and evening sessions", assets.tripImages["bass-local"]],
+  ["Race Point", "Cape Cod trophy striped bass run", assets.tripImages["race-point"]],
+  ["Stellwagen Bank", "Bluefin tuna, haddock and cod windows", assets.tripImages.bluefin],
+];
+
+const darkNotifications = [
+  ["Booking Confirmed", "Your Bluefin Tuna request is saved locally for captain review.", "2m ago", "check"],
+  ["Weather Update", "Local striped bass trips look comfortable. Offshore still needs evening review.", "1h ago", "sun"],
+  ["New Report Added", "A fresh deck report was added to The Catch.", "1d ago", "images"],
+  ["Trip Reminder", "Prep checklist and dock-arrival reminders are ready in Trip Hub.", "2d ago", "clock"],
+];
+
+const galleryPhotos = [
+  { src: assets.tripImages.bluefin, category: "Offshore", title: "Bluefin tuna on deck" },
+  { src: assets.gallery[1], category: "Offshore", title: "Captain with tuna" },
+  { src: assets.tripImages["bass-local"], category: "Inshore", title: "Local striped bass" },
+  { src: assets.heroDawn, category: "Inshore", title: "Duxbury Bay morning" },
+  { src: assets.header, category: "Nearshore", title: "High Hook underway" },
+  { src: assets.tripImages["haddock-cod"], category: "Offshore", title: "Haddock and cod grounds" },
+  { src: assets.gallery[0], category: "Nearshore", title: "South Shore run" },
+  { src: assets.tripImages["kids-camp"], category: "Inshore", title: "Kids camp catch" },
+];
+
 const store = {
   get(key, fallback) {
     try {
@@ -188,9 +305,12 @@ const store = {
 };
 
 const state = {
-  tab: "trips",
-  selectedTripId: "bass-local",
+  tab: store.get("highHook.web.hasSeenOnboarding", false) ? "home" : "onboarding",
+  selectedTripId: "bluefin",
   selectedGoal: "firstTimer",
+  selectedLocationIndex: store.get("highHook.web.selectedLocationIndex", 0),
+  bookingParty: 2,
+  bookingFilter: store.get("highHook.web.bookingFilter", "Upcoming"),
   modal: null,
   bookingSuccess: null,
   captainMode: store.get("highHook.web.captainMode", false),
@@ -198,6 +318,16 @@ const state = {
   reminders: store.get("highHook.web.reminders", {}),
   checklist: store.get("highHook.web.checklist", {}),
   reports: store.get("highHook.web.reports", defaultReports),
+  charterFilter: store.get("highHook.web.charterFilter", "All"),
+  galleryFilter: store.get("highHook.web.galleryFilter", "All"),
+  selectedPhotoIndex: store.get("highHook.web.selectedPhotoIndex", 0),
+  likedPhotos: store.get("highHook.web.likedPhotos", []),
+  readNotifications: store.get("highHook.web.readNotifications", []),
+  settings: store.get("highHook.web.settings", {
+    push: true,
+    email: true,
+    darkMode: true,
+  }),
   weather: store.get("highHook.web.weather", {
     localCall: "Green",
     offshoreCall: "Watch",
@@ -235,7 +365,10 @@ function escapeHtml(value) {
 }
 
 function fmtDate(value) {
-  return new Date(value).toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" });
+  const date = /^\d{4}-\d{2}-\d{2}$/.test(String(value))
+    ? new Date(`${value}T12:00:00`)
+    : new Date(value);
+  return date.toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" });
 }
 
 function iconSvg(name) {
@@ -269,6 +402,7 @@ function iconSvg(name) {
     tide: '<path d="M12 3v14"/><path d="m7 12 5 5 5-5"/><path d="M5 21h14"/>',
     clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
     calendar: '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4"/><path d="M16 3v4"/><path d="M4 10h16"/>',
+    back: '<path d="M19 12H5"/><path d="m11 6-6 6 6 6"/>',
     arrow: '<path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>',
     card: '<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/><path d="M7 15h4"/>',
     envelope: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/>',
@@ -276,6 +410,7 @@ function iconSvg(name) {
     home: '<path d="M4 11 12 4l8 7"/><path d="M6 10.5V20h12v-9.5"/><path d="M10 20v-6h4v6"/>',
     images: '<rect x="8" y="3" width="13" height="13" rx="2"/><path d="M16 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h3"/><path d="m9 14 2.4-2.4a1.2 1.2 0 0 1 1.7 0L16 14.5"/><circle cx="16" cy="8" r="1"/>',
     ellipsis: '<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>',
+    settings: '<path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.8 1.8 0 0 0 .4 2l.1.1a2.1 2.1 0 1 1-3 3l-.1-.1a1.8 1.8 0 0 0-2-.4 1.8 1.8 0 0 0-1 1.6V21a2.1 2.1 0 1 1-4.2 0v-.1a1.8 1.8 0 0 0-1-1.6 1.8 1.8 0 0 0-2 .4l-.1.1a2.1 2.1 0 1 1-3-3l.1-.1a1.8 1.8 0 0 0 .4-2 1.8 1.8 0 0 0-1.6-1H2.3a2.1 2.1 0 1 1 0-4.2h.1a1.8 1.8 0 0 0 1.6-1 1.8 1.8 0 0 0-.4-2l-.1-.1a2.1 2.1 0 1 1 3-3l.1.1a1.8 1.8 0 0 0 2 .4 1.8 1.8 0 0 0 1-1.6V2.3a2.1 2.1 0 1 1 4.2 0v.1a1.8 1.8 0 0 0 1 1.6 1.8 1.8 0 0 0 2-.4l.1-.1a2.1 2.1 0 1 1 3 3l-.1.1a1.8 1.8 0 0 0-.4 2 1.8 1.8 0 0 0 1.6 1h.1a2.1 2.1 0 1 1 0 4.2H21a1.8 1.8 0 0 0-1.6 1.2Z"/>',
     lock: '<rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',
     "lock-open": '<rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 7.6-1.8"/>',
     person: '<circle cx="12" cy="8" r="3"/><path d="M5 21c.8-4 3.1-6 7-6s6.2 2 7 6"/>',
@@ -313,8 +448,13 @@ function row(icon, title, detail) {
 }
 
 function setTab(tab) {
+  const darkTripSelect = document.querySelector("#darkTripSelect");
+  if (darkTripSelect) state.selectedTripId = darkTripSelect.value;
   state.tab = tab;
   state.modal = null;
+  if (!["onboarding", "login", "sign-up", "forgot-password"].includes(tab)) {
+    store.set("highHook.web.hasSeenOnboarding", true);
+  }
   render();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -810,8 +950,8 @@ function renderBookPage() {
       </section>
       <section class="direct-contact">
         <span class="label">Or reach Capt. Willie directly</span>
-        <a href="tel:7815550140">(781) 555-0140</a>
-        <a href="mailto:Charters@FishHighHook.com">willie@fishhighhook.com</a>
+        <a href="tel:7812911304">781-291-1304</a>
+        <a href="mailto:Charters@FishHighHook.com">Charters@FishHighHook.com</a>
       </section>
     </main>
   `;
@@ -875,16 +1015,432 @@ function localDataSummary() {
   return `${state.inquiries.length} saved inquiries, ${activeReminders} active reminders and ${checklistTrips} trip checklists on this device.`;
 }
 
+function darkHeader(title, backTab = "", action = "notifications") {
+  const actionLabel = action === "settings" ? "Settings" : "Notifications";
+  return `<header class="dark-header">${backTab ? `<button class="dark-icon-button" data-tab="${backTab}" aria-label="Back">${iconSvg("back")}</button>` : `<span class="dark-header-spacer" aria-hidden="true"></span>`}<h1>${title}</h1><button class="dark-icon-button" data-tab="${action}" aria-label="${actionLabel}">${iconSvg(action === "settings" ? "settings" : "bell")}</button></header>`;
+}
+
+function darkLogoBlock() {
+  return `<div class="dark-logo"><img src="${assets.logo}" alt="Fish High Hook Fishing Charters" /><strong>FISH HIGH HOOK</strong><span>FISHING CHARTERS</span></div>`;
+}
+
+function renderOnboarding() {
+  return h`<main class="dark-screen dark-onboarding">
+    <div class="onboarding-photo"><img src="${assets.heroDawn}" alt="Fishing charter boat at sunset" /><div class="hero-shade"></div></div>
+    ${darkLogoBlock()}
+    <section class="onboarding-copy"><h1>Fish Hard.<br />Have Fun.<br />Make Memories.</h1><p>Your next adventure is just a cast away.</p></section>
+    <div class="onboarding-dots"><span></span><span class="is-active"></span><span></span></div>
+    <button class="dark-primary" data-tab="login">Get Started</button>
+    <button class="dark-link" data-tab="home">Skip</button>
+  </main>`;
+}
+
+function authShell(title, subtitle, body) {
+  return h`<main class="dark-screen auth-screen">
+    <div class="auth-spacer"></div>
+    <section class="auth-card"><h1>${title}</h1><p>${subtitle}</p>${body}</section>
+  </main>`;
+}
+
+function renderLogin() {
+  return authShell("Welcome Back!", "Log in to continue", h`
+    <div class="dark-field"><label>Email</label><input value="Charters@FishHighHook.com" /></div>
+    <div class="dark-field"><label>Password</label><input type="password" value="password" /></div>
+    <button class="dark-link align-end" data-tab="forgot-password">Forgot password?</button>
+    <button class="dark-primary" data-tab="home">Log In</button>
+    <div class="auth-divider">or continue with</div>
+    <div class="auth-social"><button>G</button><button>${iconSvg("phone")}</button></div>
+    <p class="auth-foot">Don't have an account? <button data-tab="sign-up">Sign Up</button></p>
+  `);
+}
+
+function renderSignUp() {
+  return authShell("Create Account", "Join us for your next adventure", h`
+    <div class="dark-field"><label>Full Name</label><input value="High Hook Guest" /></div>
+    <div class="dark-field"><label>Email</label><input value="Charters@FishHighHook.com" /></div>
+    <div class="dark-field"><label>Phone (Optional)</label><input value="781-291-1304" /></div>
+    <div class="dark-field"><label>Password</label><input type="password" value="password" /></div>
+    <label class="dark-check"><input type="checkbox" checked /> I agree to the Terms & Conditions</label>
+    <button class="dark-primary" data-tab="home">Sign Up</button>
+    <p class="auth-foot">Already have an account? <button data-tab="login">Log In</button></p>
+  `);
+}
+
+function renderForgotPassword() {
+  return authShell("Reset Password", "Enter your email and we'll send you a link to reset it.", h`
+    <div class="dark-field"><label>Email</label><input value="Charters@FishHighHook.com" /></div>
+    <button class="dark-primary" data-tab="login">Send Reset Link</button>
+    <p class="auth-foot"><button data-tab="login">Back to Login</button></p>
+  `);
+}
+
+function charterCard(item) {
+  return `<button class="dark-list-card charter-card" data-trip="${item.id}" data-tab="charter-detail"><img src="${item.image}" alt="${item.name}" /><span><b>${item.name}</b><small>${item.duration}<br />${item.party}</small><em>${item.price}</em></span>${iconSvg("arrow")}</button>`;
+}
+
+function renderDarkHome() {
+  return h`<main class="dark-screen dark-tab-screen">
+    <header class="dark-home-head"><span class="dark-header-spacer" aria-hidden="true"></span>${darkLogoBlock()}<button class="dark-icon-button" data-tab="notifications" aria-label="Notifications">${iconSvg("bell")}</button></header>
+    <section class="dark-adventure-card"><div><h2>Your next adventure starts here</h2><p>Duxbury, Stellwagen, Race Point and Massachusetts Bay charters with Capt. Willie.</p><button class="dark-primary" data-tab="booking-date">Book a Charter</button></div></section>
+    <section class="dark-status-grid">
+      <article>${iconSvg("cloud-sun")}<span>Captain Call</span><b>${state.weather.localCall}</b></article>
+      <article>${iconSvg("waves")}<span>Offshore</span><b>${state.weather.offshoreCall}</b></article>
+      <article>${iconSvg("checklist")}<span>Trip Hub</span><b>${state.inquiries.length ? "Ready" : "Start"}</b></article>
+    </section>
+    <section class="dark-section-head"><h2>Featured Charters</h2><button data-tab="charters">View All</button></section>
+    <div class="dark-list charter-grid featured-grid">${darkCharters.slice(0, 2).map(charterCard).join("")}</div>
+    <section class="dark-section-head"><h2>Latest Report</h2><button data-tab="reports">View</button></section>
+    <article class="policy-block"><h2>${escapeHtml(state.reports[0]?.title || "Captain report")}</h2><p>${escapeHtml(state.reports[0]?.note || "Reports publish locally in Captain Mode until a production CMS is connected.")}</p></article>
+  </main>`;
+}
+
+function renderDarkCharters() {
+  const filters = ["All", "Offshore", "Inshore", "Kids Camp", "Ladies Night"];
+  const activeFilter = filters.includes(state.charterFilter) ? state.charterFilter : "All";
+  const filteredCharters = activeFilter === "All" ? darkCharters : darkCharters.filter((item) => item.type === activeFilter);
+  return h`<main class="dark-screen dark-tab-screen">${darkHeader("Charters")}
+    <div class="dark-segment">${filters.map((filter) => `<button class="${filter === activeFilter ? "is-active" : ""}" data-charter-filter="${filter}">${filter}</button>`).join("")}</div>
+    <div class="dark-list charter-grid">${filteredCharters.map(charterCard).join("")}</div>
+    ${filteredCharters.length ? "" : `<section class="policy-block"><h2>No trips in this view</h2><p>Switch to All to see every High Hook trip type.</p></section>`}
+  </main>`;
+}
+
+function selectedDarkCharter() {
+  return darkCharters.find((item) => item.id === state.selectedTripId) || darkCharters[0];
+}
+
+function renderDarkCharterDetail() {
+  const item = selectedDarkCharter();
+  return h`<main class="dark-screen detail-screen">${darkHeader("", "charters")}
+    <img class="detail-hero-img" src="${item.image}" alt="${item.name}" />
+    <section class="detail-copy"><div><h1>${item.name}</h1><p>${iconSvg("clock")} ${item.duration} &nbsp; ${iconSvg("users")} ${item.party}</p></div><b>${item.price}</b></section>
+    <p class="dark-muted">${item.description}</p>
+    <h2 class="dark-subtitle">What's Included</h2>
+    <ul class="included-list">${item.included.map((entry) => `<li>${iconSvg("check")} ${entry}</li>`).join("")}</ul>
+    <button class="dark-primary sticky-action" data-tab="booking-date">Book This Charter</button>
+  </main>`;
+}
+
+function bookingStepper(active) {
+  return `<div class="booking-stepper">${["Date", "Details", "Review", "Confirm"].map((label, index) => `<span class="${index + 1 <= active ? "is-active" : ""}"><b>${index + 1}</b><small>${label}</small></span>`).join("")}</div>`;
+}
+
+function renderBookingDate() {
+  const item = selectedDarkCharter();
+  return h`<main class="dark-screen dark-tab-screen">${darkHeader("Book a Charter", "charter-detail")}
+    ${bookingStepper(1)}
+    <section class="booking-hero"><img src="${item.image}" alt="${item.name}" /><div><h1>${item.name}</h1><p>${item.duration} · ${item.party}</p><b>${item.price}</b></div></section>
+    <h2 class="dark-subtitle">Select Date</h2>
+    <section class="calendar-card"><header><b>October 2026</b></header><div class="calendar-grid">${["Sun","Mon","Tue","Wed","Thu","Fri","Sat", ...Array.from({length: 31}, (_, i) => String(i + 1))].map((day) => `<span class="${day === "12" ? "is-picked" : ""}">${day}</span>`).join("")}</div></section>
+    <button class="dark-primary sticky-action" data-tab="booking-details">Continue</button>
+  </main>`;
+}
+
+function renderBookingDetails() {
+  const item = selectedDarkCharter();
+  return h`<main class="dark-screen dark-tab-screen">${darkHeader("Book a Charter", "booking-date")}
+    ${bookingStepper(2)}
+    <div class="dark-field"><label>Trip</label><select id="darkTripSelect">${darkCharters.map((charter) => `<option value="${charter.id}" ${charter.id === item.id ? "selected" : ""}>${charter.name} — ${charter.price}</option>`).join("")}</select></div>
+    <div class="counter dark-counter"><b>Guests</b><div class="counter-controls"><button class="button" data-party="-1">-</button><span id="partySize">${state.bookingParty}</span><button class="button" data-party="1">+</button></div></div>
+    <h2 class="dark-subtitle">Add-ons</h2>
+    ${[["Captain confirms weather window", "Included"], ["Trip Hub reminders", "Included"], ["Post-trip photo follow-up", "Included"]].map((row) => `<label class="addon-row"><span><input type="checkbox" checked /> ${row[0]}</span><b>${row[1]}</b></label>`).join("")}
+    <div class="dark-field"><label>Contact</label><input id="darkContact" value="Charters@FishHighHook.com" /></div>
+    <div class="dark-field"><label>Special Requests (Optional)</label><textarea id="darkNotes" placeholder="Target species, kids, experience level, date flexibility or special considerations."></textarea></div>
+    <button class="dark-primary sticky-action" data-tab="booking-review">Continue</button>
+  </main>`;
+}
+
+function renderBookingReview() {
+  const item = selectedDarkCharter();
+  const legacy = trip(item.id);
+  const deposit = legacy.deposit || "Captain confirms";
+  return h`<main class="dark-screen dark-tab-screen">${darkHeader("Book a Charter", "booking-details")}
+    ${bookingStepper(3)}
+    <h2 class="dark-subtitle">Review Your Trip</h2>
+    <section class="review-card">
+      ${[["Trip", item.name], ["Date", "October 12, 2026"], ["Guests", String(state.bookingParty)], ["Departure", "25 Mattakeesett Ct"], ["Deposit/Hold", deposit]].map((row) => `<p><span>${row[0]}</span><b>${row[1]}</b></p>`).join("")}
+      <p class="review-total"><span>Rate</span><b>${item.price}</b></p>
+    </section>
+    <p class="deposit-note">No card is charged here. High Hook confirms weather, availability and deposit details before a date is held.</p>
+    <button class="dark-primary sticky-action" data-action="confirm-dark-booking">Confirm Booking</button>
+  </main>`;
+}
+
+function renderBookingConfirmed() {
+  const item = selectedDarkCharter();
+  return h`<main class="dark-screen confirmed-screen">
+    <div class="confirmed-check">${iconSvg("check")}</div><h1>Request Saved!</h1><p>Your High Hook request is saved locally. Send the prepared details to <span>Charters@FishHighHook.com</span> and use Trip Hub for prep.</p>
+    <section class="review-card">
+      ${[["Booking #", "FHH-LOCAL-001"], ["Trip", item.name], ["Date", "October 12, 2026"], ["Guests", String(state.bookingParty)], ["Rate", item.price]].map((row) => `<p><span>${row[0]}</span><b>${row[1]}</b></p>`).join("")}
+    </section>
+    <button class="dark-primary" data-tab="booking-detail">View Booking</button><button class="dark-secondary" data-tab="prep">Open Trip Hub</button>
+  </main>`;
+}
+
+function renderMyBookings() {
+  const filters = ["Upcoming", "Past", "Cancelled"];
+  const activeFilter = filters.includes(state.bookingFilter) ? state.bookingFilter : "Upcoming";
+  const savedRows = state.inquiries.map((item) => ({ date: fmtDate(item.preferredDate), tripName: item.tripName, crew: `${item.partySize} People`, rate: trip(item.tripId).price || "Ask", status: item.status, tripId: item.tripId }));
+  const sampleRows = darkBookings.map((item) => ({ date: item[0], tripName: item[1], crew: item[2], rate: item[3], status: item[4], tripId: item[1].includes("Bass") ? "bass-local" : item[1].includes("Kids") ? "kids-camp" : "bluefin" }));
+  const sourceRows = savedRows.length ? savedRows : sampleRows;
+  const rows = sourceRows.filter((item) => {
+    const status = item.status.toLowerCase();
+    if (activeFilter === "Past") return status.includes("completed");
+    if (activeFilter === "Cancelled") return status.includes("cancel");
+    return !status.includes("completed") && !status.includes("cancel");
+  });
+  return h`<main class="dark-screen dark-tab-screen">${darkHeader("My Bookings")}
+    <div class="dark-segment">${filters.map((filter) => `<button class="${filter === activeFilter ? "is-active" : ""}" data-booking-filter="${filter}">${filter}</button>`).join("")}</div>
+    <div class="dark-list booking-grid">${rows.map((item) => `<button class="booking-row" data-trip="${item.tripId}" data-tab="booking-detail"><span><small>${item.date}</small><b>${item.tripName}</b><em>${item.crew} · ${item.rate}</em></span><mark class="${item.status.toLowerCase().includes("completed") ? "is-complete" : item.status.toLowerCase().includes("cancel") ? "is-cancelled" : ""}">${item.status}</mark></button>`).join("")}</div>
+    ${rows.length ? "" : `<section class="policy-block"><h2>No ${activeFilter.toLowerCase()} bookings</h2><p>Switch filters or book a charter to start a new High Hook trip.</p><button class="dark-primary" data-tab="booking-date">Book a Charter</button></section>`}
+  </main>`;
+}
+
+function renderBookingDetailPage() {
+  const inquiry = matchingInquiries()[0] || state.inquiries[0];
+  const item = inquiry ? darkCharters.find((charter) => charter.id === inquiry.tripId) || selectedDarkCharter() : selectedDarkCharter();
+  const current = trip(item.id);
+  return h`<main class="dark-screen detail-screen">${darkHeader("Booking Details", "bookings")}
+    <section class="booking-hero"><img src="${item.image}" alt="${item.name}" /><div><h1>${item.name}</h1><p>${inquiry ? `${fmtDate(inquiry.preferredDate)} · ${inquiry.partySize} People` : "October 12, 2026 · 4 People"}</p><b>${item.price}</b></div></section>
+    <div class="booking-actions"><button data-tab="booking-date">${iconSvg("clock")} Reschedule</button><button data-tab="prep">${iconSvg("checklist")} Trip Hub</button><a href="mailto:Charters@FishHighHook.com">${iconSvg("envelope")} Message</a></div>
+    <h2 class="dark-subtitle">Trip Details</h2>
+    <section class="review-card">${[["Meeting Time", "Captain confirms"], ["Departure Location", "25 Mattakeesett Ct, Duxbury, MA 02332"], ["Deposit/Hold", current.deposit], ["What to Bring", "Soft bag, drinks, snacks, sunglasses, hat, layers and soft-soled shoes"]].map((row) => `<p><span>${row[0]}</span><b>${row[1]}</b></p>`).join("")}</section>
+    <button class="dark-primary sticky-action" data-tab="policy">View / Manage Booking</button>
+  </main>`;
+}
+
+function renderPolicy() {
+  return h`<main class="dark-screen dark-tab-screen">${darkHeader("Cancellation Policy", "booking-detail")}
+    ${[["Weather", "Trips may be rescheduled or cancelled due to unsafe weather conditions. The captain has final authority on go/no-go decisions."], ["Deposit & Hold", "No date is held until High Hook confirms availability and deposit details. This local app prototype does not charge a card."], ["Cancellations by You", "Cancellation timing and refund details should be confirmed directly with High Hook before booking."], ["No Shows", "No shows or late arrivals may be non-refundable once a trip is confirmed."], ["Questions?", "Contact High Hook anytime before your trip."]].map((item) => `<section class="policy-block"><h2>${item[0]}</h2><p>${item[1]}</p></section>`).join("")}
+    <button class="dark-primary sticky-action" data-tab="contact-page">Contact Us</button>
+  </main>`;
+}
+
+function renderDarkTripHub() {
+  const current = trip();
+  const inquiry = matchingInquiries()[0] || state.inquiries[0];
+  const checked = new Set(state.checklist[current.id] || checklistItems(current).slice(0, 2));
+  return h`<main class="dark-screen dark-tab-screen">${darkHeader("Trip Hub", "profile")}
+    <section class="booking-hero"><img src="${assets.tripImages[current.id] || assets.heroDawn}" alt="${current.name}" /><div><h1>${current.name}</h1><p>${inquiry ? `${inquiry.name} · ${fmtDate(inquiry.preferredDate)}` : current.bestFor}</p><b>${inquiry ? inquiry.status : current.deposit}</b></div></section>
+    <section class="dark-status-grid">
+      <article>${iconSvg("sun")}<span>Weather</span><b>${state.weather.localCall}</b></article>
+      <article>${iconSvg("clock")}<span>Duration</span><b>${current.duration}</b></article>
+      <article>${iconSvg("checklist")}<span>Prep</span><b>${checked.size}/${checklistItems(current).length}</b></article>
+    </section>
+    ${inquiry ? `<section class="review-card">
+      ${[["Client", `${inquiry.name} · ${inquiry.email}`], ["Preferred date", fmtDate(inquiry.preferredDate)], ["Party size", `${inquiry.partySize} anglers`], ["Availability", availabilitySummary(inquiry)]].map((row) => `<p><span>${row[0]}</span><b>${escapeHtml(row[1])}</b></p>`).join("")}
+    </section>` : `<section class="policy-block"><h2>Start this Trip Hub</h2><p>Send a charter request and this screen becomes the client-specific place for status, weather, reminders, dock details and prep.</p><button class="dark-primary" data-tab="booking-date">Request this trip</button></section>`}
+    ${state.captainMode && inquiry ? `<section class="policy-block"><h2>Captain Status</h2><div class="chip-row">${["Email draft ready", "Awaiting captain", "Captain confirmed", "Deposit due"].map((status) => `<button class="status-button ${inquiry.status === status ? "is-active" : ""}" data-status="${status}" data-id="${inquiry.id}">${status}</button>`).join("")}</div></section>` : `<section class="policy-block"><h2>Captain updates</h2><p>Status editing is hidden from clients. Unlock Captain Mode from Contact for local review controls.</p></section>`}
+    <section class="policy-block"><h2>Dock Arrival</h2>${[["Departure", "25 Mattakeesett Ct, Duxbury, MA 02332"], ["Bring", "Soft bag, drinks, snacks, sunglasses, hat, layers and soft-soled shoes"], ["Weather call", "Watch for the captain's go/no-go text the evening before"]].map((row) => `<p><span>${row[0]}</span><b>${row[1]}</b></p>`).join("")}<a class="dark-primary dark-link-button" href="https://maps.apple.com/?q=25%20Mattakeesett%20Ct%20Duxbury%20MA%2002332">Open in Maps</a></section>
+    <section class="policy-block"><h2>Prep Checklist</h2>${checklistItems(current).map((item) => `<button class="dark-toggle-row" data-check="${escapeHtml(item)}"><span>${checked.has(item) ? "✓" : "○"} ${item}</span></button>`).join("")}</section>
+    <section class="policy-block"><h2>Trip Reminders</h2>${reminderKinds.map((kind) => `<button class="dark-toggle-row" data-reminder="${kind[0]}"><span>${kind[1]}<small>${kind[2]}</small></span><span class="switch ${state.reminders[`${current.id}-${kind[0]}`] ? "is-on" : ""}"></span></button>`).join("")}</section>
+  </main>`;
+}
+
+function renderDarkReports() {
+  const reportPhotos = [assets.gallery[1], assets.gallery[0], assets.heroDawn, assets.tripImages.bluefin, assets.tripImages["haddock-cod"], assets.tripImages["kids-camp"]];
+  return h`<main class="dark-screen dark-tab-screen">${darkHeader("The Catch", "profile")}
+    <section class="gallery-grid-dark">${reportPhotos.map((src) => {
+      const index = Math.max(0, galleryPhotos.findIndex((photo) => photo.src === src));
+      return `<button data-photo-index="${index}"><img src="${src}" alt="High Hook catch report" /></button>`;
+    }).join("")}</section>
+    <div class="dark-list report-grid">${state.reports.map((item) => `<article class="policy-block"><h2>${escapeHtml(item.title)}</h2><p><b>${escapeHtml(item.date)} · ${escapeHtml(item.condition)}</b></p><p>${escapeHtml(item.note)}</p></article>`).join("")}</div>
+    ${state.captainMode ? `<section class="policy-block"><h2>Publish Local Report</h2><div class="dark-field"><label>Title</label><input id="reportTitle" value="Fresh captain report" /></div><div class="dark-field"><label>Condition</label><input id="reportCondition" value="2 ft swell" /></div><div class="dark-field"><label>Note</label><textarea id="reportNote">Add a short deck report for local review.</textarea></div><button class="dark-primary" data-action="publish-report">Publish Report</button></section>` : `<section class="policy-block"><h2>Reports are client-safe</h2><p>Publishing controls stay hidden until Captain Mode is unlocked.</p></section>`}
+  </main>`;
+}
+
+function renderDarkRegulations() {
+  return h`<main class="dark-screen dark-tab-screen">${darkHeader("Regulations", "profile")}
+    ${regulations.map((item) => `<section class="policy-block"><h2>${iconSvg(item[4])} ${item[0]}</h2><p>${item[1]}</p><p><b>${item[2]}</b></p><a class="dark-secondary dark-link-button" href="${item[3]}">Open Official Source</a></section>`).join("")}
+  </main>`;
+}
+
+function renderDarkLocalData() {
+  return h`<main class="dark-screen dark-tab-screen">${darkHeader("Data & Privacy", "settings")}
+    <section class="policy-block"><h2>Local Data</h2><p>${localDataSummary()}</p><button class="dark-primary" data-modal="export">Export Local Data</button><button class="dark-secondary" data-action="clear-data">Clear Local Data</button></section>
+    <section class="policy-block"><h2>Privacy</h2><p>This local prototype stores booking requests, checklist progress and reminders in this browser only. Production still needs server-side deletion/export policy once CRM or Supabase persistence is connected.</p></section>
+    <section class="policy-block"><h2>Payments</h2><p>No card is charged in the app. The live High Hook pricing page says half-day trips require a $100 deposit, full-day tuna trips require a $300 deposit, and kids camps/certificates require full payment at sign-up or ordering.</p></section>
+  </main>`;
+}
+
+function renderDarkWeather() {
+  const hourly = [
+    ["6 AM", "58°", "6 kt", "cloud-sun"],
+    ["9 AM", "64°", "8 kt", "sun"],
+    ["12 PM", "71°", "10 kt", "sun"],
+    ["3 PM", "73°", "12 kt", "cloud-sun"],
+    ["6 PM", "68°", "9 kt", "cloud"],
+  ];
+  const tides = [
+    ["Low", "0.4 ft", "4:12 AM"],
+    ["High", "9.8 ft", "10:28 AM"],
+    ["Low", "0.6 ft", "4:41 PM"],
+    ["High", "10.1 ft", "10:55 PM"],
+  ];
+  const metrics = [
+    ["Wind", state.weather.metrics.find((metric) => metric[0] === "Wind")?.[1] || "8 kt SW", "wind"],
+    ["Swell", state.weather.metrics.find((metric) => metric[0] === "Swell")?.[1] || "1.5 ft", "waves"],
+    ["Tide", state.weather.metrics.find((metric) => metric[0] === "Tide")?.[1] || "Outgoing 8:40", "tide"],
+    ["Water", state.weather.metrics.find((metric) => metric[0] === "Water")?.[1] || "62F", "sun"],
+  ];
+  return h`<main class="dark-screen dark-tab-screen">${darkHeader("Weather & Tides", "profile")}
+    <section class="dark-weather-hero">
+      <div><span>Duxbury Bay · Now</span><h1>68°</h1><p>Partly cloudy · feels 66°</p></div>
+      <i>${iconSvg("cloud-sun")}</i>
+    </section>
+    <section class="dark-status-grid">
+      <article>${iconSvg("sun")}<span>Local</span><b>${state.weather.localCall}</b></article>
+      <article>${iconSvg("waves")}<span>Offshore</span><b>${state.weather.offshoreCall}</b></article>
+      <article>${iconSvg("clock")}<span>Next</span><b>${escapeHtml(state.weather.nextUpdate)}</b></article>
+    </section>
+    <section class="policy-block"><h2>Marine Metrics</h2><div class="dark-metric-grid">${metrics.map((item) => `<article>${iconSvg(item[2])}<span>${item[0]}</span><b>${item[1]}</b></article>`).join("")}</div></section>
+    <section class="policy-block"><h2>Hourly</h2><div class="dark-hourly">${hourly.map((item) => `<article><span>${item[0]}</span>${iconSvg(item[3])}<b>${item[1]}</b><small>${item[2]}</small></article>`).join("")}</div></section>
+    <section class="policy-block"><h2>Tides Today</h2>${tides.map((item) => `<p><span>${item[0]}</span><b>${item[1]} · ${item[2]}</b></p>`).join("")}</section>
+    <section class="policy-block"><h2>Captain's Note</h2><p>${escapeHtml(state.weather.note)}</p><p><span>Updated</span><b>${fmtDate(state.weather.updatedAt)}</b></p></section>
+    ${state.captainMode ? renderDarkWeatherEditor() : `<section class="policy-block"><h2>Captain tools locked</h2><p>Clients see the latest captain call here. Unlock Captain Mode from Contact to update weather status locally.</p></section>`}
+  </main>`;
+}
+
+function renderDarkWeatherEditor() {
+  return `<section class="policy-block"><h2>Captain Weather Controls</h2>
+    <div class="dark-field"><label>Local bass</label><select id="localCall"><option>Green</option><option>Watch</option><option>Hold</option></select></div>
+    <div class="dark-field"><label>Offshore</label><select id="offshoreCall"><option>Green</option><option>Watch</option><option>Hold</option></select></div>
+    <div class="dark-field"><label>Next update</label><input id="nextUpdate" value="${escapeHtml(state.weather.nextUpdate)}" /></div>
+    <div class="dark-field"><label>Captain note</label><textarea id="weatherNote">${escapeHtml(state.weather.note)}</textarea></div>
+    <button class="dark-primary" data-action="save-weather">Save update</button>
+    <button class="dark-secondary" data-action="reset-weather">Reset sample</button>
+  </section>`;
+}
+
+function renderGalleryDark() {
+  const filters = ["All", "Offshore", "Nearshore", "Inshore"];
+  const activeFilter = filters.includes(state.galleryFilter) ? state.galleryFilter : "All";
+  const photos = activeFilter === "All" ? galleryPhotos : galleryPhotos.filter((photo) => photo.category === activeFilter);
+  return h`<main class="dark-screen dark-tab-screen">${darkHeader("Gallery")}
+    <div class="dark-segment">${filters.map((filter) => `<button class="${filter === activeFilter ? "is-active" : ""}" data-gallery-filter="${filter}">${filter}</button>`).join("")}</div>
+    <section class="gallery-grid-dark">${photos.map((photo) => `<button data-photo-index="${galleryPhotos.indexOf(photo)}"><img src="${photo.src}" alt="${escapeHtml(photo.title)}" /></button>`).join("")}</section>
+  </main>`;
+}
+
+function renderPhotoViewer() {
+  const index = Math.max(0, Math.min(galleryPhotos.length - 1, state.selectedPhotoIndex));
+  const photo = galleryPhotos[index];
+  const isLiked = state.likedPhotos.includes(index);
+  return h`<main class="dark-screen photo-viewer">${darkHeader(`${index + 1} / ${galleryPhotos.length}`, "gallery")}
+    <img src="${photo.src}" alt="${escapeHtml(photo.title)}" />
+    <div class="photo-actions"><button class="${isLiked ? "is-liked" : ""}" data-action="toggle-photo-like">${iconSvg("star")}<span>${isLiked ? "Liked" : "Like"}</span></button><button data-action="download-photo">${iconSvg("share")}<span>Download</span></button><button data-action="share-photo">${iconSvg("share")}<span>Share</span></button><button data-action="photo-info">${iconSvg("eye")}<span>Info</span></button></div>
+    <p class="photo-caption">${escapeHtml(photo.title)} · ${escapeHtml(photo.category)}</p>
+    <div class="photo-thumbs">${galleryPhotos.slice(0, 6).map((item, thumbIndex) => `<button class="${thumbIndex === index ? "is-active" : ""}" data-photo-index="${thumbIndex}"><img src="${item.src}" alt="" /></button>`).join("")}</div>
+  </main>`;
+}
+
+function renderCrew() {
+  return h`<main class="dark-screen dark-tab-screen">${darkHeader("Our Crew", "profile")}
+    <div class="dark-list crew-grid">${darkCrew.map((person) => `<article class="crew-row"><img src="${person[3]}" alt="${person[0]}" /><span><b>${person[0]}</b><small>${person[1]}</small><em>${person[2]}</em></span></article>`).join("")}</div>
+    <button class="dark-primary sticky-action" data-tab="contact-page">Meet the Crew</button>
+  </main>`;
+}
+
+function renderLocations() {
+  return h`<main class="dark-screen dark-tab-screen">${darkHeader("Locations", "profile")}
+    <section class="map-card"><img src="${assets.heroDawn}" alt="Map preview" /></section>
+    <div class="dark-list location-grid">${darkLocations.map((item, index) => `<button class="location-row" data-location-index="${index}">${iconSvg("location")}<span><b>${item[0]}</b><small>${item[1]}</small></span></button>`).join("")}</div>
+  </main>`;
+}
+
+function renderLocationDetail() {
+  const location = darkLocations[Math.max(0, Math.min(darkLocations.length - 1, state.selectedLocationIndex))] || darkLocations[0];
+  const isDock = location[0] === "High Hook Dock";
+  const query = encodeURIComponent(isDock ? "25 Mattakeesett Ct Duxbury MA 02332" : `${location[0]} Massachusetts`);
+  return h`<main class="dark-screen dark-tab-screen">${darkHeader("", "locations")}
+    <section class="map-card"><img src="${location[2]}" alt="${escapeHtml(location[0])} map preview" /></section>
+    <section class="location-detail-card"><h1>${location[0]}</h1><p>${location[1]}</p><a class="dark-primary dark-link-button" href="https://maps.apple.com/?q=${query}">Get Directions</a></section>
+    <h2 class="dark-subtitle">Details</h2><p class="dark-muted">Departure details and exact meeting time are confirmed by the captain before the trip. Keep large coolers in the vehicle until the boat returns.</p>
+    <h2 class="dark-subtitle">Amenities</h2><div class="amenities"><span>${iconSvg("card")}</span><span>${iconSvg("users")}</span><span>${iconSvg("bag")}</span><span>${iconSvg("anchor")}</span></div>
+  </main>`;
+}
+
+function renderContactPage() {
+  const contactRows = [
+    ["phone", "Call", "781-291-1304", "tel:7812911304"],
+    ["envelope", "Email", "Charters@FishHighHook.com", "mailto:Charters@FishHighHook.com"],
+    ["location", "Dock", "25 Mattakeesett Ct, Duxbury, MA", "https://maps.apple.com/?q=25%20Mattakeesett%20Ct%20Duxbury%20MA%2002332"],
+    ["clock", "Response", "Captain typically replies within 24 hours", ""],
+  ];
+  return h`<main class="dark-screen dark-tab-screen">${darkHeader("Contact Us", "profile")}
+    ${contactRows.map((item) => item[3] ? `<a class="contact-row" href="${item[3]}">${iconSvg(item[0])}<span><b>${item[1]}</b><small>${item[2]}</small></span></a>` : `<button class="contact-row" data-action="response-info">${iconSvg(item[0])}<span><b>${item[1]}</b><small>${item[2]}</small></span></button>`).join("")}
+    <section class="policy-block"><h2>Capt. Willie Woodruff</h2><p>Born and raised in Duxbury, MA. USCG licensed, CPR & First Aid certified, and focused on Massachusetts Bay, Stellwagen, Race Point and local South Shore fishing.</p></section>
+    <section class="policy-block"><h2>Captain Mode</h2><p>${state.captainMode ? "Unlocked for local review on this device." : "Client-safe mode is active. Unlock local review controls for Weather, Reports and Trip Hub status."}</p><button class="dark-primary" data-action="${state.captainMode ? "lock-captain" : "unlock-captain"}">${state.captainMode ? "Lock Captain Mode" : "Unlock Captain Mode"}</button></section>
+    <h2 class="dark-subtitle">More</h2><div class="settings-list"><button data-tab="locations">${iconSvg("location")}<span>Locations</span>${iconSvg("arrow")}</button><button data-tab="regulations">${iconSvg("shield")}<span>Regulations</span>${iconSvg("arrow")}</button><button data-tab="local-data">${iconSvg("doc")}<span>Local Data</span>${iconSvg("arrow")}</button></div>
+  </main>`;
+}
+
+function renderNotifications() {
+  const read = new Set(state.readNotifications);
+  return h`<main class="dark-screen dark-tab-screen">${darkHeader("Notifications", "profile")}
+    <button class="dark-link align-end" data-action="mark-notifications-read">Mark all as read</button>
+    <div class="dark-list notification-grid">${darkNotifications.map((item, index) => {
+      const id = `notification-${index}`;
+      return `<button class="notification-row ${read.has(id) ? "is-read" : ""}" data-notification-id="${id}"><span>${iconSvg(item[3])}</span><div><b>${item[0]}</b><p>${item[1]}</p></div><small>${read.has(id) ? "Read" : item[2]}</small></button>`;
+    }).join("")}</div>
+  </main>`;
+}
+
+function renderProfile() {
+  return h`<main class="dark-screen dark-tab-screen profile-screen">${darkHeader("", "", "settings")}
+    <img class="avatar" src="${assets.gallery[1]}" alt="High Hook angler" /><h1>High Hook Guest</h1><p>Charters@FishHighHook.com<br />Duxbury, Massachusetts</p>
+    <div class="settings-list">${[
+      ["Personal Information", "person", "contact-page"],
+      ["My Bookings", "calendar", "bookings"],
+      ["Payment Methods", "card", "local-data"],
+      ["Address Book", "location", "locations"],
+      ["Change Password", "lock", "forgot-password"],
+      ["Log Out", "arrow", "login"],
+    ].map((item) => `<button data-tab="${item[2]}">${iconSvg(item[1])}<span>${item[0]}</span>${iconSvg("arrow")}</button>`).join("")}</div>
+    <h2 class="dark-subtitle">Explore</h2>
+    <div class="settings-list">${[
+      ["Trip Hub", "checklist", "prep"],
+      ["Reports", "images", "reports"],
+      ["Notifications", "bell", "notifications"],
+      ["Crew", "users", "crew"],
+      ["Weather & Tides", "cloud-sun", "weather"],
+      ["Regulations", "shield", "regulations"],
+      ["Contact High Hook", "envelope", "contact-page"],
+    ].map((item) => `<button data-tab="${item[2]}">${iconSvg(item[1])}<span>${item[0]}</span>${iconSvg("arrow")}</button>`).join("")}</div>
+  </main>`;
+}
+
+function renderSettings() {
+  const settingRows = [
+    ["push", "Push Notifications"],
+    ["email", "Email Notifications"],
+    ["darkMode", "Dark Mode"],
+  ];
+  return h`<main class="dark-screen dark-tab-screen">${darkHeader("Settings", "profile")}
+    <h2 class="dark-subtitle">Preferences</h2>
+    <div class="settings-list">${settingRows.map((item) => `<button data-setting="${item[0]}"><span>${item[1]}</span><span class="switch ${state.settings[item[0]] ? "is-on" : ""}"></span></button>`).join("")}</div>
+    <h2 class="dark-subtitle">App</h2><div class="settings-list"><button><span>Language</span><b>English</b>${iconSvg("arrow")}</button></div>
+    <h2 class="dark-subtitle">About</h2><div class="settings-list"><button data-tab="local-data"><span>Privacy Policy</span>${iconSvg("arrow")}</button><button data-tab="policy"><span>Terms of Service</span>${iconSvg("arrow")}</button><button data-tab="regulations"><span>Regulations</span>${iconSvg("arrow")}</button><button><span>App Version</span><b>1.0.0</b></button></div>
+  </main>`;
+}
+
 function renderDock() {
   const tabs = [
-    { tab: "trips", icon: "home", label: "Home" },
-    { tab: "trip-list", icon: "anchor", label: "Trips" },
-    { tab: "weather", icon: "sun", label: "Weather" },
-    { tab: "book", icon: "calendar", label: "Book" },
-    { tab: "contact", icon: "ellipsis", label: "More" },
+    { tab: "home", icon: "home", label: "Home" },
+    { tab: "charters", icon: "anchor", label: "Trips" },
+    { tab: "weather", icon: "cloud-sun", label: "Weather" },
+    { tab: "gallery", icon: "images", label: "Gallery" },
+    { tab: "profile", icon: "person", label: "Profile" },
   ];
+  const dockGroups = {
+    home: ["home"],
+    charters: ["charters", "charter-detail"],
+    weather: ["weather"],
+    gallery: ["gallery", "photo-viewer"],
+    profile: ["profile", "bookings", "booking-detail", "policy", "prep", "settings", "contact", "crew", "locations", "location-detail", "notifications", "reports", "regulations", "local-data"],
+  };
   return `<nav class="dock" aria-label="High Hook navigation">${tabs.map((item) => {
-    const isActive = state.tab === item.tab;
+    const isActive = dockGroups[item.tab].includes(state.tab);
     return `<button class="dock-button ${isActive ? "is-active" : ""}" data-tab="${item.tab}"><span>${iconSvg(item.icon)}</span><span>${item.label}</span></button>`;
   }).join("")}</nav>`;
 }
@@ -1052,24 +1608,59 @@ ${localDataSummary()}`;
 
 function render() {
   const content = {
-    trips: renderTrips,
-    "trip-list": renderTripLineup,
-    weather: renderWeather,
-    book: renderBookPage,
-    prep: renderPrep,
-    reports: renderReports,
-    contact: renderContact,
-  }[state.tab]();
-  app.innerHTML = `${state.captainMode ? '<div class="captain-banner">Captain Mode unlocked on this device</div>' : ""}${content}${renderDock()}${renderModal()}`;
+    onboarding: renderOnboarding,
+    login: renderLogin,
+    "sign-up": renderSignUp,
+    "forgot-password": renderForgotPassword,
+    home: renderDarkHome,
+    charters: renderDarkCharters,
+    "charter-detail": renderDarkCharterDetail,
+    "booking-date": renderBookingDate,
+    "booking-details": renderBookingDetails,
+    "booking-review": renderBookingReview,
+    "booking-confirmed": renderBookingConfirmed,
+    bookings: renderMyBookings,
+    "booking-detail": renderBookingDetailPage,
+    policy: renderPolicy,
+    gallery: renderGalleryDark,
+    "photo-viewer": renderPhotoViewer,
+    crew: renderCrew,
+    locations: renderLocations,
+    "location-detail": renderLocationDetail,
+    "contact-page": renderContactPage,
+    notifications: renderNotifications,
+    profile: renderProfile,
+    settings: renderSettings,
+    prep: renderDarkTripHub,
+    reports: renderDarkReports,
+    regulations: renderDarkRegulations,
+    "local-data": renderDarkLocalData,
+    trips: renderDarkCharters,
+    "trip-list": renderDarkCharters,
+    weather: renderDarkWeather,
+    book: renderBookingDate,
+    contact: renderContactPage,
+  }[state.tab] || renderDarkHome;
+  const authTabs = ["onboarding", "login", "sign-up", "forgot-password", "booking-confirmed"];
+  app.innerHTML = `${state.captainMode ? '<div class="captain-banner">Captain Mode unlocked on this device</div>' : ""}${content()}${authTabs.includes(state.tab) ? "" : renderDock()}${renderModal()}`;
   bind();
 }
 
 function persist() {
+  store.set("highHook.web.hasSeenOnboarding", !["onboarding", "login", "sign-up", "forgot-password"].includes(state.tab));
   store.set("highHook.web.captainMode", state.captainMode);
   store.set("highHook.web.inquiries", state.inquiries);
   store.set("highHook.web.reminders", state.reminders);
   store.set("highHook.web.checklist", state.checklist);
   store.set("highHook.web.reports", state.reports);
+  store.set("highHook.web.selectedLocationIndex", state.selectedLocationIndex);
+  store.set("highHook.web.bookingFilter", state.bookingFilter);
+  store.set("highHook.web.charterFilter", state.charterFilter);
+  store.set("highHook.web.galleryFilter", state.galleryFilter);
+  store.set("highHook.web.selectedPhotoIndex", state.selectedPhotoIndex);
+  store.set("highHook.web.likedPhotos", state.likedPhotos);
+  store.set("highHook.web.readNotifications", state.readNotifications);
+  store.set("highHook.web.settings", state.settings);
   store.set("highHook.web.weather", state.weather);
 }
 
@@ -1085,9 +1676,47 @@ function bind() {
   }));
   document.querySelectorAll("[data-modal]").forEach((button) => button.addEventListener("click", () => { state.modal = button.dataset.modal; render(); }));
   document.querySelectorAll("[data-action]").forEach((button) => button.addEventListener("click", handleAction));
+  document.querySelectorAll("[data-charter-filter]").forEach((button) => button.addEventListener("click", () => {
+    state.charterFilter = button.dataset.charterFilter;
+    persist();
+    render();
+  }));
+  document.querySelectorAll("[data-booking-filter]").forEach((button) => button.addEventListener("click", () => {
+    state.bookingFilter = button.dataset.bookingFilter;
+    persist();
+    render();
+  }));
+  document.querySelectorAll("[data-gallery-filter]").forEach((button) => button.addEventListener("click", () => {
+    state.galleryFilter = button.dataset.galleryFilter;
+    persist();
+    render();
+  }));
+  document.querySelectorAll("[data-photo-index]").forEach((button) => button.addEventListener("click", () => {
+    state.selectedPhotoIndex = Number(button.dataset.photoIndex);
+    persist();
+    setTab("photo-viewer");
+  }));
+  document.querySelectorAll("[data-notification-id]").forEach((button) => button.addEventListener("click", () => {
+    if (!state.readNotifications.includes(button.dataset.notificationId)) {
+      state.readNotifications.push(button.dataset.notificationId);
+    }
+    persist();
+    render();
+  }));
+  document.querySelectorAll("[data-location-index]").forEach((button) => button.addEventListener("click", () => {
+    state.selectedLocationIndex = Number(button.dataset.locationIndex);
+    persist();
+    setTab("location-detail");
+  }));
+  document.querySelectorAll("[data-setting]").forEach((button) => button.addEventListener("click", () => {
+    state.settings[button.dataset.setting] = !state.settings[button.dataset.setting];
+    persist();
+    render();
+  }));
   document.querySelectorAll("[data-party]").forEach((button) => button.addEventListener("click", () => {
     const node = document.querySelector("#partySize");
-    node.textContent = Math.max(1, Math.min(6, Number(node.textContent) + Number(button.dataset.party)));
+    state.bookingParty = Math.max(1, Math.min(6, Number(node.textContent) + Number(button.dataset.party)));
+    node.textContent = state.bookingParty;
   }));
   document.querySelectorAll("[data-status]").forEach((button) => button.addEventListener("click", () => {
     const item = state.inquiries.find((record) => record.id === button.dataset.id);
@@ -1170,6 +1799,53 @@ function handleAction(event) {
   }
   if (action === "share-packet") shareText(packetText());
   if (action === "copy-export") shareText(document.querySelector("pre").textContent);
+  if (action === "response-info") {
+    alert("High Hook typically replies within 24 hours. For urgent same-day trip changes, call 781-291-1304.");
+  }
+  if (action === "mark-notifications-read") {
+    state.readNotifications = darkNotifications.map((_, index) => `notification-${index}`);
+    persist();
+    render();
+  }
+  if (action === "toggle-photo-like") {
+    const index = Math.max(0, Math.min(galleryPhotos.length - 1, state.selectedPhotoIndex));
+    state.likedPhotos = state.likedPhotos.includes(index) ? state.likedPhotos.filter((item) => item !== index) : [...state.likedPhotos, index];
+    persist();
+    render();
+  }
+  if (action === "share-photo") {
+    const photo = galleryPhotos[state.selectedPhotoIndex] || galleryPhotos[0];
+    shareText(`High Hook Charters photo: ${photo.title}\n${photo.src}`);
+  }
+  if (action === "download-photo") {
+    const photo = galleryPhotos[state.selectedPhotoIndex] || galleryPhotos[0];
+    const link = document.createElement("a");
+    link.href = photo.src;
+    link.download = `high-hook-${photo.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}.jpg`;
+    link.click();
+  }
+  if (action === "photo-info") {
+    const photo = galleryPhotos[state.selectedPhotoIndex] || galleryPhotos[0];
+    alert(`${photo.title}\nCategory: ${photo.category}\nHigh Hook Charters gallery`);
+  }
+  if (action === "confirm-dark-booking") {
+    const item = selectedDarkCharter();
+    const current = trip(item.id);
+    state.inquiries.unshift({
+      id: `FHH-${Date.now()}`,
+      tripId: item.id,
+      tripName: item.name,
+      name: "High Hook Guest",
+      email: document.querySelector("#darkContact")?.value || "Charters@FishHighHook.com",
+      partySize: state.bookingParty,
+      preferredDate: "2026-10-12",
+      notes: `Availability: Captain can pick best window; backup October 13, 2026.\n\n${current.details}`,
+      submittedAt: new Date().toISOString(),
+      status: "Email draft ready",
+    });
+    persist();
+    setTab("booking-confirmed");
+  }
 }
 
 function unlockCaptain() {

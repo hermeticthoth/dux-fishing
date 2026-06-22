@@ -96,6 +96,144 @@ xcodebuild -project HighHookCharters.xcodeproj -scheme HighHookCharters -destina
 - In-app browser Lovable-tab verification: compared `/private/tmp/hook-up-trips-reference-mobile.png`, `/private/tmp/hook-up-book-reference-mobile.png` and `/private/tmp/hook-up-more-reference-mobile.png` against `/private/tmp/highhook-exact-ui-trips-mobile.png`, `/private/tmp/highhook-exact-ui-book-mobile.png` and `/private/tmp/highhook-exact-ui-more-mobile.png`.
 - In-app browser mobile smoke: all five primary tabs rendered expected headings, active dock states and yellow/royal-blue styling at 393x852 with no console errors, no black text, no horizontal overflow, seven Trips images, hidden extra booking fields and two More images.
 - Booking form accessibility verification: `Your name` and `Phone` fields were filled by associated labels, confirming the full-page booking labels are programmatically linked. Browser policy blocked clicking `Request booking` because it opens an external `mailto:` handoff, so submit was not re-executed in that browser pass.
+- Playwright dark UI workflow verification: local static app at `http://127.0.0.1:4173` rendered the new dark complete-app flow without console errors, warnings or horizontal overflow. Fresh onboarding/login, Home, Charters, Charter Detail, Booking Date, Booking Details party stepper, Booking Review, Booking Confirmed, Booking Details, Cancellation Policy, Contact, Gallery, Photo Viewer, Profile, Crew and Weather & Tides routes were exercised. Desktop home was also checked at 1280x900. Browser plugin was unavailable, so regular Playwright was used. Screenshots were archived in the second brain under `assets/High Hook Charters/dark-ui-qa/`.
+
+## 2026-06-22 15:38 Dark UI Workflow Local Pass
+
+- Implemented the supplied dark complete-app mock board as the active static web workflow in `app.js` and `styles.css`.
+- Added dark screens for onboarding, login, sign up, reset password, Home, Charters, Charter Detail, booking date/details/review/confirmation, My Bookings, Booking Detail, Cancellation Policy, Gallery, Photo Viewer, Crew, Locations, Location Detail, Contact, Notifications, Profile and Settings.
+- Updated the dock to match the supplied dark mock set: `Home`, `Charters`, `Bookings`, `Gallery`, `More`.
+- Kept prior Weather/Captain Call information reachable from Profile as `Weather & Tides` so existing app content remains accessible while following the new dark mock UI.
+- Fixed mock-polish issues found during review: back arrow direction, fallback amenity icon, Profile settings icon, Profile support-screen navigation, and bottom dock reachability for Profile controls.
+- Verification passed with `node --check app.js`, `git diff --check`, and Playwright mobile workflow plus desktop home checks.
+- Not deployed to Vercel per Jeff's instruction to hold deployment until the project is complete.
+
+## 2026-06-22 15:53 Dark Workflow Content Integration Pass
+
+- Replaced placeholder Gulf/Orange Beach mock content with High Hook's actual Duxbury/Massachusetts Bay context: Bluefin Tuna, Haddock/Cod, Striped Bass Local, Race Point Striped Bass, Shark Fishing, Kids Camp and Ladies Night Fishing.
+- Updated contact and payment facts from the live High Hook website: `781-291-1304`, `Charters@FishHighHook.com`, `25 Mattakeesett Ct, Duxbury, MA 02332`, `$100` half-day deposit, `$300` full-day tuna deposit, and full payment for kids camps/certificates.
+- Added dark-native operational routes for Trip Hub, Reports, Regulations and Data & Privacy, and connected them through Profile, Settings and Contact.
+- Booking now preserves selected charter and party size through date/details/review/confirmation, creates a matching local inquiry, fixes local-date formatting for `YYYY-MM-DD`, and routes into the matching Trip Hub.
+- Verification passed with `node --check app.js`, `git diff --check`, and Playwright mobile route smoke covering onboarding, Home, Charters, detail, date/details/review/confirmed booking, Trip Hub, Gallery, My Bookings, Profile, Reports, Regulations, Contact and Local Data with no console errors/warnings or horizontal overflow.
+- Viewport screenshots were archived to the second brain under `assets/High Hook Charters/dark-ui-qa-2/`.
+- Still not committed, pushed or deployed to Vercel.
+
+## 2026-06-22 16:01 Dark Weather/Admin Pass
+
+- Replaced the remaining reachable light/Lovable Weather surface with a dark-native `Weather & Tides` route matching the dark workflow.
+- Added dark marine conditions cards, local/offshore/next-update status, hourly strip, tide rows, captain note and a dark Captain Weather Controls panel.
+- Updated auth defaults to High Hook-specific contact info instead of placeholder account details.
+- Reworked the Captain Mode banner into a compact fixed status pill so it no longer covers dark headers.
+- Verified Captain Mode unlock, Weather status save, Reports publishing controls and Local Data export modal with Playwright. No console errors/warnings or horizontal overflow.
+- QA screenshots archived under `assets/High Hook Charters/dark-ui-qa-3/`.
+- Still not committed, pushed or deployed to Vercel.
+
+## 2026-06-22 16:11 Dark Interaction/Navigation Pass
+
+- Converted visual-only dark segmented controls into stateful filters for Charters and Gallery, persisted locally under `highHook.web.charterFilter` and `highHook.web.galleryFilter`.
+- Updated the bottom dock to Jeff's requested primary tabs: `Home`, `Trips`, `Weather`, `Gallery`, `Book`.
+- Redirected legacy `trips`, `trip-list`, `book` and `contact` route keys into dark-native routes so stale light screens are no longer reachable through app state.
+- Made Notifications rows stateful: tap a row to mark it read, or use `Mark all as read`; read state is persisted locally.
+- Made the Gallery photo viewer stateful with selected-photo persistence, active thumbnails, a working Like/Liked state, share/copy text handoff, image download link and photo info alert.
+- Corrected the remaining stale dark booking contact default to `Charters@FishHighHook.com` and fixed a legacy fallback label that still displayed `willie@fishhighhook.com`.
+- Verification passed with `node --check app.js`, `git diff --check`, a CSS/source sweep for stale black text/email values, and Playwright mobile interaction checks across Home/footer, Trips Nearshore filter, Weather, Gallery Inshore photo Like, Notifications read state and Booking Review. No console errors/warnings.
+- QA screenshots archived under `assets/High Hook Charters/dark-ui-qa-4/`: Home footer, Trips Nearshore filter, Weather, liked Gallery photo, read Notifications and Booking Review.
+- Still not committed, pushed or deployed to Vercel.
+
+## 2026-06-22 16:18 Dark Account/Utility Interaction Pass
+
+- Restored full account/support reachability after the footer changed by wiring the dark header menu button to Profile and adding `My Bookings` to the Profile account list.
+- Made My Bookings tabs functional with persisted `Upcoming`, `Past` and `Cancelled` filters, including empty-state handling and selected trip carry-through into booking details.
+- Made Locations stateful: list rows now select the requested location and render the matching detail card/image/Apple Maps query instead of always showing the dock.
+- Converted Contact phone/email/dock rows into real `tel:`, `mailto:` and Maps links, with the response-time row showing a local info alert.
+- Made Settings preference switches functional and locally persisted (`push`, `email`, `darkMode`).
+- Connected Reports gallery thumbnails into the stateful Photo Viewer instead of opening whatever photo had been selected previously.
+- Verification passed with `node --check app.js`, `git diff --check`, Playwright mobile interaction checks across Profile/Menu, My Bookings Past/Cancelled filters, Address Book -> Race Point detail, Settings push toggle persistence and Reports -> Photo Viewer. No console errors/warnings/dialog surprises. Geometry check confirmed the fixed dock clears Profile content after scrolling.
+- QA screenshots archived under `assets/High Hook Charters/dark-ui-qa-5/`: Profile menu, Past bookings filter, Cancelled bookings filter, Location detail, Settings toggle and Reports photo viewer.
+- Still not committed, pushed or deployed to Vercel.
+
+## 2026-06-22 16:24 Mobile-First / iPad Responsive Pass
+
+- Kept the dark app mobile-first: iPhone remains single-column at `390px` with 2-column gallery/weather metric defaults and no horizontal overflow.
+- Added tablet breakpoints for iPad: dark screens and dock expand to `760px` on iPad portrait and `900px` on landscape/large iPad widths instead of staying trapped in the phone-width shell.
+- Added semantic grid classes for responsive content (`charter-grid`, `booking-grid`, `location-grid`, `crew-grid`, `report-grid`, `notification-grid`) and used them to give iPad more scannable layouts.
+- iPad portrait now uses wider hero/status/card surfaces, 2-column charter/bookings/location/report-style grids, 4-column weather metrics and 4-column gallery.
+- iPad landscape/large tablet now supports 3-column charter/bookings/location/report-style grids and a 5-column gallery while preserving the same bottom dock and dark visual language.
+- Auth/onboarding screens intentionally remain phone-width to keep forms focused and native-app-like.
+- Verification passed with `node --check app.js`, `git diff --check`, and Playwright responsive QA at `390x844`, `820x1180`, and `1180x820`. No console errors/warnings, no horizontal overflow, Profile content clears the fixed dock after scrolling, and tablet grids expanded as expected.
+- QA screenshots archived under `assets/High Hook Charters/dark-ui-responsive-qa/`: iPhone Home/Trips/Weather/Profile, iPad portrait Home/Trips/Weather/Profile, and iPad landscape Home/Trips/Weather/Profile.
+- Still not committed, pushed or deployed to Vercel.
+
+## 2026-06-22 16:28 Full-Width Device Pass
+
+- Removed the side-gutter width caps from the dark app shell, dark screens and bottom dock so the app spans the full device width.
+- Replaced tablet `calc(100% - 56px)` / `calc(100% - 72px)` shell widths with `100%`; iPad content keeps internal padding but the app surface and dock now reach both device edges.
+- Verification passed with `node --check app.js`, `git diff --check`, and Playwright viewport measurements at `390x844`, `820x1180`, and `1180x820`.
+- Measured app shell, dark screen and dock widths exactly matched each viewport (`390`, `820`, `1180`), all left offsets were `0`, and no horizontal overflow was detected.
+- QA screenshots archived under `assets/High Hook Charters/dark-ui-full-width-qa/`: iPhone/iPad portrait/iPad landscape Home and Trips full-width proofs.
+- Still not committed, pushed or deployed to Vercel.
+
+## 2026-06-22 16:34 Mobile Full-Bleed Content Pass
+
+- Traced the remaining visible mobile side space to `.dark-screen` internal padding and bordered card surfaces, not the app shell width.
+- Removed mobile-only outer screen padding for app routes and made the major dark content surfaces (`dark-adventure-card`, `dark-list-card`, `policy-block`, weather hero, booking/location/settings cards) touch both device edges while preserving readable internal text padding.
+- Kept sticky action buttons inset intentionally so tappable CTAs remain visually separated from the screen edge.
+- Verification passed with `node --check app.js`, `git diff --check`, and Playwright mobile geometry at `390x844`.
+- Measurement proof: `.dark-screen`, `.dark-adventure-card`, `.dark-status-grid`, `.dark-list-card`, `.policy-block` and `.dock` all measured `x: 0`, width `390`, and no horizontal overflow was detected.
+- QA screenshots archived under `assets/High Hook Charters/dark-ui-mobile-full-bleed-qa/`: iPhone Home and Trips full-bleed proofs.
+- Still not committed, pushed or deployed to Vercel.
+
+## 2026-06-22 16:41 Trip Category Pass
+
+- Updated the dark Trips categories to Jeff's requested set: `All`, `Offshore`, `Inshore`, `Kids Camp`, `Ladies Night`.
+- Removed `Nearshore` from Trips and mapped Race Point Striped Bass into `Inshore`; Kids Camp and Ladies Night now filter as their own trip categories.
+- Adjusted the dark segmented-control grid so five categories fit the full mobile width without horizontal scrolling.
+- Verification passed with `node --check app.js`, `git diff --check`, and Playwright mobile filter checks at `390x844`.
+- Browser QA confirmed each category returns the expected trips: Offshore = Bluefin/Haddock/Shark, Inshore = Local Bass/Race Point, Kids Camp = High Hook Kids Camp, Ladies Night = Ladies Night Fishing.
+- QA screenshots archived under `assets/High Hook Charters/dark-ui-trip-categories-qa/`: all categories and Ladies Night filter proofs.
+- Still not committed, pushed or deployed to Vercel.
+
+## 2026-06-22 16:45 Trips Footer Icon Pass
+
+- Changed the bottom dock `Trips` tab icon from fish to anchor.
+- Verification passed with `node --check app.js`, `git diff --check`, and Playwright mobile proof that the Trips dock SVG uses the anchor glyph with no console errors.
+- QA screenshot archived under `assets/High Hook Charters/dark-ui-trip-categories-qa/iphone-footer-trips-anchor.png`.
+- Still not committed, pushed or deployed to Vercel.
+
+## 2026-06-22 16:49 Profile Footer Pass
+
+- Moved `Profile` into the bottom dock's far-right slot, replacing the footer `Book` tab.
+- Removed header Profile/menu entry points from the dark Home/header chrome; headers now keep alignment with an inert spacer and Home uses the right-side notifications button.
+- Booking remains reachable through primary `Book a Charter`, trip detail, empty bookings and Trip Hub CTAs.
+- Verification passed with `node --check app.js`, `git diff --check`, and Playwright mobile QA at `390x844`.
+- Browser QA confirmed dock labels are `Home`, `Trips`, `Weather`, `Gallery`, `Profile`; Profile opens from the bottom-right dock; no header `data-tab="profile"` buttons remain on Home; no console errors/warnings or horizontal overflow.
+- QA screenshot archived under `assets/High Hook Charters/dark-ui-profile-footer-qa/iphone-footer-profile.png`.
+- Still not committed, pushed or deployed to Vercel.
+
+## 2026-06-22 16:54 Production Vercel Publish
+
+- Published the current local dark workflow worktree to Vercel production with `npx vercel --prod --yes`.
+- Production alias: `https://dux-fishing.vercel.app`.
+- Deployment URL: `https://dux-fishing-hpo5gja3w-hermeticthoths-projects.vercel.app`.
+- Inspect URL: `https://vercel.com/hermeticthoths-projects/dux-fishing/5sdJyxs5z9xMETaK2BUATRFaLpyL`.
+- Verification passed before deploy with `node --check app.js` and `git diff --check`.
+- Live verification passed: `curl -I https://dux-fishing.vercel.app` returned HTTP 200, and Playwright mobile smoke at `390x844` confirmed dock labels are `Home`, `Trips`, `Weather`, `Gallery`, `Profile`; Profile opens from the bottom-right dock; no header `data-tab="profile"` buttons remain; no console errors/warnings or horizontal overflow.
+- The deployed files are still local working-tree changes and have not been committed or pushed to GitHub.
+
+## 2026-06-22 17:03 Mobile/Tablet Padding Pass
+
+- Restored content padding around the dark app on mobile and tablet after Jeff noted the content needed breathing room.
+- Kept the app shell and bottom dock full-width, but changed route content gutters to `16px` on iPhone/mobile, `28px` on iPad portrait/tablet, and `36px` on wider iPad/landscape.
+- Removed the earlier mobile-only edge-to-edge content overrides that zeroed side padding and stripped card side borders/radius.
+- Verification passed locally with `node --check app.js`, `git diff --check`, and Playwright geometry at `390x844`, `820x1180`, and `1180x820`.
+- Local QA proof: first Trips card measured `x: 16` on iPhone, `x: 28` on iPad portrait, and `x: 36` on iPad landscape; no horizontal overflow.
+- QA screenshots archived under `assets/High Hook Charters/dark-ui-padding-qa/`.
+- Published to Vercel production with `npx vercel --prod --yes`.
+- Production alias: `https://dux-fishing.vercel.app`.
+- Deployment URL: `https://dux-fishing-945bbpksk-hermeticthoths-projects.vercel.app`.
+- Inspect URL: `https://vercel.com/hermeticthoths-projects/dux-fishing/Fn5NC6zz4t27wjdCGD1WCPzGvSyB`.
+- Live verification passed on iPhone and iPad portrait: expected content padding, full-width dock, footer labels `Home`, `Trips`, `Weather`, `Gallery`, `Profile`, no console errors/warnings and no horizontal overflow.
+- The deployed files are still local working-tree changes and have not been committed or pushed to GitHub.
 
 ## Known Release Blockers
 
