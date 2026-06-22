@@ -235,6 +235,21 @@ xcodebuild -project HighHookCharters.xcodeproj -scheme HighHookCharters -destina
 - Live verification passed on iPhone and iPad portrait: expected content padding, full-width dock, footer labels `Home`, `Trips`, `Weather`, `Gallery`, `Profile`, no console errors/warnings and no horizontal overflow.
 - The deployed files are still local working-tree changes and have not been committed or pushed to GitHub.
 
+## 2026-06-22 17:18 Captain Mode Toggle Pass
+
+- Added a clear `Captain Mode` card to Profile and Settings so the captain can turn local review controls on and off without digging through Contact.
+- The `Turn Captain Mode On` action keeps the existing `HIGHHOOK` prompt gate; once enabled, the same card changes to `Turn Captain Mode Off`.
+- Contact now reuses the same Captain Mode card, and locked Weather/Trip Hub copy now points captains to Profile or Settings.
+- Verification passed with `node --check app.js`, `git diff --check`, and Playwright mobile QA at `390x844`.
+- Local QA confirmed Profile shows the off state, accepts `HIGHHOOK`, switches to the on state, displays the captain banner, unlocks Weather editor controls, then turns off again without horizontal overflow.
+- QA screenshots archived under `assets/High Hook Charters/captain-mode-toggle-qa/`.
+- Published to Vercel production with `npx vercel --prod --yes`.
+- Production alias: `https://dux-fishing.vercel.app`.
+- Deployment URL: `https://dux-fishing-4005ce7gi-hermeticthoths-projects.vercel.app`.
+- Inspect URL: `https://vercel.com/hermeticthoths-projects/dux-fishing/8XtqFTemzeamYbVJBi4s7YP48ZBF`.
+- Live verification passed: Profile Captain Mode on/off flow works, Weather editor unlocks while on, footer labels remain `Home`, `Trips`, `Weather`, `Gallery`, `Profile`, no console errors/warnings and no horizontal overflow.
+- Feature commit: `da9218e` (`Add Captain Mode toggle`) pushed to `origin/main`.
+
 ## Known Release Blockers
 
 - Web conversion is static/local-first and mirrors the prototype, but it still needs server-side booking persistence, authenticated admin/CMS sync, and production analytics before it can replace operational tooling.
