@@ -308,6 +308,10 @@ function setTab(tab) {
   state.tab = tab;
   state.modal = null;
   render();
+  if (tab === "trip-list") {
+    requestAnimationFrame(() => document.querySelector("#charterTypes")?.scrollIntoView({ behavior: "smooth", block: "start" }));
+    return;
+  }
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -392,7 +396,7 @@ function renderTrips() {
         </div>
       </section>
 
-      <section class="reference-section">
+      <section class="reference-section" id="charterTypes">
         <div class="section-line">
           <h2>Charter Types</h2>
           <button class="link-button" data-modal="trip-detail">View selected</button>
@@ -738,13 +742,17 @@ function localDataSummary() {
 
 function renderDock() {
   const tabs = [
-    ["trips", "home", "Home"],
-    ["weather", "sun", "Weather"],
-    ["prep", "checklist", "Hub"],
-    ["reports", "images", "Gallery"],
-    ["contact", "ellipsis", "More"],
+    { tab: "trips", icon: "home", label: "Home" },
+    { tab: "trip-list", icon: "anchor", label: "Trips" },
+    { tab: "weather", icon: "sun", label: "Weather" },
+    { tab: "reports", icon: "images", label: "Gallery" },
+    { action: "book", icon: "calendar", label: "Book" },
   ];
-  return `<nav class="dock" aria-label="High Hook navigation">${tabs.map((tab) => `<button class="dock-button ${state.tab === tab[0] ? "is-active" : ""}" data-tab="${tab[0]}"><span>${iconSvg(tab[1])}</span><span>${tab[2]}</span></button>`).join("")}</nav>`;
+  return `<nav class="dock" aria-label="High Hook navigation">${tabs.map((item) => {
+    const isActive = item.tab ? state.tab === item.tab : state.modal === "booking";
+    const attr = item.tab ? `data-tab="${item.tab}"` : `data-action="${item.action}"`;
+    return `<button class="dock-button ${isActive ? "is-active" : ""}" ${attr}><span>${iconSvg(item.icon)}</span><span>${item.label}</span></button>`;
+  }).join("")}</nav>`;
 }
 
 function renderModal() {
@@ -911,6 +919,7 @@ ${localDataSummary()}`;
 function render() {
   const content = {
     trips: renderTrips,
+    "trip-list": renderTrips,
     weather: renderWeather,
     prep: renderPrep,
     reports: renderReports,
