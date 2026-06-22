@@ -177,6 +177,7 @@ const state = {
   selectedTripId: "bass-local",
   selectedGoal: "firstTimer",
   modal: null,
+  bookingSuccess: null,
   captainMode: store.get("highHook.web.captainMode", false),
   inquiries: store.get("highHook.web.inquiries", []),
   reminders: store.get("highHook.web.reminders", {}),
@@ -685,6 +686,7 @@ function renderDock() {
 function renderModal() {
   if (!state.modal) return "";
   if (state.modal === "booking") return renderBookingModal();
+  if (state.modal === "booking-success") return renderBookingSuccessModal();
   if (state.modal === "trip-detail") return renderTripDetailModal();
   if (state.modal === "packet") return renderPacketModal();
   if (state.modal === "export") return renderExportModal();
@@ -729,6 +731,30 @@ function renderBookingModal() {
             ${row("checklist", "Trip Hub unlocks", "Booked clients get arrival details, captain notes, weather status and a prep checklist in one place.")}
           `)}
           <button class="button primary block" data-action="submit-booking">Email</button>
+        </div>
+      </section>
+    </div>
+  `;
+}
+
+function renderBookingSuccessModal() {
+  const success = state.bookingSuccess || {};
+  const inquiry = state.inquiries.find((item) => item.id === success.inquiryId) || state.inquiries[0];
+  return h`
+    <div class="modal-backdrop" role="dialog" aria-modal="true">
+      <section class="modal-panel">
+        <div class="modal-header"><h2>Email draft ready</h2><button class="button" data-action="close-modal">Done</button></div>
+        <div class="stack">
+          ${card(h`
+            <div class="success-mark">${iconSvg("check")}</div>
+            ${sectionHeader("Email draft ready", "Review the prepared message in Mail and send it to High Hook.")}
+            <p>A later production backend can also mirror these requests into a CRM or booking queue.</p>
+            ${inquiry ? `<div class="data-box"><b>${escapeHtml(inquiry.tripName)}</b><p>${escapeHtml(inquiry.name)} &middot; ${escapeHtml(fmtDate(inquiry.preferredDate))} &middot; Party of ${inquiry.partySize}</p></div>` : ""}
+            <div class="actions">
+              <button class="button primary block" data-action="reopen-email">${iconLabel("envelope", "Reopen email draft")}</button>
+              <button class="button block" data-action="preview-trip-hub">${iconLabel("checklist", "Preview Trip Hub")}</button>
+            </div>
+          `)}
         </div>
       </section>
     </div>
@@ -871,6 +897,15 @@ function handleAction(event) {
   if (action === "book") openBooking();
   if (action === "close-modal") closeModal();
   if (action === "submit-booking") submitBooking();
+  if (action === "reopen-email" && state.bookingSuccess?.mailto) {
+    window.location.href = state.bookingSuccess.mailto;
+  }
+  if (action === "preview-trip-hub") {
+    state.tab = "prep";
+    state.modal = null;
+    render();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
   if (action === "unlock-captain") unlockCaptain();
   if (action === "lock-captain") {
     state.captainMode = false;
@@ -968,10 +1003,11 @@ Notes:
 ${notes || "None provided yet."}
 
 Sent from the High Hook Charters web app.`);
-  window.location.href = `mailto:Charters@FishHighHook.com?subject=${encodeURIComponent(`High Hook charter request - ${current.name}`)}&body=${body}`;
-  state.tab = "prep";
-  state.modal = null;
+  const mailto = `mailto:Charters@FishHighHook.com?subject=${encodeURIComponent(`High Hook charter request - ${current.name}`)}&body=${body}`;
+  state.bookingSuccess = { inquiryId: inquiry.id, mailto };
+  state.modal = "booking-success";
   render();
+  window.location.href = mailto;
 }
 
 async function shareText(text) {

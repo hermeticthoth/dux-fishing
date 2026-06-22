@@ -480,6 +480,22 @@ a {
   background: rgba(0, 20, 46, 0.66);
 }
 
+.success-mark {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  color: var(--orange);
+  border: 1px solid rgba(246, 150, 38, 0.5);
+  border-radius: 14px;
+  background: rgba(246, 150, 38, 0.14);
+}
+
+.success-mark .ui-icon {
+  width: 30px;
+  height: 30px;
+}
+
 .toggle-row {
   display: flex;
   align-items: center;
