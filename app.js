@@ -728,7 +728,7 @@ function renderWeather() {
         </div>
       </section>
 
-      ${state.captainMode ? renderWeatherEditor() : `<section class="reference-card">${renderNotice("Captain tools locked", "Clients see the latest captain call here. Weather editing is available from Contact after unlocking Captain Mode for local review.")}</section>`}
+      ${state.captainMode ? renderWeatherEditor() : `<section class="reference-card">${renderNotice("Captain tools locked", "Clients see the latest captain call here. Weather editing is available from Profile or Settings after turning on Captain Mode.")}</section>`}
     </main>
   `;
 }
@@ -805,7 +805,7 @@ function renderInquiryHub(current, inquiry, inquiries) {
       ${row("calendar", "Preferred date", fmtDate(inquiry.preferredDate))}
       ${row("users", "Party size", `${inquiry.partySize} anglers`)}
       ${row("clock", "Submitted", new Date(inquiry.submittedAt).toLocaleString())}
-      ${state.captainMode ? `<div class="chip-row">${["Email draft ready", "Awaiting captain", "Captain confirmed", "Deposit due"].map((status) => `<button class="status-button ${inquiry.status === status ? "is-active" : ""}" data-status="${status}" data-id="${inquiry.id}">${status}</button>`).join("")}</div>` : renderNotice("Captain updates locked", "Clients can see the latest request status here. Status editing stays hidden until Captain Mode is unlocked from Contact.")}
+      ${state.captainMode ? `<div class="chip-row">${["Email draft ready", "Awaiting captain", "Captain confirmed", "Deposit due"].map((status) => `<button class="status-button ${inquiry.status === status ? "is-active" : ""}" data-status="${status}" data-id="${inquiry.id}">${status}</button>`).join("")}</div>` : renderNotice("Captain updates locked", "Clients can see the latest request status here. Status editing stays hidden until Captain Mode is turned on from Profile or Settings.")}
       ${inquiry.notes ? `<div class="data-box" style="padding:12px"><span class="label">Notes</span><p>${escapeHtml(inquiry.notes)}</p></div>` : ""}
     `)}
     ${card(h`
@@ -1230,7 +1230,7 @@ function renderDarkTripHub() {
     ${inquiry ? `<section class="review-card">
       ${[["Client", `${inquiry.name} · ${inquiry.email}`], ["Preferred date", fmtDate(inquiry.preferredDate)], ["Party size", `${inquiry.partySize} anglers`], ["Availability", availabilitySummary(inquiry)]].map((row) => `<p><span>${row[0]}</span><b>${escapeHtml(row[1])}</b></p>`).join("")}
     </section>` : `<section class="policy-block"><h2>Start this Trip Hub</h2><p>Send a charter request and this screen becomes the client-specific place for status, weather, reminders, dock details and prep.</p><button class="dark-primary" data-tab="booking-date">Request this trip</button></section>`}
-    ${state.captainMode && inquiry ? `<section class="policy-block"><h2>Captain Status</h2><div class="chip-row">${["Email draft ready", "Awaiting captain", "Captain confirmed", "Deposit due"].map((status) => `<button class="status-button ${inquiry.status === status ? "is-active" : ""}" data-status="${status}" data-id="${inquiry.id}">${status}</button>`).join("")}</div></section>` : `<section class="policy-block"><h2>Captain updates</h2><p>Status editing is hidden from clients. Unlock Captain Mode from Contact for local review controls.</p></section>`}
+    ${state.captainMode && inquiry ? `<section class="policy-block"><h2>Captain Status</h2><div class="chip-row">${["Email draft ready", "Awaiting captain", "Captain confirmed", "Deposit due"].map((status) => `<button class="status-button ${inquiry.status === status ? "is-active" : ""}" data-status="${status}" data-id="${inquiry.id}">${status}</button>`).join("")}</div></section>` : `<section class="policy-block"><h2>Captain updates</h2><p>Status editing is hidden from clients. Turn on Captain Mode from Profile or Settings for local review controls.</p></section>`}
     <section class="policy-block"><h2>Dock Arrival</h2>${[["Departure", "25 Mattakeesett Ct, Duxbury, MA 02332"], ["Bring", "Soft bag, drinks, snacks, sunglasses, hat, layers and soft-soled shoes"], ["Weather call", "Watch for the captain's go/no-go text the evening before"]].map((row) => `<p><span>${row[0]}</span><b>${row[1]}</b></p>`).join("")}<a class="dark-primary dark-link-button" href="https://maps.apple.com/?q=25%20Mattakeesett%20Ct%20Duxbury%20MA%2002332">Open in Maps</a></section>
     <section class="policy-block"><h2>Prep Checklist</h2>${checklistItems(current).map((item) => `<button class="dark-toggle-row" data-check="${escapeHtml(item)}"><span>${checked.has(item) ? "✓" : "○"} ${item}</span></button>`).join("")}</section>
     <section class="policy-block"><h2>Trip Reminders</h2>${reminderKinds.map((kind) => `<button class="dark-toggle-row" data-reminder="${kind[0]}"><span>${kind[1]}<small>${kind[2]}</small></span><span class="switch ${state.reminders[`${current.id}-${kind[0]}`] ? "is-on" : ""}"></span></button>`).join("")}</section>
@@ -1297,7 +1297,7 @@ function renderDarkWeather() {
     <section class="policy-block"><h2>Hourly</h2><div class="dark-hourly">${hourly.map((item) => `<article><span>${item[0]}</span>${iconSvg(item[3])}<b>${item[1]}</b><small>${item[2]}</small></article>`).join("")}</div></section>
     <section class="policy-block"><h2>Tides Today</h2>${tides.map((item) => `<p><span>${item[0]}</span><b>${item[1]} · ${item[2]}</b></p>`).join("")}</section>
     <section class="policy-block"><h2>Captain's Note</h2><p>${escapeHtml(state.weather.note)}</p><p><span>Updated</span><b>${fmtDate(state.weather.updatedAt)}</b></p></section>
-    ${state.captainMode ? renderDarkWeatherEditor() : `<section class="policy-block"><h2>Captain tools locked</h2><p>Clients see the latest captain call here. Unlock Captain Mode from Contact to update weather status locally.</p></section>`}
+    ${state.captainMode ? renderDarkWeatherEditor() : `<section class="policy-block"><h2>Captain tools locked</h2><p>Clients see the latest captain call here. Turn on Captain Mode from Profile or Settings to update weather status locally.</p></section>`}
   </main>`;
 }
 
@@ -1370,9 +1370,17 @@ function renderContactPage() {
   return h`<main class="dark-screen dark-tab-screen">${darkHeader("Contact Us", "profile")}
     ${contactRows.map((item) => item[3] ? `<a class="contact-row" href="${item[3]}">${iconSvg(item[0])}<span><b>${item[1]}</b><small>${item[2]}</small></span></a>` : `<button class="contact-row" data-action="response-info">${iconSvg(item[0])}<span><b>${item[1]}</b><small>${item[2]}</small></span></button>`).join("")}
     <section class="policy-block"><h2>Capt. Willie Woodruff</h2><p>Born and raised in Duxbury, MA. USCG licensed, CPR & First Aid certified, and focused on Massachusetts Bay, Stellwagen, Race Point and local South Shore fishing.</p></section>
-    <section class="policy-block"><h2>Captain Mode</h2><p>${state.captainMode ? "Unlocked for local review on this device." : "Client-safe mode is active. Unlock local review controls for Weather, Reports and Trip Hub status."}</p><button class="dark-primary" data-action="${state.captainMode ? "lock-captain" : "unlock-captain"}">${state.captainMode ? "Lock Captain Mode" : "Unlock Captain Mode"}</button></section>
+    ${renderCaptainModeCard()}
     <h2 class="dark-subtitle">More</h2><div class="settings-list"><button data-tab="locations">${iconSvg("location")}<span>Locations</span>${iconSvg("arrow")}</button><button data-tab="regulations">${iconSvg("shield")}<span>Regulations</span>${iconSvg("arrow")}</button><button data-tab="local-data">${iconSvg("doc")}<span>Local Data</span>${iconSvg("arrow")}</button></div>
   </main>`;
+}
+
+function renderCaptainModeCard() {
+  return `<section class="policy-block captain-mode-card">
+    <h2>Captain Mode</h2>
+    <p>${state.captainMode ? "Captain Mode is on for this device. Weather, Reports and Trip Hub status controls are available." : "Captain Mode is off. Client-safe screens are shown until the captain unlocks local review controls."}</p>
+    <button class="${state.captainMode ? "dark-secondary" : "dark-primary"}" data-action="${state.captainMode ? "lock-captain" : "unlock-captain"}">${state.captainMode ? "Turn Captain Mode Off" : "Turn Captain Mode On"}</button>
+  </section>`;
 }
 
 function renderNotifications() {
@@ -1389,6 +1397,7 @@ function renderNotifications() {
 function renderProfile() {
   return h`<main class="dark-screen dark-tab-screen profile-screen">${darkHeader("", "", "settings")}
     <img class="avatar" src="${assets.gallery[1]}" alt="High Hook angler" /><h1>High Hook Guest</h1><p>Charters@FishHighHook.com<br />Duxbury, Massachusetts</p>
+    ${renderCaptainModeCard()}
     <div class="settings-list">${[
       ["Personal Information", "person", "contact-page"],
       ["My Bookings", "calendar", "bookings"],
@@ -1419,6 +1428,8 @@ function renderSettings() {
   return h`<main class="dark-screen dark-tab-screen">${darkHeader("Settings", "profile")}
     <h2 class="dark-subtitle">Preferences</h2>
     <div class="settings-list">${settingRows.map((item) => `<button data-setting="${item[0]}"><span>${item[1]}</span><span class="switch ${state.settings[item[0]] ? "is-on" : ""}"></span></button>`).join("")}</div>
+    <h2 class="dark-subtitle">Captain Tools</h2>
+    ${renderCaptainModeCard()}
     <h2 class="dark-subtitle">App</h2><div class="settings-list"><button><span>Language</span><b>English</b>${iconSvg("arrow")}</button></div>
     <h2 class="dark-subtitle">About</h2><div class="settings-list"><button data-tab="local-data"><span>Privacy Policy</span>${iconSvg("arrow")}</button><button data-tab="policy"><span>Terms of Service</span>${iconSvg("arrow")}</button><button data-tab="regulations"><span>Regulations</span>${iconSvg("arrow")}</button><button><span>App Version</span><b>1.0.0</b></button></div>
   </main>`;
